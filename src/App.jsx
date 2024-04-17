@@ -9,6 +9,11 @@ function App() {
   return (
     <>
       <div className="bg-gray-300">Hello</div>
+      <div className="bg-gray-300">Hello</div>
+      <div className="bg-gray-300">Hello</div>
+      <div className="bg-gray-300">Hello</div>
+      <div className="bg-gray-300">Hello</div>
+      <div className="bg-gray-300">Hello</div>
        
     </>
   )
