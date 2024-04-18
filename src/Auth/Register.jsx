@@ -3,15 +3,15 @@ import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Footer } from "../components/Footer";
-export function Login() {
+export function Register() {
   return (
     <div className="my-12 py-12">
       <div className="container mx-auto">
         <div className="flex flex-col flex-wrap items-center justify-center">
           {/* Header */}
           <Header
-            heading="Sign in"
-            label="Sign in to continue to Chatvia."
+            heading="Register"
+            label="Get your Chatvia account now."
             href="#"
           />
           {/* body */}
@@ -48,8 +48,10 @@ export function Login() {
                       </label>
                     </div>
                     <div className="">
-                      <a href="#">
-                        <span className="opacity-60 hover:opacity-100">Forgot password?</span>
+                      <a href="">
+                        <span className="opacity-60 hover:opacity-100">
+                          Forgot password?
+                        </span>
                       </a>
                     </div>
                   </div>
@@ -61,7 +63,9 @@ export function Login() {
           </div>
           {/* Footer */}
           <Footer
-          label1="Don't have an account ?" label2=" Sign up now" href = "/register"
+            label1="Don't have an account ?"
+            label2=" Sign up now"
+            href="#"
           />
         </div>
       </div>
