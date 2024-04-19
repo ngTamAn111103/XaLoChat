@@ -16,6 +16,7 @@ export default {
       "border-input": "#e6ebf5",
       "bg-btn-hover": "#6159cb",
       "bg-icon": "#f8f9fa",
+      'text-danger':'#dc3545',
     },
   },
 };

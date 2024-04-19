@@ -7,11 +7,14 @@ import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Footer } from "../components/Footer";
 export function Login() {
-  const [username, setUsername] = useState("");
-  if (username.includes("@gmail.com")) {
-    console.log("Thành công");
-  } else {
-    console.log("Chưa thành công");
+  // Khởi tạo mặc định usernmae có @gmail.com
+  const [username, setUsername] = useState("@gmail.com");
+  // mặc đinh true
+  let isValidationUsername = true;
+  // Username không có @gmail.com
+  if (!username.includes("@gmail.com")) {
+    // false
+    isValidationUsername = false;
   }
 
   return (
@@ -37,6 +40,9 @@ export function Login() {
                     icon="fa-solid fa-user"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    validation={isValidationUsername}
+                    isFocus={true}
+                    labelValidation="Please Enter Your Username"
                   />
                   <Input
                     textLabel="Password"
