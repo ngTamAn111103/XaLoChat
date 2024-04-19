@@ -1,9 +1,19 @@
 import React from "react";
+
+import { useState } from "react";
+
 import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { Button } from "../components/Button";
 import { Footer } from "../components/Footer";
 export function Login() {
+  const [username, setUsername] = useState("");
+  if (username.includes("@gmail.com")) {
+    console.log("Thành công");
+  } else {
+    console.log("Chưa thành công");
+  }
+
   return (
     <div className="my-12 py-12">
       <div className="container mx-auto">
@@ -25,6 +35,8 @@ export function Login() {
                     placeholder="Enter username"
                     inputType="text"
                     icon="fa-solid fa-user"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                   />
                   <Input
                     textLabel="Password"
@@ -49,7 +61,9 @@ export function Login() {
                     </div>
                     <div className="">
                       <a href="#">
-                        <span className="opacity-60 hover:opacity-100">Forgot password?</span>
+                        <span className="opacity-60 hover:opacity-100">
+                          Forgot password?
+                        </span>
                       </a>
                     </div>
                   </div>
@@ -61,7 +75,9 @@ export function Login() {
           </div>
           {/* Footer */}
           <Footer
-          label1="Don't have an account ?" label2=" Sign up now" href = "/register"
+            label1="Don't have an account ?"
+            label2=" Sign up now"
+            href="/register"
           />
         </div>
       </div>

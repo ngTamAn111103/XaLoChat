@@ -6,6 +6,9 @@ export function Input({
   icon,
   placeholder,
   inputType = "text",
+  value,
+  onChange,
+
 }) {
   return (
     <div className="mb-4">
@@ -28,8 +31,11 @@ export function Input({
             type={inputType}
             className="border-border-input w-full border border-solid px-4 py-2 focus:outline-none "
             aria-invalid="false"
+            value={value}
+            onChange={onChange}
           />
         </div>
+          <span>Please Enter Your Username</span>
       </div>
     </div>
   );

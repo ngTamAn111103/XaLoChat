@@ -15,8 +15,8 @@ export function Register() {
             href="#"
           />
           {/* body */}
-          <div class="card mx-auto mb-6 flex max-w-lg rounded-lg bg-white p-8 shadow-md">
-            <div class="flex flex-col items-center justify-center">
+          <div className="card mx-auto mb-6 flex max-w-lg rounded-lg bg-white p-8 shadow-md">
+            <div className="flex flex-col items-center justify-center">
               <div className="p-4">
                 <form action="#">
                   <Input
