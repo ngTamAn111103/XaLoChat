@@ -13,10 +13,12 @@ export function Input({
   isFocus=false,
   value,
   onChange,
-
+  onMouseLeave,
   // validation
   validation=true,
-  labelValidation=""
+  labelValidation="",
+  colorValidation = "text-text-danger",
+  error 
 }) {
   
   return (
@@ -42,13 +44,14 @@ export function Input({
             value={value}
             onChange={onChange}
             autoFocus={isFocus}
+            onMouseLeave={onMouseLeave}
           />
         </div>
-
+        {error ? <div className={`${colorValidation}`}>{error}</div> : ""}
 
         <span
           id="validation"
-          className={`text-text-danger 
+          className={`${colorValidation}
         ${validation ? "hidden" : ""}`}
         >
           {labelValidation}
