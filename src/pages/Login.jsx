@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet, Link } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -73,8 +74,9 @@ export function Login() {
                       </a>
                     </div>
                   </div>
-
-                  <Button label="Sign in" type="submit" />
+                  <Link to="/index">
+                    <Button label="Sign in" type="submit" />
+                  </Link>
                 </form>
               </div>
             </div>
