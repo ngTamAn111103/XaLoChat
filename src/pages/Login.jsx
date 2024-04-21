@@ -3,10 +3,10 @@ import { Outlet, Link } from "react-router-dom";
 
 import { useState } from "react";
 
-import { Header } from "../components/Header";
-import { Input } from "../components/Input";
-import { Button } from "../components/Button";
-import { Footer } from "../components/Footer";
+import { Header } from "../components_auth/Header";
+import { Input } from "../components_auth/Input";
+import { Button } from "../components_auth/Button";
+import { Footer } from "../components_auth/Footer";
 export function Login() {
   // Khởi tạo mặc định usernmae có @gmail.com
   const [username, setUsername] = useState("@gmail.com");

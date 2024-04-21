@@ -1,8 +1,8 @@
 import React from "react";
-import { Header } from "../components/Header";
-import { Input } from "../components/Input";
-import { Button } from "../components/Button";
-import { Footer } from "../components/Footer";
+import { Header } from "../components_auth/Header";
+import { Input } from "../components_auth/Input";
+import { Button } from "../components_auth/Button";
+import { Footer } from "../components_auth/Footer";
 export function Register() {
   return (
     <div className="my-12 py-12">
