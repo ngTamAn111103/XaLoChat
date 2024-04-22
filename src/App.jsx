@@ -4,6 +4,7 @@ import "./App.css";
 import { Login } from "./pages/Login.jsx";
 import { Register } from "./pages/Register.jsx";
 import { Index } from "./pages/Index.jsx";
+import RecoverPass from "./pages/RecoverPass.jsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/index" element={<Index />} />
+          <Route path="/forget-password" element={<RecoverPass />} />
         </Routes>
       </Router>
     </>
