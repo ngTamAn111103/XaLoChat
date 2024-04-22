@@ -12,10 +12,14 @@ export function Input({
   isFocus = false,
   value,
   onChange,
-
+  onMouseLeave,
+  
   // validation
-  validation = true,
-  labelValidation = "",
+  validation=true,
+  labelValidation="",
+  colorValidation = "text-text-danger",
+  error 
+
 }) {
   // Focus vào đầu của @gmail.com
   const ref = useRef();
@@ -51,14 +55,27 @@ export function Input({
             value={value}
             onChange={onChange}
             autoFocus={isFocus}
+            onMouseLeave={onMouseLeave}
           />
           
         </div>
-        {!validation && (
-          <span id="validation" className={"text-text-danger"}>
-            {labelValidation}
-          </span>
-        )}
+
+        {error ? <div className={`${colorValidation}`}>{error}</div> : ""}
+
+        <span
+          id="validation"
+          className={`${colorValidation}
+        ${validation ? "hidden" : ""}`}
+        >
+          {labelValidation}
+        </span>
+
+//         {!validation && (
+//           <span id="validation" className={"text-text-danger"}>
+//             {labelValidation}
+//           </span>
+//         )}
+
       </div>
     </div>
   );
