@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 export function Input({
   // Label
@@ -13,18 +13,16 @@ export function Input({
   value,
   onChange,
   onMouseLeave,
-  
-  // validation
-  validation=true,
-  labelValidation="",
-  colorValidation = "text-text-danger",
-  error 
 
+  // validation
+  validation = true,
+  labelValidation = "",
+  colorValidation = "text-text-danger",
+  error,
 }) {
   // Focus vào đầu của @gmail.com
   const ref = useRef();
   useEffect(() => {
-
     // const codeInput = document.querySelector( `#${htmlFor}`)
     // codeInput.setSelectionRange(0, 0);
     if (isFocus) {
@@ -57,25 +55,17 @@ export function Input({
             autoFocus={isFocus}
             onMouseLeave={onMouseLeave}
           />
-          
         </div>
 
         {error ? <div className={`${colorValidation}`}>{error}</div> : ""}
 
-        <span
-          id="validation"
-          className={`${colorValidation}
-        ${validation ? "hidden" : ""}`}
-        >
-          {labelValidation}
-        </span>
+        
 
-//         {!validation && (
-//           <span id="validation" className={"text-text-danger"}>
-//             {labelValidation}
-//           </span>
-//         )}
-
+        {!validation && (
+          <span id="validation" className={`${colorValidation}`}>
+            {labelValidation}
+          </span>
+        )}
       </div>
     </div>
   );

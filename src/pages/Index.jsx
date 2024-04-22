@@ -1,5 +1,5 @@
 import { NavbarItem } from "../components_Index/NavbarItem";
-import Logo from "D:/Prj_XaLoChat/XaLoChat/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
+import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 export function Index() {
   return (
     <>
