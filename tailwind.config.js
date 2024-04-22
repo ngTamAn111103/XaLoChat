@@ -9,6 +9,7 @@ export default {
     colors: {
       // Configure your color palette here
       white: "#fff",
+      "black": "000",
       "bg-color": "#f7f7ff",
       primary: "#7269ef",
       "text-muted": "#7a7f9a",
@@ -17,6 +18,7 @@ export default {
       "bg-btn-hover": "#6159cb",
       "bg-icon": "#f8f9fa",
       'text-danger':'#dc3545',
+      'bs-sidebar-menu-item-color':'#f7f7ff',
     },
   },
 };
