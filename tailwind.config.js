@@ -21,4 +21,6 @@ export default {
       'bs-sidebar-menu-item-color':'#f7f7ff',
     },
   },
+  
+
 };

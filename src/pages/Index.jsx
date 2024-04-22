@@ -1,5 +1,6 @@
 import { NavbarItem } from "../components_Index/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
+import FriendList from "../components_Index/FriendList";
 export function Index() {
   return (
     <>
@@ -133,6 +134,18 @@ export function Index() {
             </ul>
           </div>
         </div>
+
+        {/* Thanh ở giữa*/}
+        <div
+          className="me-lg-1 max-w-0 min-w-0 md:max-w-[380px] md:min-w-[380px] me-1 bg-[#f5f7fb]"
+        >
+          <div className="contain">
+            <FriendList/>
+          </div>
+
+          
+        </div>
+
       </div>
     </>
   );
