@@ -1,5 +1,4 @@
-import React, { useRef } from "react";
-
+import React, {  useEffect, useRef } from "react";
 
 export function Input({
   // Label
@@ -10,17 +9,28 @@ export function Input({
   // input
   placeholder,
   inputType = "text",
-  isFocus=false,
+  isFocus = false,
   value,
   onChange,
   onMouseLeave,
+  
   // validation
   validation=true,
   labelValidation="",
   colorValidation = "text-text-danger",
   error 
+
 }) {
-  
+  // Focus vào đầu của @gmail.com
+  const ref = useRef();
+  useEffect(() => {
+
+    // const codeInput = document.querySelector( `#${htmlFor}`)
+    // codeInput.setSelectionRange(0, 0);
+    if (isFocus) {
+      ref.current.setSelectionRange(0, 0);
+    }
+  }, []);
   return (
     <div className="mb-4">
       <label className="mb-2 block " htmlFor={htmlFor}>
@@ -37,6 +47,7 @@ export function Input({
           </span>
           <input
             id={htmlFor}
+            ref={ref}
             name={htmlFor}
             placeholder={placeholder}
             type={inputType}
@@ -46,7 +57,9 @@ export function Input({
             autoFocus={isFocus}
             onMouseLeave={onMouseLeave}
           />
+          
         </div>
+
         {error ? <div className={`${colorValidation}`}>{error}</div> : ""}
 
         <span
@@ -56,6 +69,13 @@ export function Input({
         >
           {labelValidation}
         </span>
+
+//         {!validation && (
+//           <span id="validation" className={"text-text-danger"}>
+//             {labelValidation}
+//           </span>
+//         )}
+
       </div>
     </div>
   );
