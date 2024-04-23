@@ -131,7 +131,7 @@ export function Register() {
           <Footer
             label1="Already have an account?"
             label2=" Signin"
-            href="#"
+            href="/"
           />
         </div>
       </div>

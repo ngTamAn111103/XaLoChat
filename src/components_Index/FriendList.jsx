@@ -36,11 +36,103 @@ function FriendList() {
       </div>
       {/* Recent Friend*/}
       <h5 className="px-5 pt-4 font-medium mb-5 text-[#343a40]">Recent</h5>
-      <div className="list-chat h-80 overflow-auto scroll-smooth focus:scroll-auto">
+      <div className="list-chat overflow-auto h-[calc(100vh_-_246px)] scroll-smooth focus:scroll-auto">
         <ul>
           <Conversation isOnline={true} isSelected={true}/>
           <Conversation notifycation={1} name="Lorem ipsum, dolor sit... " newestMessage="Lorem ipsum, dolor sit ..."/>
           <Conversation isOnline={true} notifycation={3} avatar="avatar-tinder.jpg" name="Tinder" newestMessage="Tải app tìm bạn ngay" time="09:00 PM" isSentFile={true}/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
+         
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
           <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền..."/>
          
         </ul>
