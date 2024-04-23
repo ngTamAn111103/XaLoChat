@@ -18,11 +18,11 @@ function Conversation({
         >
           <div className="flex items-center">
             {/* Avatar  */}
-            <div className="avatar relative h-9 w-9">
+            <div className="avatar relative ">
               <img
                 src={`images/` + avatar}
                 alt="err"
-                className="rounded-full"
+                className="h-9  w-9 rounded-full"
               />
               {isOnline ? (
                 <span className="absolute right-0 block h-2.5 w-2.5 translate-y-[-50%] rounded-full border-2 border-[#fff] bg-[#06d6a0]"></span>
@@ -35,8 +35,8 @@ function Conversation({
               <div className="text-[.9375rem] font-semibold">{name}</div>
               <div className="text-sm text-[#7a7f9a]">
                 {isSentImage ? <i class="fa-regular fa-image me-1"></i> : ""}
-               
-                {isSentFile ?  <i class="fa-solid fa-paperclip me-1"></i> : ""}
+
+                {isSentFile ? <i class="fa-solid fa-paperclip me-1"></i> : ""}
                 {newestMessage}
               </div>
             </div>
