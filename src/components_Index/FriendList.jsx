@@ -5,7 +5,7 @@ function FriendList() {
       {/* title */}
       <div className="px-6 pt-5">
         <h4
-          className="mb-5 text-[1.3125rem] font-semibold"
+          className="mb-6 text-[1.3125rem] font-semibold"
           >
           Chats
         </h4>
@@ -24,7 +24,7 @@ function FriendList() {
 
       {/* Online Friends */}
       <div className="">
-        <ul className="px-6 pt-1 flex">
+        <ul className="px-5 flex space-content-around">
             <OnlineFriend />
             <OnlineFriend />
             <OnlineFriend />
