@@ -1,4 +1,4 @@
-function OnlineFriend({avatar = "avatar-captain.jpg", name = "Luffy", onClick}) { 
+function OnlineFriend({avatar = "avatar-captain.jpg", name = "Luffy"}) { 
     return(
         <>
            <li className="w-[5rem] mx-2">

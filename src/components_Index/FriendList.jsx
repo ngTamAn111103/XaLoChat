@@ -1,4 +1,6 @@
+import Conversation from "./Conversation";
 import OnlineFriend from "./OnlineFriend";
+
 function FriendList() {
   return (
     <>
@@ -32,8 +34,17 @@ function FriendList() {
         </ul>
 
       </div>
-      {/* Recent */}
-      <h5 className="px-5 pt-5 font-medium">Recent</h5>
+      {/* Recent Friend*/}
+      <h5 className="px-5 pt-4 font-medium mb-5">Recent</h5>
+      <div className="list-chat h-80 overflow-auto scroll-smooth focus:scroll-auto">
+        <ul>
+          <Conversation isOnline={true} isSelected={true}/>
+          <Conversation notifycation={1} name="Lù Phi 2" newestMessage="Acc kia bị hack rồi e ơi"/>
+          <Conversation isOnline={true} notifycation={3} avatar="avatar-tinder.jpg" name="Tinder" newestMessage="Tải app tìm bạn ngay" time="09:00 PM" isSentFile={true}/>
+          <Conversation isSentImage= {true} notifycation={2} avatar="avatar-girl.jpg" name="Em" newestMessage="Hello anh cho em lên thuyền với"/>
+         
+        </ul>
+      </div>
     </>
   );
 }
