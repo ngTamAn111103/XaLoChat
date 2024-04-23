@@ -49,7 +49,7 @@ export function Input({
             name={htmlFor}
             placeholder={placeholder}
             type={inputType}
-            className="w-full border border-solid border-border-input px-4 py-2 focus:outline-none "
+            className="w-96 border border-solid border-border-input px-4 py-2 focus:outline-none "
             value={value}
             onChange={onChange}
             autoFocus={isFocus}
