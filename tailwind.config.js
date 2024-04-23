@@ -19,6 +19,7 @@ export default {
       "bg-icon": "#f8f9fa",
       'text-danger':'#dc3545',
       'bs-sidebar-menu-item-color':'#f7f7ff',
+      "bs-dark": "#343a40",
     },
   },
   
