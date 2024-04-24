@@ -6,7 +6,9 @@ export function SideMenu() {
   return (
     <>
       <div
-        className="side-menu shadow-blackh-full flex min-h-[100vh] min-w-[75px] max-w-[75px] flex-col bg-white drop-shadow-md"
+        className="side-menu shadow-blackh-full flex flex-col bg-white drop-shadow-md
+        min-h-[100vh] min-w-[75px] max-w-[75px]
+        "
       >
         {/* phần trên của nav: Logo */}
         <div className="navbar-brand-box box-border block text-center">
