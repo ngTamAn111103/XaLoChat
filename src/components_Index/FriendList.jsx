@@ -82,6 +82,168 @@ function FriendList() {
             name="Shipper Shoppe"
             newestMessage="Nợ anh 2 củ tỏi nha em"
           />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
+          <Conversation
+            notifycation="99+"
+            avatar="IMG_5226.jpg"
+            name="Shipper Shoppe"
+            newestMessage="Nợ anh 2 củ tỏi nha em"
+          />
         </ul>
       </div>
     </>
