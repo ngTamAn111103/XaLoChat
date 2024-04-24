@@ -137,9 +137,11 @@ export function Index() {
 
         {/* Thanh ở giữa*/}
         <div
-          className="me-lg-1 max-w-0 min-w-0 md:max-w-[380px] md:min-w-[380px] me-1 bg-[#f7f7ff]"
+          className="me-lg-1 max-w-0 min-w-0 md:max-w-[380px] md:min-w-[380px] me-1 bg-[#f5f7fb]"
         >
-          <div className="contain">
+          <div 
+          className="contain "
+          >
             <FriendList/>
             
           </div>
