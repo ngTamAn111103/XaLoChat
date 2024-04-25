@@ -5,7 +5,7 @@ import { Login } from "./pages/Login.jsx";
 import { Register } from "./pages/Register.jsx";
 import { Index } from "./pages/Index.jsx";
 import RecoverPass from "./pages/RecoverPass.jsx";
-
+import Profile from "./components_Index/Profile.jsx";
 function App() {
   return (
     <>
@@ -15,6 +15,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/index" element={<Index />} />
           <Route path="/forget-password" element={<RecoverPass />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>

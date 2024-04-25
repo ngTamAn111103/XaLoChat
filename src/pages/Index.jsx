@@ -1,5 +1,6 @@
 import { NavbarItem } from "../components_Index/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
+import Profile from "../components_Index/Profile";
 export function Index() {
   return (
     <>
@@ -61,20 +62,19 @@ export function Index() {
           <div className="my-auto box-border">
             <ul
               className="
-            side-menu-nav 
-            nav-pills
-            nav
-            mb-0
-            mt-0
-            flex
-            list-none
-            flex-col
-            flex-wrap
-            justify-center
-            pl-0"
+              side-menu-nav
+              nav 
+              mb-0 
+              mt-0 
+              box-border
+               flex 
+               list-none 
+               flex-wrap
+               justify-center
+               pl-0"
             >
-              <NavbarItem icon="fa-solid fa-user" />
-              <NavbarItem icon="fa-solid fa-user" isPrimary={true} />
+              <NavbarItem icon="fa-solid fa-user" isPrimary={true}/>
+              <NavbarItem icon="fa-brands fa-rocketchat"/>
               <NavbarItem icon="fa-solid fa-user" />
               <NavbarItem icon="fa-solid fa-user" />
               <NavbarItem icon="fa-solid fa-user" />
@@ -132,6 +132,18 @@ export function Index() {
               </li>
             </ul>
           </div>
+        </div>
+        
+        {/* Thanh ở giữa*/}
+        <div
+          className="me-lg-1 md:max-w-[380px] md:min-w-[380px] me-1 bg-[#f7f7ff]"
+        >
+          <div className="contain">
+            <Profile/>
+            
+          </div>
+
+          
         </div>
       </div>
     </>
