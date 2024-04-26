@@ -28,7 +28,7 @@ export function GroupList() {
       />
 
       {/* Danh sách groups */}
-      <div className="chat-message-list chat-group-list h-[calc(100vh_-_160px)] max-h-full overflow-auto scroll-smooth p-6 focus:scroll-auto">
+      <div className="chat-message-list chat-group-list h-[calc(100vh_-_160px)] max-h-full overflow-auto scroll-smooth p-6 pb-0 focus:scroll-auto">
         <div className="simplebar-wrapper">
           <ul role="list" className="chat-list m-0 list-none pl-0">
             <ItemGroup
