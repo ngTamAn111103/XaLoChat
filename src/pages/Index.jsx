@@ -1,7 +1,7 @@
 import { NavbarItem } from "../components_Index/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import FriendList from "../components_Index/FriendList";
-import { GroupList } from "../components_Index/GroupList";
+import ContactList from "../components_Index/Contacts/ContactList";
 export function Index() {
   return (
     <>
@@ -144,9 +144,10 @@ export function Index() {
           className="contain "
           >
             {/* <FriendList/> */}
-            <GroupList
+            {/* <GroupList
               
-            />
+            /> */}
+            <ContactList></ContactList>
             
           </div>
 
