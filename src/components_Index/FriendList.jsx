@@ -9,6 +9,7 @@ function FriendList() {
       <Header
         title="Chats"
         isSearch ={true}
+        placeholderSearch="Search messages or users"
       />
 
       {/* Online Friends */}
