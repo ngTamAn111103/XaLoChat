@@ -8,9 +8,9 @@ import { Footer } from "../components_auth/Footer";
 export function Register() {
     // Thiết lập các useState() 
     const [formData, setFormData] = useState({
-      username: '',
+      password: '',
       email: '',
-      password: ''
+      confirm_password: '',
     });
     const [errors, setErrors] = useState({});
 
@@ -19,10 +19,10 @@ export function Register() {
     const handleSubmit = (e) => { 
       console.log("called")
       e.preventDefault(); 
-      errors.username = validateField('username', formData.username)["username"]; 
       errors.email = validateField('email', formData.email)["email"]; 
       errors.password = validateField('password', formData.password)["password"]; 
-      setErrors({...errors, "username": errors.username, "password": errors.password, "email": errors.email })
+      errors.confirm_password = validateField('confirm_password', formData.confirm_password)["confirm_password"]; 
+      setErrors({...errors, "confirm_password": errors.confirm_password, "password": errors.password, "email": errors.email })
     }
 
     //onChange: kiêm tra khi thay đổi
@@ -33,6 +33,7 @@ export function Register() {
         ...formData,
         [name]: value
       });
+      console.log(formData.name )
       // xác thực dữ liệu và cập nhật Lỗi
       const validationErrors = validateField(name, value);
       setErrors({
@@ -43,15 +44,18 @@ export function Register() {
 
     //validate các trường và thay đổi useState của error
     const validateField = (name, value) => {
+      console.log("called: "+formData.confirm_password);
       const fieldErrors = {};
-      if (name === 'username' && !value.trim()) {
-        fieldErrors[name] = 'Username is required';
+      if (name === 'confirm_password' && !value.trim()) {
+        fieldErrors[name] = 'Confirm password is required';
       } else if (name === 'email' && !value.trim()) {
         fieldErrors[name] = 'Email is required';
       } else if (name === 'email' && !isValidEmail(value)) {
         fieldErrors[name] = 'Invalid email address';
       } else if (name === 'password' && !value.trim()) {
         fieldErrors[name] = 'Password is required';
+      } else if (name === 'confirm_password' && formData.password!= formData.confirm_password) {
+        fieldErrors[name] = 'Confirm password is wrong';
       }
       return fieldErrors;
     };
@@ -88,34 +92,34 @@ export function Register() {
                     inputType="text"
                     icon="fa-solid fa-envelope"
                     onChange={(e)=>handleChange(e)}
-                    onMouseLeave={(e)=>handleChange(e)}
+                    onBlur={(e)=>handleChange(e)}
                     value = {formData.email}
                     error={errors.email}
                     colorValidation="text-text-danger"
                   />
+                    <Input
+                      textLabel="Password"
+                      htmlFor="password"
+                      placeholder="Enter Password"
+                      inputType="password"
+                      icon="fa-solid fa-lock"
+                      onChange={(e)=>handleChange(e)}
+                      onBlur={(e)=>handleChange(e)}
+                      error={errors.password}
+                      colorValidation="text-text-danger"
+                      value = {formData.password}
+                    />
                   <Input
-                    textLabel="Username"
-                    htmlFor="username"
-                    placeholder="Enter Username"
-                    inputType="text"
-                    icon="fa-solid fa-user"
-                    onChange={(e)=>handleChange(e)}
-                    onMouseLeave={(e)=>handleChange(e)}
-                    error={errors.username}
-                    value = {formData.username}
-                    colorValidation="text-text-danger"
-                  />
-                  <Input
-                    textLabel="Password"
-                    htmlFor="password"
-                    placeholder="Enter Password"
+                    textLabel="Confirm password"
+                    htmlFor="confirm_password"
+                    placeholder="Confirm password"
                     inputType="password"
                     icon="fa-solid fa-lock"
                     onChange={(e)=>handleChange(e)}
-                    onMouseLeave={(e)=>handleChange(e)}
-                    error={errors.password}
+                    onBlur={(e)=>handleChange(e)}
+                    error={errors.confirm_password}
+                    value = {formData.confirm_password}
                     colorValidation="text-text-danger"
-                    value = {formData.password}
                   />
   
                   <Button label="Register" type="submit" />
@@ -127,7 +131,7 @@ export function Register() {
           <Footer
             label1="Already have an account?"
             label2=" Signin"
-            href="#"
+            href="/"
           />
         </div>
       </div>
