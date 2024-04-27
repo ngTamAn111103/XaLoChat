@@ -1,68 +1,66 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 const FileCard = ({ fileName, fileSize, iconClassName }) => {
+  const [showMenu, setShowMenu] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+  
+    document.addEventListener("click", handleClickOutside);
+  
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [dropdownRef]);
+  
   return (
-    <div className="card mb-2 border p-2">
-      <div className="d-flex align-items-center">
-        <div className="avatar-sm me-3 ms-0">
-          <i className={`avatar-title bg-primary-subtle font-size-20 rounded text-primary ${iconClassName} p-3`}></i>
+    <div className="m-2 rounded-md border border-[#DCDCDC]">
+      <div className="flex items-center p-2">
+        <div className="bg-[#E3E1FC] flex h-10 w-10 items-center justify-center rounded">
+            <i className={`${iconClassName} text-lg text-primary`}></i>
         </div>
-        <div className="flex-grow-1 overflow-hidden">
+        <div className="pl-3 flex-grow overflow-hidden">
           <div className="text-left">
-            <h5 className="font-size-14 mb-1 fw-bolder text-sm">{fileName}</h5>
-            <p className="text-muted font-size-13 mb-0">{fileSize}</p>
+            <h5 className="mb-1 text-xs font-bold">{fileName}</h5>
+            <p className="text-[#7A7F9A] mb-0 text-xs">{fileSize}</p>
           </div>
         </div>
-        <div className="ms-4">
-          <ul className="list-inline font-size-18 mb-0">
-            <li className="list-inline-item">
-              <a className="text-muted px-1" href="/dashboard">
-                <i className="bi bi-download"></i>
+        <div className="ml-4">
+          <ul className=" flex items-center space-x-2 p-2">
+            <li>
+              <a className="text-[#7A7F9A] p-2" href="/dashboard">
+                <i className="fas fa-download"></i>
               </a>
             </li>
-            <div className="list-inline-item dropdown">
-              <a
+            <li className="relative" ref={dropdownRef}>
+              <button
+                className="focus:outline-none"
+                aria-label="Options"
                 aria-haspopup="true"
-                className="font-size-18 text-muted"
-                id="dropdownMenuButton"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                onClick={() => setShowMenu(!showMenu)}
               >
-                <i className="bi bi-three-dots"></i>
-              </a>
+                <i className="fas fa-ellipsis-h text-[#7A7F9A]"></i>
+              </button>
               <div
-                tabIndex="-1"
-                role="menu"
-                aria-hidden="true"
-                className="dropdown-menu dropdown-menu-end"
+                className={`absolute right-0 z-10 mt-2 w-40 rounded-md bg-white shadow-lg ${showMenu ? "block" : "hidden"}`}
               >
-                <button
-                  tabIndex="0"
-                  role="menuitem"
-                  className="dropdown-item"
-                >
-                  Action
-                </button>
-                <button
-                  tabIndex="0"
-                  role="menuitem"
-                  className="dropdown-item"
-                >
-                  Another Action
-                </button>
-                <div
-                  tabIndex="-1"
-                  className="dropdown-divider"
-                ></div>
-                <button
-                  tabIndex="0"
-                  role="menuitem"
-                  className="dropdown-item"
-                >
-                  Delete
-                </button>
+                <div className="py-1">
+                  <button className=" hover:bg-[#F5F5F5] block w-full px-4 py-2 text-left text-sm">
+                    Action
+                  </button>
+                  <button className="hover:bg-[#F5F5F5] block w-full px-4 py-2 text-left text-sm">
+                    Another Action
+                  </button>
+                  <div className="border-t border-[#DCDCDC]"></div>
+                  <button className="hover:bg-[#F5F5F5] block w-full px-4 py-2 text-left text-sm">
+                    Delete
+                  </button>
+                </div>
               </div>
-            </div>
+            </li>
           </ul>
         </div>
       </div>

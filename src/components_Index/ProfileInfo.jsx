@@ -3,9 +3,9 @@ import React from "react";
 function ProfileInfo({ p, label, value }) {
   return (
     <>
-      <p className="text-muted mb-4 text-[#7A7F9A]">{p}</p>
-      <p className="text-muted mb-1">{label}</p>
-      <h5 className="font-size-14 fw-bolder text-sm">{value}</h5>
+      <p className="text-[#7A7F9A] mb-4">{p}</p>
+      <p className="text-[#7A7F9A] mb-1">{label}</p>
+      <h5 className="font-bold font-sans text-xs mb-4">{value}</h5>
     </>
   );
 }
