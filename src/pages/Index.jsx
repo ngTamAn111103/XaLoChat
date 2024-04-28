@@ -1,6 +1,7 @@
 import { NavbarItem } from "../components_Index/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
-import Profile from "../components_Index/Profile";
+import { Setting } from "../components_Index/Settings";
+
 export function Index() {
   return (
     <>
@@ -73,11 +74,11 @@ export function Index() {
                justify-center
                pl-0"
             >
-              <NavbarItem icon="fa-solid fa-user" isPrimary={true}/>
+              <NavbarItem icon="fa-solid fa-user"/>
               <NavbarItem icon="fa-brands fa-rocketchat"/>
               <NavbarItem icon="fa-solid fa-user" />
               <NavbarItem icon="fa-solid fa-user" />
-              <NavbarItem icon="fa-solid fa-user" />
+              <NavbarItem icon="fa-solid fa-user" isPrimary={true}/>
             </ul>
           </div>
           {/* Phần cuối của nav */}
@@ -139,10 +140,8 @@ export function Index() {
           className="me-lg-1 md:max-w-[380px] md:min-w-[380px] me-1 bg-[#f7f7ff]"
         >
           <div className="contain">
-            <Profile/>
-            
+            <Setting/>
           </div>
-
           
         </div>
       </div>
