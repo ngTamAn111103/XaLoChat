@@ -12,7 +12,7 @@ export function Input({
   isFocus = false,
   value,
   onChange,
-  onMouseLeave,
+  onBlur,
 
   // validation
   validation = true,
@@ -53,7 +53,9 @@ export function Input({
             value={value}
             onChange={onChange}
             autoFocus={isFocus}
-            onMouseLeave={onMouseLeave}
+            onBlur={onBlur}
+            onKeyDown={onChange}
+            
           />
         </div>
 

@@ -1,5 +1,7 @@
 import { NavbarItem } from "../components_Index/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
+import FriendList from "../components_Index/FriendList";
+import ContactList from "../components_Index/Contacts/ContactList";
 export function Index() {
   return (
     <>
@@ -74,8 +76,8 @@ export function Index() {
             pl-0"
             >
               <NavbarItem icon="fa-solid fa-user" />
-              <NavbarItem icon="fa-solid fa-user" isPrimary={true} />
-              <NavbarItem icon="fa-solid fa-user" />
+              <NavbarItem icon="fa-solid fa-user"  />
+              <NavbarItem icon="fa-solid fa-user" isPrimary={true}/>
               <NavbarItem icon="fa-solid fa-user" />
               <NavbarItem icon="fa-solid fa-user" />
             </ul>
@@ -133,6 +135,25 @@ export function Index() {
             </ul>
           </div>
         </div>
+
+        {/* Thanh ở giữa*/}
+        <div
+          className="me-lg-1 max-w-0 min-w-0 md:max-w-[380px] md:min-w-[380px] me-1 bg-[#f5f7fb] drop-shadow-lg	"
+        >
+          <div 
+          className="contain "
+          >
+            {/* <FriendList/> */}
+            {/* <GroupList
+              
+            /> */}
+            <ContactList></ContactList>
+            
+          </div>
+
+          
+        </div>
+
       </div>
     </>
   );
