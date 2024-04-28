@@ -7,7 +7,7 @@ export function Button({ label, type = "button" }) {
         type={type}
         className="waves-effect waves-light btn btn-primary d-block w-100
                   h-10
-                  w-96 rounded-md
+                  w-full rounded-md
                   bg-primary
                 text-white
                 hover:bg-bg-btn-hover

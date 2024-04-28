@@ -20,6 +20,7 @@ export default {
       'text-danger':'#dc3545',
       'bs-sidebar-menu-item-color':'#f7f7ff',
       "bs-dark": "#343a40",
+      'bs-primary-bg-subtle': '#e3e1fc',
     },
   },
   
