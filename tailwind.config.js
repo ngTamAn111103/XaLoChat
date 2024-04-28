@@ -9,7 +9,7 @@ export default {
     colors: {
       // Configure your color palette here
       white: "#fff",
-      "black": "000",
+      "black": "#000",
       "bg-color": "#f7f7ff",
       primary: "#7269ef",
       "text-muted": "#7a7f9a",

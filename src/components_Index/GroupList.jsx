@@ -2,7 +2,7 @@ import React from "react";
 import { Header } from "./chat-leftsidebar/Header";
 import { ItemGroup } from "./Groups/ItemGroup";
 
-export function GroupList() {
+export default function GroupList() {
   return (
     // Title
     <>

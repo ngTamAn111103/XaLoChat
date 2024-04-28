@@ -1,4 +1,4 @@
-export function NavbarItem({ href = "#", icon, isPrimary = false }) {
+export function NavbarItem({ href = "#", icon, isPrimary = false, id }) {
   return (
     <li
       className={`mx-3 my-1 
@@ -11,6 +11,7 @@ export function NavbarItem({ href = "#", icon, isPrimary = false }) {
     >
       <a
         href={href}
+        id={id}
         className="
                   text-bs-sidebar-menu-item-color
                 mx-auto 

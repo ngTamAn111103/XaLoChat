@@ -20,6 +20,17 @@ const RecoverPass = () => {
     }
     // Gửi yêu cầu khôi phục mật khẩu đến server (ở đây tạm thời chỉ hiển thị thông báo thành công)
     setMessage('Liên kết khôi phục mật khẩu đã được gửi đến email của bạn.');
+//   const [email, setEmail] = useState("");
+//   const [message, setMessage] = useState("");
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (!email || !email.includes("@")) {
+//       setMessage("Vui lòng nhập một địa chỉ email hợp lệ.");
+//       return;
+//     }
+//     // Gửi yêu cầu khôi phục mật khẩu đến server (ở đây tạm thời chỉ hiển thị thông báo thành công)
+//     setMessage("Liên kết khôi phục mật khẩu đã được gửi đến email của bạn.");
   };
 
   return (
@@ -38,6 +49,8 @@ const RecoverPass = () => {
               <div className="p-4">
                 <form onSubmit={handleSubmit}>
                   <div className="text-center mb-4 alert alert-success p-2 bg-[#cdf7ec] text-[#024540] rounded border border-[#9befd9] border-solid">
+                   {/* <div className="alert alert-success mb-4 rounded  border border-solid border-[#9befd9] bg-[#cdf7ec] px-5 py-3 text-center text-[#024540]"> */}
+
                     Enter your Email and instructions will be sent to you!
                   </div>
                   <Input
@@ -54,15 +67,12 @@ const RecoverPass = () => {
               </div>
             </div>
           </div>
-          <Footer
-            label1="Remember It ? "
-            label2="Signin"
-            href="/login"
-          />
+
+          <Footer label1="Remember It ? " label2="Signin" href="/login" />
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default RecoverPass;
