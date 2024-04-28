@@ -4,7 +4,8 @@ import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
 
-function Profile() {
+
+export function Profile() {
   // State hooks để quản lý toggle và dropdown
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
@@ -52,51 +53,49 @@ function Profile() {
   }, []);
 
   return (
-    <div className="bg-light text-sans-serif text-sm">
-      <div className="px-4 pt-4">
-        {/*Thêm component Header vào */}
-        <Header
-          title={"My Profile"}
-          extend={
-            <div className="user-chat-nav float-right">
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  className="font-size-18 text-muted"
-                  id="dropdownMenuButton"
-                  onClick={toggleDropdown}
-                >
-                  <i className="fas fa-ellipsis-v"></i>
-                </button>
-                {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg">
-                    <div className="py-1">
-                      <button
-                        className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-                        onClick={() => {}}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-                        onClick={() => {}}
-                      >
-                        Action
-                      </button>
-                      <div className="border-t border-[#DCDCDC]"></div>
-                      <button
-                        className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-                        onClick={() => {}}
-                      >
-                        Another action
-                      </button>
-                    </div>
+    <>
+      {/*Thêm component Header vào */}
+      <Header
+        title={"My Profile"}
+        extend={
+          <div className="user-chat-nav float-right">
+            <div className="relative" ref={dropdownRef}>
+              <button
+                className="font-size-18 text-muted"
+                id="dropdownMenuButton"
+                onClick={toggleDropdown}
+              >
+                <i className="fas fa-ellipsis-v"></i>
+              </button>
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg">
+                  <div className="py-1">
+                    <button
+                      className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+                      onClick={() => {}}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+                      onClick={() => {}}
+                    >
+                      Action
+                    </button>
+                    <div className="border-t border-[#DCDCDC]"></div>
+                    <button
+                      className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+                      onClick={() => {}}
+                    >
+                      Another action
+                    </button>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-          }
-        />
-      </div>
+          </div>
+        }
+      />
       {/* Component User Profile */}
       <UserProfile
         avatarSrc="./images/avt.png"
@@ -106,7 +105,10 @@ function Profile() {
       <div className="user-profile-desc p-4">
         <div className="text-muted">
           {/* Thêm ProfileInfo với prop value */}
-          <ProfileInfo p="If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual." />
+          <ProfileInfo
+            p="If several languages coalesce, the grammar of the resulting 
+          language is more simple and regular than that of the individual."
+          />
         </div>
         <div className="custom-accordion">
           {/* First Card */}
@@ -169,7 +171,7 @@ function Profile() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
