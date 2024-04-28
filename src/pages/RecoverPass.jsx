@@ -49,7 +49,7 @@ const RecoverPass = () => {
               <div className="p-4">
                 <form onSubmit={handleSubmit}>
                   <div className="text-center mb-4 alert alert-success p-2 bg-[#cdf7ec] text-[#024540] rounded border border-[#9befd9] border-solid">
-//                   <div className="alert alert-success mb-4 rounded  border border-solid border-[#9befd9] bg-[#cdf7ec] px-5 py-3 text-center text-[#024540]">
+                   {/* <div className="alert alert-success mb-4 rounded  border border-solid border-[#9befd9] bg-[#cdf7ec] px-5 py-3 text-center text-[#024540]"> */}
 
                     Enter your Email and instructions will be sent to you!
                   </div>
@@ -73,6 +73,6 @@ const RecoverPass = () => {
       </div>
     </div>
   );
-};
+}
 
 export default RecoverPass;
