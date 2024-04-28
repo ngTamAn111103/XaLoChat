@@ -1,6 +1,6 @@
 import React from "react";
 
-function ProfileInfo({ p, label, value }) {
+function ProfileInfo({ p="", label="", value=""}) {
   return (
     <>
       <p className="text-[#7A7F9A] mb-4">{p}</p>
