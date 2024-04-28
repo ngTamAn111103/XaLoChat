@@ -83,7 +83,11 @@ export function Register() {
           <div className="card mx-auto mb-6 flex max-w-lg rounded-lg bg-white p-8 shadow-md">
             <div className="flex flex-col items-center justify-center">
               <div className="p-4">
-                <form action="#" method="post" onSubmit={(e)=> handleSubmit(e)}>
+                <form
+                  action="#"
+                  method="post"
+                  onSubmit={(e) => handleSubmit(e)}
+                >
 
                   <Input
                     textLabel="Email"
@@ -94,6 +98,12 @@ export function Register() {
                     onChange={(e)=>handleChange(e)}
                     onBlur={(e)=>handleChange(e)}
                     value = {formData.email}
+
+                      {/*
+                    onChange={(e) => handleChange(e)}
+                    onMouseLeave={(e) => handleChange(e)}
+                    value={formData.email}
+                    */}
                     error={errors.email}
                     colorValidation="text-text-danger"
                   />
@@ -120,8 +130,33 @@ export function Register() {
                     error={errors.confirm_password}
                     value = {formData.confirm_password}
                     colorValidation="text-text-danger"
+
+                      {/*
+                    textLabel="Username"
+                    htmlFor="username"
+                    placeholder="Enter Username"
+                    inputType="text"
+                    icon="fa-solid fa-user"
+                    onChange={(e) => handleChange(e)}
+                    onMouseLeave={(e) => handleChange(e)}
+                    error={errors.username}
+                    value={formData.username}
+                    colorValidation="text-text-danger"
                   />
-  
+                  <Input
+                    textLabel="Password"
+                    htmlFor="password"
+                    placeholder="Enter Password"
+                    inputType="password"
+                    icon="fa-solid fa-lock"
+                    onChange={(e) => handleChange(e)}
+                    onMouseLeave={(e) => handleChange(e)}
+                    error={errors.password}
+                    colorValidation="text-text-danger"
+                    value={formData.password}
+                    */}
+                  />
+
                   <Button label="Register" type="submit" />
                 </form>
               </div>
@@ -133,6 +168,10 @@ export function Register() {
             label2=" Signin"
             href="/"
           />
+
+              {/*
+          <Footer label1="Already have an account?" label2=" Signin" href="#" />
+          */}
         </div>
       </div>
     </div>

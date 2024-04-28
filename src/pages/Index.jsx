@@ -1,63 +1,22 @@
-import { NavbarItem } from "../components_Index/NavbarItem";
+import { NavbarItem } from "../components_Index/side-menu/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
-import Profile from "../components_Index/Profile";
-export function Index() {
-  return (
-    <>
-      {/* Toàn bộ trang index */}
-      <div className="layout-wrapper box-border flex">
-        {/* Thanh navbar bên trái */}
-        <div
-          className="
-        side-menu 
-        shadow-black 
-        mr-1 
-        flex 
-        h-[100vh] 
-        min-h-[570px] 
-        min-w-[75px]
-        max-w-[75px]
-        flex-col
-        bg-white"
-        >
-          {/* phần trên của nav: Logo */}
-          <div className="navbar-brand-box box-border block text-center">
-            <a
-              className="logo
-            logo-dark 
-            flex
-            h-[70px]	
-            items-center	
-           justify-center
-           leading-[70px]
-           decoration-0
-           outline-none
-           
-           
 
-            "
-              href="#"
-            >
-              <span
-                className="
-                logo-sm
-                box-border
-                leading-[69px]
-                "
-              >
-                <img
-                  src={Logo}
-                  alt={Logo}
-                  className="box-border
-                    h-[30px]
-                    align-middle
-                    leading-[70px]
-                    "
-                />
-              </span>
-            </a>
-          </div>
-          {/* Phần giữa của nav: Các thông tin */}
+import Profile from "../components_Index/Profile";
+
+import FriendList from "../components_Index/chat-leftsidebar/FriendList";
+import { SideMenu } from "../components_Index/side-menu/SideMenu";
+import FriendList from "../components_Index/FriendList";
+import ContactList from "../components_Index/Contacts/ContactList";
+
+
+export function Index() {
+  return(
+    <>
+{/* Toàn bộ trang index */}
+      <div className="layout-wrapper box-border flex">
+
+        {/* Thanh navbar bên trái, luôn luôn hiển thị trên trang chủ */}
+        <SideMenu/>
 
           <div className="my-auto box-border">
             <ul
@@ -96,12 +55,10 @@ export function Index() {
             >
               <NavbarItem icon="fa-solid fa-user" />
               <NavbarItem icon="fa-solid fa-user" />
-              <li
-                className={`mx-3 my-1 
-      box-border
-      list-item
-      cursor-pointer	
+            </ul>
+                
     
+
 
         rounded-xl`}
               >
@@ -135,11 +92,21 @@ export function Index() {
         </div>
         
         {/* Thanh ở giữa*/}
+
         <div
           className="me-lg-1 md:max-w-[380px] md:min-w-[380px] me-1 bg-[#f7f7ff]"
         >
-          <div className="contain">
+
+          <div 
+          className="contain "
+          >
+            {/* <FriendList/> */}
+            {/* <GroupList
+              
+            /> */}
+            <ContactList></ContactList>
             <Profile/>
+
             
           </div>
 
@@ -149,3 +116,18 @@ export function Index() {
     </>
   );
 }
+
+{/*
+        {/* Phần chat: user-chat*/}
+
+      </div>
+    </>
+  ) 
+    
+    
+      
+
+  
+  
+}*/}
+

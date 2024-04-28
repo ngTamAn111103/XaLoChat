@@ -23,7 +23,7 @@ function FriendList() {
       </div>
       {/* Recent Friend*/}
       <h5 className="mb-5 px-5 pt-4 font-medium text-[#343a40]">Recent</h5>
-      <div className="list-chat h-[calc(100vh_-_270px)] overflow-auto scroll-smooth focus:scroll-auto">
+      <div className="scrollbar-config h-[calc(100vh_-_270px)] overflow-auto scroll-smooth focus:scroll-auto">
         <ul>
           <Conversation isOnline={true} isSelected={true} />
           <Conversation
