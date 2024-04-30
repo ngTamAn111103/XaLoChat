@@ -29,7 +29,7 @@ export function Index() {
             {/* <Profile /> */}
             {/* <FriendList></FriendList> */}
             {/* <GroupList/> */}
-            <ContactList/>
+            {/* <ContactList/> */}
                <Setting/>
           </div>
 
