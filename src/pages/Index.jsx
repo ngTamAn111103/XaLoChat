@@ -35,7 +35,7 @@ export function Index() {
             {/* phần chat */}
             <div className="userchat relative w-full overflow-hidden">
               {/* Header: Thông tin người dùng */}
-              <div className="border-b p-6 ">
+              <div className="border-bs-border-color  border-b p-6">
                 <div className="flex flex-wrap items-center justify-between">
                   {/* Avt + Tên */}
                   <div className="col-8 col-sm-4">
@@ -52,35 +52,38 @@ export function Index() {
                           <a href="#" className="decoration-0 outline-none	">
                             Sử Thị Thuỷ Tiên
                           </a>
-                          <i class="fa-solid fa-circle text-bs-success-rgb ml-2 text-[10px]"></i>
+                          <i class="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
                         </h5>
                       </div>
                     </div>
                   </div>
+                  {/* Tìm kiếm, call, video, info, three dots */}
+
                   <div className="col-4 col-sm-8  ">
                     <ul className="user-chat-nav mb-0 mt-0 list-none pl-0 ">
-                      <li className="mr-5 inline-block">
+                      <li className="mr-7 inline-block">
                         <i class="fa-solid fa-magnifying-glass"></i>
                       </li>
-                      <li className="mr-5 inline-block">
+                      <li className="mr-7 inline-block">
                         <i class="fa-solid fa-phone"></i>
                       </li>
-                      <li className="mr-5 inline-block">
+                      <li className="mr-7 inline-block">
                         <i class="fa-solid fa-video"></i>
                       </li>
-                      <li className="mr-5 inline-block">
+                      <li className="mr-7 inline-block">
                         <i class="fa-solid fa-user"></i>
                       </li>
-                      <li className="mr-5 inline-block">
+                      <li className="mr-7 inline-block">
                         <i class="fa-solid fa-ellipsis-vertical"></i>
                       </li>
                     </ul>
                   </div>
-                  {/* Tìm kiếm, call, video, info, three dots */}
                 </div>
               </div>
               {/* Nội dung chat */}
-
+              <div className="chat-conversation h-[calc(100vh_-_185px)] max-h-full p-6">
+                
+              </div>
               {/*  Input */}
             </div>
             {/* phần thông tin user được ẩn đi */}

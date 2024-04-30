@@ -22,6 +22,7 @@ export default {
       "bs-dark": "#343a40",
       "bs-primary-bg-subtle": "#e3e1fc",
       "bs-success-rgb": "#06d6a0",
+      "bs-border-color": "#f0eff5",
     },
   },
 };
