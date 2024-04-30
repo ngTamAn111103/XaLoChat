@@ -31,13 +31,13 @@ function OptionContact({ index = 1 }) {
           <li className="px-6 py-[0.3125rem] hover:bg-[#f8f9fa] transition-all">
             <a href="#" className="flex justify-between font-normal text-[0.9375rem]">
                 Block
-                <i class="fa-solid fa-ban text-[#7a7f9a]"></i>
+                <i className="fa-solid fa-ban text-[#7a7f9a]"></i>
             </a>
           </li>
           <li className="px-6 py-[0.3125rem] hover:bg-[#f8f9fa] transition-all">
             <a href="#" className="flex justify-between font-normal text-[0.9375rem]">
                 Remove
-                <i class="fa-solid fa-trash text-[#7a7f9a]"></i>
+                <i className="fa-solid fa-trash text-[#7a7f9a]"></i>
             </a>
           </li>
         </ul>

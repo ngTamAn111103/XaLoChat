@@ -24,10 +24,10 @@ export function Index() {
         <div className="me-lg-1 me-1 min-w-0 max-w-0 bg-[#f5f7fb] drop-shadow-lg md:min-w-[380px] md:max-w-[380px]	">
           <div className="contain ">
             {/* <Profile /> */}
-            {/* <FriendList></FriendList> */}
+            <FriendList/>
             {/* <GroupList/> */}
-            <ContactList/>
-               <Setting/>
+            {/* <ContactList/> */}
+               {/* <Setting/> */}
           </div>
 
         </div>

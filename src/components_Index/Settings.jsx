@@ -93,12 +93,12 @@ export function Setting() {
             </div>
             <div className={` ${toggleOne ? "block" : "hidden"}`}>
               <div className="card-body">
-                <div class="float-right pr-5">
+                <div className="float-right pr-5">
                   <button
                     type="button"
-                    class="flex items-center rounded bg-[#E6EBF5] px-3 py-1 text-xs"
+                    className="flex items-center rounded bg-[#E6EBF5] px-3 py-1 text-xs"
                   >
-                    <i class="fa-solid fa-pen pr-2">_</i>
+                    <i className="fa-solid fa-pen pr-2">_</i>
                     Edit
                   </button>
                 </div>
@@ -130,47 +130,47 @@ export function Setting() {
             <div className={` ${toggleTwo ? "block" : "hidden"} p-2 pb-6`}>
               <div className="card-body">
                 <div className="pl-3">
-                  <div class="flex items-center">
-                    <div class="flex-grow overflow-hidden">
-                      <h5 class="text-xs font-medium">Profile photo</h5>
+                  <div className="flex items-center">
+                    <div className="flex-grow overflow-hidden">
+                      <h5 className="text-xs font-medium">Profile photo</h5>
                     </div>
-                    <div class="relative ms-2">
+                    <div className="relative ms-2">
                       <button
                         aria-haspopup="true"
-                        class="btn btn-light btn-sm w-20 text-xs sm:w-24 sm:text-sm md:w-28 md:text-base lg:w-32 lg:text-lg xl:w-36 xl:text-xl"
+                        className="btn btn-light btn-sm w-20 text-xs sm:w-24 sm:text-sm md:w-28 md:text-base lg:w-32 lg:text-lg xl:w-36 xl:text-xl"
                       >
-                        Everyone <i class="fa fa-chevron-down fa-xs"></i>
+                        Everyone <i className="fa fa-chevron-down fa-xs"></i>
                       </button>
                       <div
-                        tabindex="-1"
+                        tabIndex="-1"
                         role="menu"
                         aria-hidden="true"
-                        class="border-gray-200 absolute right-0 z-10 mt-2 hidden w-36 rounded border bg-white shadow-md"
+                        className="border-gray-200 absolute right-0 z-10 mt-2 hidden w-36 rounded border bg-white shadow-md"
                       >
                         <button
-                          tabindex="0"
+                          tabIndex="0"
                           role="menuitem"
-                          class="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 text-2xs block w-full px-4 py-2 focus:outline-none"
+                          className="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 text-2xs block w-full px-4 py-2 focus:outline-none"
                         >
                           Everyone
                         </button>
                         <button
-                          tabindex="0"
+                          tabIndex="0"
                           role="menuitem"
-                          class="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 block w-full px-4 py-2 text-sm focus:outline-none"
+                          className="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 block w-full px-4 py-2 text-sm focus:outline-none"
                         >
                           Selected
                         </button>
                         <button
-                          tabindex="0"
+                          tabIndex="0"
                           role="menuitem"
-                          class="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 block w-full px-4 py-2 text-sm focus:outline-none"
+                          className="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 block w-full px-4 py-2 text-sm focus:outline-none"
                         >
                           Nobody
                         </button>
                       </div>
                     </div>
-                  </div> 
+                  </div>
                 </div>
               </div>
             </div>

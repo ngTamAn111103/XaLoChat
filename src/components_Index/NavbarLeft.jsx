@@ -23,7 +23,7 @@ export function NavbarLeft() {
 
       <div className="my-auto box-border">
         <ul className=" side-menu-nav nav-pills nav mb-0 mt-0 flex list-none flex-col flex-wrap justify-center pl-0">
-          <NavbarItem icon="fa-solid fa-user" id="profile"  />
+          <NavbarItem icon="fa-solid fa-user" id="profile" onClick={() => {console.log(Math.random());}}/>
           <NavbarItem icon="fa-solid fa-message" isPrimary={true} />
 
           <NavbarItem icon="fa-solid fa-user-group" />
