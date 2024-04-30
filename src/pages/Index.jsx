@@ -21,9 +21,6 @@ export function Index() {
 
 
         {/* Thanh ở giữa*/}
-
-          
-
         <div className="me-lg-1 me-1 min-w-0 max-w-0 bg-[#f5f7fb] drop-shadow-lg md:min-w-[380px] md:max-w-[380px]	">
           <div className="contain ">
             {/* <Profile /> */}
@@ -34,6 +31,22 @@ export function Index() {
           </div>
 
         </div>
+
+        {/* Phần chat + thông tin cá nhân  */}
+      <div className="user-chat flex-1 h-screen">
+        <div className="flex flex-row h-full">
+          {/* phần chat */}
+          <div className="userchat h-full flex-1 bg-text-danger">
+
+          </div>
+          {/* phần thông tin user được ẩn đi */}
+          <div className="user-profile-sidebar basis-[23.5rem] bg-primary h-full ms-1 hidden">
+
+          </div>
+
+        </div>
+      </div>
+
       </div>
     </>
   );
