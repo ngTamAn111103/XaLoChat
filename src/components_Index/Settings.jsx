@@ -99,6 +99,7 @@ export function Setting({isActive}) {
                 <div className="float-right pr-5">
                   <button
                     type="button"
+
                     className="flex items-center rounded bg-[#E6EBF5] px-3 py-1 text-xs hover:bg-[#C4C8D0]"
                   >
                     <i className="fa-solid fa-pen pr-2">_</i>
@@ -131,6 +132,7 @@ export function Setting({isActive}) {
             </div>
             <div className={` ${toggleTwo ? "block" : "hidden"} p-2 pb-6`}>
               <div className="card-body">
+
                 <div className="py-3 pl-3">
                   <div className="flex items-center">
                     <div className="flex-grow overflow-hidden ">
