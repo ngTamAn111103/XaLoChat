@@ -5,7 +5,7 @@ import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
 
 
-export function Profile() {
+export function Profile({isActive}) {
   // State hooks để quản lý toggle và dropdown
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
@@ -54,6 +54,7 @@ export function Profile() {
 
   return (
     <>
+    <div className={isActive ? "block": "hidden"}>
       {/*Thêm component Header vào */}
       <Header
         title={"My Profile"}
@@ -170,6 +171,7 @@ export function Profile() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
