@@ -4,8 +4,7 @@ import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
 
-
-export function Profile({isActive}) {
+export function Profile({isHeader = true, extend,isActive}) {
   // State hooks để quản lý toggle và dropdown
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
@@ -55,8 +54,8 @@ export function Profile({isActive}) {
   return (
     <>
     <div className={isActive ? "block": "hidden"}>
-      {/*Thêm component Header vào */}
-      <Header
+       {/*Thêm component Header vào nếu không truyền isHeader = false*/}
+     {isHeader &&  <Header
         title={"My Profile"}
         extend={
           <div className="user-chat-nav float-right">
@@ -96,7 +95,11 @@ export function Profile({isActive}) {
             </div>
           </div>
         }
-      />
+      />}
+      {/* thêm phần extend vào */}
+      {
+        extend
+      }
       {/* Component User Profile */}
       <UserProfile
         avatarSrc="./images/avt.png"
