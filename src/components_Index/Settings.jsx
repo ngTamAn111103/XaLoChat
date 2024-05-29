@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Header } from "./chat-leftsidebar/Header";
 import UserSetting from "./Settings/UserSetting";
 import ProfileInfo from "./ProfileInfo";
-export function Setting() {
+import DropdownMenu from "./Settings/DropdownProFile";
+import ToggleSwitch from "./Settings/ToggleSwitch";
+export function Setting({isActive}) {
   // State hooks để quản lý toggle và dropdown
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
@@ -71,6 +73,7 @@ export function Setting() {
 
   return (
     <>
+      <div className={isActive ? "block": "hidden"}>
       <Header title={"Settings"} />
 
       {/* Component User Profile */}
@@ -93,16 +96,16 @@ export function Setting() {
             </div>
             <div className={` ${toggleOne ? "block" : "hidden"}`}>
               <div className="card-body">
-                <div class="float-right pr-5">
+                <div className="float-right pr-5">
                   <button
                     type="button"
-                    class="flex items-center rounded bg-[#E6EBF5] px-3 py-1 text-xs"
+
+                    className="flex items-center rounded bg-[#E6EBF5] px-3 py-1 text-xs hover:bg-[#C4C8D0]"
                   >
-                    <i class="fa-solid fa-pen pr-2">_</i>
+                    <i className="fa-solid fa-pen pr-2">_</i>
                     Edit
                   </button>
                 </div>
-
                 <div className="mt-4 pl-4">
                   {/* Thêm thông tin người dùng */}
                   <ProfileInfo label={"Name"} value={"Patricia Smith"} />
@@ -129,48 +132,65 @@ export function Setting() {
             </div>
             <div className={` ${toggleTwo ? "block" : "hidden"} p-2 pb-6`}>
               <div className="card-body">
-                <div className="pl-3">
-                  <div class="flex items-center">
-                    <div class="flex-grow overflow-hidden">
-                      <h5 class="text-xs font-medium">Profile photo</h5>
+
+                <div className="py-3 pl-3">
+                  <div className="flex items-center">
+                    <div className="flex-grow overflow-hidden ">
+                      <h5 className="text-xs font-medium">Profile photo</h5>
                     </div>
-                    <div class="relative ms-2">
-                      <button
-                        aria-haspopup="true"
-                        class="btn btn-light btn-sm w-20 text-xs sm:w-24 sm:text-sm md:w-28 md:text-base lg:w-32 lg:text-lg xl:w-36 xl:text-xl"
-                      >
-                        Everyone <i class="fa fa-chevron-down fa-xs"></i>
-                      </button>
-                      <div
-                        tabindex="-1"
-                        role="menu"
-                        aria-hidden="true"
-                        class="border-gray-200 absolute right-0 z-10 mt-2 hidden w-36 rounded border bg-white shadow-md"
-                      >
-                        <button
-                          tabindex="0"
-                          role="menuitem"
-                          class="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 text-2xs block w-full px-4 py-2 focus:outline-none"
-                        >
-                          Everyone
-                        </button>
-                        <button
-                          tabindex="0"
-                          role="menuitem"
-                          class="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 block w-full px-4 py-2 text-sm focus:outline-none"
-                        >
-                          Selected
-                        </button>
-                        <button
-                          tabindex="0"
-                          role="menuitem"
-                          class="text-gray-800 hover:bg-gray-100 focus:bg-gray-100 block w-full px-4 py-2 text-sm focus:outline-none"
-                        >
-                          Nobody
-                        </button>
-                      </div>
+                    {/*Component tại đây*/}
+                    <div className="pr-3">
+                      <DropdownMenu />
                     </div>
-                  </div> 
+                  </div>
+                </div>
+
+                <div className="border-t border-[#DCDCDC] py-3 pl-3">
+                  <div className="flex items-center">
+                    <div className="flex-grow overflow-hidden">
+                      <h5 className="text-xs font-medium">Last seen</h5>
+                    </div >
+                    {/*Component tại đây*/}
+                    <div className="pr-4">
+                    <ToggleSwitch />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#DCDCDC] py-3 pl-3">
+                  <div className="flex items-center">
+                    <div className="flex-grow overflow-hidden">
+                      <h5 className="text-xs font-medium">Status</h5>
+                    </div>
+                    {/*Component tại đây*/}
+                    <div className="pr-3">
+                      <DropdownMenu />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#DCDCDC] py-3 pl-3">
+                  <div className="flex items-center">
+                    <div className="flex-grow overflow-hidden">
+                      <h5 className="text-xs font-medium">Read receipts</h5>
+                    </div>
+                    {/*Component tại đây*/}
+                    <div className="pr-4">
+                    <ToggleSwitch />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#DCDCDC] py-3 pl-3">
+                  <div className="flex items-center">
+                    <div className="flex-grow overflow-hidden">
+                      <h5 className="text-xs font-medium">Groups</h5>
+                    </div>
+                    {/*Component tại đây*/}
+                    <div className="pr-3">
+                      <DropdownMenu />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -190,7 +210,19 @@ export function Setting() {
             </div>
             <div className={` ${toggleThree ? "block" : "hidden"}`}>
               <div className="card-body">
-                <div className="mt-4 pl-4">{/* Thêm nội dung của card */}</div>
+                <div className="mt-4 pb-4 pl-5">
+                  <div className="flex items-center">
+                    <div className="flex-grow overflow-hidden">
+                      <h5 className="mb-0 text-xs font-medium">
+                        Show security notification
+                      </h5>
+                    </div>
+                    {/*Component tại đây*/}
+                    <div className="pr-4">
+                    <ToggleSwitch />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -209,12 +241,35 @@ export function Setting() {
               </h6>
             </div>
             <div className={` ${toggleFour ? "block" : "hidden"}`}>
-              <div className="card-body">
-                <div className="mt-4 pl-4">{/* Thêm nội dung của card */}</div>
+              <div className="mt-4 pl-5">
+                <div className="card-body font-medium">
+                  <div className="py-3">
+                    <h5 className="mb-0 text-xs">
+                      <a href="/dashboard" className="text-blue-500">
+                        FAQs
+                      </a>
+                    </h5>
+                  </div>
+                  <div className="border-t border-[#DCDCDC] py-3">
+                    <h5 className="mb-0 text-xs">
+                      <a href="/dashboard" className="text-blue-500">
+                        Contact
+                      </a>
+                    </h5>
+                  </div>
+                  <div className="border-t border-[#DCDCDC] py-3">
+                    <h5 className="mb-0 text-xs">
+                      <a href="/dashboard" className="text-blue-500">
+                        Terms & Privacy policy
+                      </a>
+                    </h5>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

@@ -10,7 +10,7 @@ function UserProfile({
   return (
     <div className="border-b border-[#DCDCDC] p-4 text-center">
       <div className="border border-[#DCDCDC] inline-block p-1 rounded-full">
-        <img src={avatarSrc} className="h-24 w-24 rounded-full" alt={name} />
+        <img src={avatarSrc} className="h-20 w-20 rounded-full" alt={name} />
       </div>
       <h5 className="text-base text-black">{name}</h5>
       <p className="mb-1 text-xs text-[#7A7F9A]">
