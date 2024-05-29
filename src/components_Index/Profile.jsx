@@ -53,7 +53,7 @@ export function Profile({isHeader = true, extend,isActive}) {
 
   return (
     <>
-    <div className={isActive ? "block": "hidden"}>
+    <div className={isActive ? "block h-full bg-white absolute ": "hidden"}>
        {/*Thêm component Header vào nếu không truyền isHeader = false*/}
      {isHeader &&  <Header
         title={"My Profile"}
