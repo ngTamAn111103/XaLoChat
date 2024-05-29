@@ -4,7 +4,7 @@ import UserSetting from "./Settings/UserSetting";
 import ProfileInfo from "./ProfileInfo";
 import DropdownMenu from "./Settings/DropdownProFile";
 import ToggleSwitch from "./Settings/ToggleSwitch";
-export function Setting() {
+export function Setting({isActive}) {
   // State hooks để quản lý toggle và dropdown
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
@@ -73,6 +73,7 @@ export function Setting() {
 
   return (
     <>
+      <div className={isActive ? "block": "hidden"}>
       <Header title={"Settings"} />
 
       {/* Component User Profile */}
@@ -266,6 +267,7 @@ export function Setting() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

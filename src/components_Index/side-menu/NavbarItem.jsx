@@ -1,4 +1,4 @@
-export function NavbarItem({ href = "#", icon, isPrimary = false, id }) {
+export function NavbarItem({onClickButton, href = "#", icon, isPrimary = false, id }) {
   return (
     <li
       className={`mx-3 my-1 
@@ -8,6 +8,7 @@ export function NavbarItem({ href = "#", icon, isPrimary = false, id }) {
     ${isPrimary ? "bg-bg-color " : ""}
 
         rounded-xl`}
+        onClick={onClickButton}
     >
       <a
         href={href}
@@ -32,7 +33,7 @@ export function NavbarItem({ href = "#", icon, isPrimary = false, id }) {
                
                 "
       >
-        <i class={icon + `${isPrimary?" text-primary":" text-secondary-color"}` }></i>
+        <i className={icon + `${isPrimary?" text-primary":" text-secondary-color"}` }></i>
       </a>
     </li>
   );

@@ -9,25 +9,29 @@ import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
+import { useState } from "react";
 
 export function Index() {
+  const [selectedButton,setSelectedButton ] = useState("message")
+  // mặc định là hiện lên phần chat  
+
   return (
     <>
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex">
         {/* Thanh navbar bên trái */}
 
-        <NavbarLeft />
+        <NavbarLeft selectedButton={selectedButton} setSelectedButton={setSelectedButton}/>
 
 
         {/* Thanh ở giữa*/}
         <div className="me-lg-1 me-1 min-w-0 max-w-0 bg-[#f5f7fb] drop-shadow-lg md:min-w-[380px] md:max-w-[380px]	">
           <div className="contain ">
-            {/* <Profile /> */}
-            {/* <FriendList></FriendList> */}
-            {/* <GroupList/> */}
-            {/* <ContactList/> */}
-               <Setting/>
+            <Profile isActive={selectedButton=="user"? true: false}/>
+            <FriendList isActive={selectedButton=="message"? true: false}></FriendList>
+            <GroupList isActive={selectedButton=="group"? true: false}/>
+            <ContactList isActive={selectedButton=="contacts"? true: false}/>
+            <Setting isActive={selectedButton=="setting"? true: false}/>
           </div>
 
         </div>

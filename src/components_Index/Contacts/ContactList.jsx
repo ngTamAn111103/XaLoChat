@@ -1,6 +1,6 @@
 import { Header } from "../chat-leftsidebar/Header";
 import GroupContact from "./GroupContact";
-function ContactList() {
+function ContactList({isActive}) {
   const nameList = [
     {
       A: [
@@ -27,6 +27,7 @@ function ContactList() {
 
   return (
     <>
+      <div className={isActive ? "block": "hidden"}>
       <div className="overflow-auto">
         {/* Hiển thị Title và Input Search */}
         <Header
@@ -60,6 +61,7 @@ function ContactList() {
             />
           ))}
         </div>
+      </div>
       </div>
     </>
   );

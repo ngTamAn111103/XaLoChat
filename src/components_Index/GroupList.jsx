@@ -2,10 +2,11 @@ import React from "react";
 import { Header } from "./chat-leftsidebar/Header";
 import { ItemGroup } from "./Groups/ItemGroup";
 
-export default function GroupList() {
+export default function GroupList({isActive}) {
   return (
     // Title
     <>
+      <div className={isActive ? "block" : "hidden"}>
       <Header
         title={"Groups"}
         placeholderSearch="Search groups..."
@@ -151,6 +152,7 @@ export default function GroupList() {
             />
           </ul>
         </div>
+      </div>
       </div>
     </>
   );

@@ -1,9 +1,10 @@
 import Conversation from "./Conversation";
 import OnlineFriend from "./OnlineFriend";
 
-function FriendList() {
+function FriendList({isActive}) {
   return (
     <>
+     <div className={isActive ? "block": "hidden"}>
       {/* title */}
       <div className="px-6 pt-5">
         <h4 className="mb-6 text-[1.3125rem] font-semibold text-[#343a40]">
@@ -245,6 +246,7 @@ function FriendList() {
             newestMessage="Nợ anh 2 củ tỏi nha em"
           />
         </ul>
+      </div>
       </div>
     </>
   );
