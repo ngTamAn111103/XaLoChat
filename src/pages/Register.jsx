@@ -1,9 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
 import { Footer } from "../components_auth/Footer";
+import { auth } from "../lib/firebase";
 
 export function Register() {
   // Thiết lập các useState()
@@ -12,12 +16,45 @@ export function Register() {
     email: "",
     confirm_password: "",
   });
+
   const [errors, setErrors] = useState({});
 
   //functions
+  // TA: Back-end: Đăng ký với Auth
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    // Lấy giá trị email từ state formData
+    const { email, password, confirm_password } = formData;
+   
+    // Xử lý ngoại lệ:
+    try {
+      // Kiểm tra xác nhận mật khẩu không đúng
+      if (password != confirm_password) {
+        console.log("Confirm password fail!");
+        toast.error("Confirm password fail!",{
+          position: "top-center"
+        });
+
+        return;
+
+      } else {
+        // Thực hiện hàm đăng ký user với Auth Firebase
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+        
+        console.log("Create UserAuth thành công.");
+        toast.success("Create UserAuth thành công.");
+
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   //onsubmit: kiểm tra sự kiện onSumit khi ấn form
   const handleSubmit = (e) => {
-    console.log("called");
+    // console.log("called");
     e.preventDefault();
     errors.email = validateField("email", formData.email)["email"];
     errors.password = validateField("password", formData.password)["password"];
@@ -41,7 +78,7 @@ export function Register() {
       ...formData,
       [name]: value,
     });
-    console.log(formData.name);
+    // console.log(formData.name);
     // xác thực dữ liệu và cập nhật Lỗi
     const validationErrors = validateField(name, value);
     setErrors({
@@ -52,7 +89,7 @@ export function Register() {
 
   //validate các trường và thay đổi useState của error
   const validateField = (name, value) => {
-    console.log("called: " + formData.confirm_password);
+    // console.log("called: " + formData.confirm_password);
     const fieldErrors = {};
     if (name === "confirm_password" && !value.trim()) {
       fieldErrors[name] = "Confirm password is required";
@@ -92,9 +129,10 @@ export function Register() {
             <div className="flex flex-col items-center justify-center">
               <div className="p-4">
                 <form
-                  action="#"
+                  // action="#"
                   method="post"
-                  onSubmit={(e) => handleSubmit(e)}
+                  onSubmit={handleRegister}
+                  // onSubmit={(e) => handleSubmit(e)}
                 >
                   <Input
                     textLabel="Email"
