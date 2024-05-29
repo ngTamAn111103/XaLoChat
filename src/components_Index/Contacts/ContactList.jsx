@@ -53,7 +53,7 @@ function ContactList({isActive}) {
         ></Header>
 
         {/* Hiển thị danh sách liên hệ theo nhóm A-Z */}
-        <div className="scrollbar-config mt-5  h-[calc(100vh_-_120px)] overflow-auto scroll-smooth p-6 focus:scroll-auto">
+        <div className="scrollbar-config mt-5  h-[calc(100vh_-_140px)] overflow-auto scroll-smooth p-6 focus:scroll-auto">
           {nameList.map((element) => (
             <GroupContact
               letter={Object.keys(element)[0]}
