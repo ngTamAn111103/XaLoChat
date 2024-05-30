@@ -9,8 +9,11 @@ import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
 import { onAuthStateChanged } from "firebase/auth";
- 
+import { Navigate, Outlet } from 'react-router-dom';
+
 export function Index() {
+  
+
   const [showUserInfo, setUserInfo] = useState(false);
   const [selectedButton, setSelectedButton] = useState("message");
 

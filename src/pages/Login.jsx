@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Outlet, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-
+import { useUserStore } from "../lib/userStore";
 
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
@@ -13,6 +13,7 @@ import { Footer } from "../components_auth/Footer";
 import { toast } from "react-toastify";
 import { auth } from "../lib/firebase";
 export function Login() {
+  
   // Khởi tạo mặc định usernmae có @gmail.com
   const [username, setUsername] = useState("admin@gmail.com");
   const [loading, setLoading] = useState(false);
@@ -29,7 +30,6 @@ export function Login() {
     // Lấy data người dùng nhập
     const formData = new FormData(e.target);
     const { password } = Object.fromEntries(formData);
-    console.log(username);
     
 
     try {
