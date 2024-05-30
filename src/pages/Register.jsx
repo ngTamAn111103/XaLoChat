@@ -2,12 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../lib/firebase";
 
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
 import { Footer } from "../components_auth/Footer";
-import { auth } from "../lib/firebase";
 
 export function Register() {
   // Thiết lập các useState()
@@ -26,25 +27,41 @@ export function Register() {
 
     // Lấy giá trị email từ state formData
     const { email, password, confirm_password } = formData;
-   
+
     // Xử lý ngoại lệ:
     try {
       // Kiểm tra xác nhận mật khẩu không đúng
       if (password != confirm_password) {
         console.log("Confirm password fail!");
-        toast.error("Confirm password fail!",{
-          position: "top-center"
+        toast.error("Confirm password fail!", {
+          position: "top-center",
         });
 
         return;
-
       } else {
         // Thực hiện hàm đăng ký user với Auth Firebase
         const res = await createUserWithEmailAndPassword(auth, email, password);
-        
-        console.log("Create UserAuth thành công.");
-        toast.success("Create UserAuth thành công.");
+        if (res) {
+          console.log("Create UserAuth thành công.");
+          toast.success("Create UserAuth thành công.");
 
+          // Thực hiện hàm thêm dữ liệu vào firestore
+          await setDoc(doc(db, "Profile", res.user.uid),
+            {
+              ID: res.user.uid,
+              email,
+              Fullname: email,
+              Avatar: "avatar_default.jpg",
+              Location: "Viet Nam",
+              Description: "",
+              createdAt: Date() ,
+              updatedAt: Date(),
+              blocked: [],
+            });
+
+          console.log("Create Profile thành công.");
+          toast.success("Create Profile thành công.");
+        }
       }
     } catch (error) {
       console.log(error);
