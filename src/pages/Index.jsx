@@ -8,12 +8,15 @@ import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
+import { onAuthStateChanged } from "firebase/auth";
+import { Navigate, Outlet } from 'react-router-dom';
 import ChatContainer from "../components_Index/ChatContainer";
 import fakeDate from "./Test"
 export function Index() {
   const [showUserInfo, setUserInfo] = useState(false);//ấn để hiện phần thông tin user ẩn 
   const [selectedButton, setSelectedButton] = useState("message");//ẩn để chọn 1 bên của navbar 
   const [showChat, setShowChat] = useState(fakeDate); 
+
   // mặc định là hiện lên phần chat
   return (
     <>

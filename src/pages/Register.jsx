@@ -1,23 +1,89 @@
 import React from "react";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { Timestamp, doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../lib/firebase";
+
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
 import { Footer } from "../components_auth/Footer";
+import { useNavigate } from "react-router-dom";
 
 export function Register() {
   // Thiết lập các useState()
   const [formData, setFormData] = useState({
-    password: "",
-    email: "",
-    confirm_password: "",
+    password: "admin@gmail.com",
+    email: "admin@gmail.com",
+    confirm_password: "admin@gmail.com",
   });
+
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false)
+  // Chuyển về trang đăng nhập sau khi đăng ký thành công
+  const navigate = useNavigate();
 
   //functions
+  // TA: Back-end: Đăng ký với Auth
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    // Bật loading
+    setLoading(true)
+
+    // Lấy giá trị email từ state formData
+    const { email, password, confirm_password } = formData;
+
+    // Xử lý ngoại lệ:
+    try {
+      // Kiểm tra xác nhận mật khẩu không đúng
+      if (password != confirm_password) {
+        console.log("Confirm password fail!");
+        toast.error("Confirm password fail!", {
+          position: "top-center",
+        });
+
+        return;
+      } else {
+        // Thực hiện hàm đăng ký user với Auth Firebase
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+        if (res) {
+          console.log("Create UserAuth thành công.");
+          toast.success("Create UserAuth thành công.");
+
+          // Thực hiện hàm thêm dữ liệu vào firestore
+          await setDoc(doc(db, "Profile", res.user.uid), {
+            ID: res.user.uid,
+            email,
+            Fullname: email,
+            Avatar: "avatar_default.jpg",
+            Location: "Viet Nam",
+            Description: "",
+            createdAt: Date(),
+            updatedAt: Date(),
+            blocked: [],
+          });
+
+          console.log("Create Profile thành công.");
+          toast.success("Create Profile thành công.");
+        }
+        // Chuyển hướng đến trang đăng nhập
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+    finally{
+      // Tắt loading
+      setLoading(false)
+    }
+  };
+
   //onsubmit: kiểm tra sự kiện onSumit khi ấn form
   const handleSubmit = (e) => {
-    console.log("called");
+    // console.log("called");
     e.preventDefault();
     errors.email = validateField("email", formData.email)["email"];
     errors.password = validateField("password", formData.password)["password"];
@@ -41,7 +107,7 @@ export function Register() {
       ...formData,
       [name]: value,
     });
-    console.log(formData.name);
+    // console.log(formData.name);
     // xác thực dữ liệu và cập nhật Lỗi
     const validationErrors = validateField(name, value);
     setErrors({
@@ -52,7 +118,7 @@ export function Register() {
 
   //validate các trường và thay đổi useState của error
   const validateField = (name, value) => {
-    console.log("called: " + formData.confirm_password);
+    // console.log("called: " + formData.confirm_password);
     const fieldErrors = {};
     if (name === "confirm_password" && !value.trim()) {
       fieldErrors[name] = "Confirm password is required";
@@ -92,9 +158,10 @@ export function Register() {
             <div className="flex flex-col items-center justify-center">
               <div className="p-4">
                 <form
-                  action="#"
+                  // action="#"
                   method="post"
-                  onSubmit={(e) => handleSubmit(e)}
+                  onSubmit={handleRegister}
+                  // onSubmit={(e) => handleSubmit(e)}
                 >
                   <Input
                     textLabel="Email"
@@ -136,34 +203,9 @@ export function Register() {
                     error={errors.confirm_password}
                     value={formData.confirm_password}
                     colorValidation="text-text-danger"
-
-                    /*
-                    textLabel="Username"
-                    htmlFor="username"
-                    placeholder="Enter Username"
-                    inputType="text"
-                    icon="fa-solid fa-user"
-                    onChange={(e) => handleChange(e)}
-                    onMouseLeave={(e) => handleChange(e)}
-                    error={errors.username}
-                    value={formData.username}
-                    colorValidation="text-text-danger"
-                  />
-                  <Input
-                    textLabel="Password"
-                    htmlFor="password"
-                    placeholder="Enter Password"
-                    inputType="password"
-                    icon="fa-solid fa-lock"
-                    onChange={(e) => handleChange(e)}
-                    onMouseLeave={(e) => handleChange(e)}
-                    error={errors.password}
-                    colorValidation="text-text-danger"
-                    value={formData.password}
-                    */
                   />
 
-                  <Button label="Register" type="submit" />
+                  <Button label="Register" type="submit" loading={loading} />
                 </form>
               </div>
             </div>
