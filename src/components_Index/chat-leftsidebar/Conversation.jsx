@@ -8,10 +8,11 @@ function Conversation({
   notifycation = 0,
   isSentImage = false,
   isSentFile = false,
+  onClickFriend, 
 }) {
   return (
     <>
-      <li className="px-2">
+      <li className="px-2" onClick={onClickFriend}>
         <a
           href="#"
           className={`mb-[0.125rem] block rounded px-5 py-4 transition hover:bg-[#e6ebf5] ${isSelected ? "bg-[#e6ebf5]" : ""}`}

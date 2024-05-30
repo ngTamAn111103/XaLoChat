@@ -11,3 +11,13 @@
     inset: unset!important;
     transform: translate(-90%,-5%)!important;
 }
+.chat-option > li { 
+    cursor: pointer;
+}
+.createdAt { 
+    font-size: .8rem;
+    color: #b8a9a9; 
+}
+.msg { 
+    cursor: pointer;
+}
