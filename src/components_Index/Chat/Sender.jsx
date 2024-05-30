@@ -13,7 +13,7 @@ export function Sender({ msg, createdAt,isLast }) {
 
   return (
     <>
-      <div class="mb-2 flex items-center justify-end">
+      <div className="mb-2 flex items-center justify-end">
         <div className="block">
           <div className=" max-w-sm msg rounded-lg bg-primary p-2 text-white shadow" onClick={handShowTime}>
             {msg}

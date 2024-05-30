@@ -2,8 +2,26 @@ import { useState } from "react";
 import Conversation from "./Conversation";
 import OnlineFriend from "./OnlineFriend";
 
-function FriendList({ isActive }) {
-  const [clickedButton, setClickedButton] = useState(1);
+function FriendList({ isActive, clickedButton, setClickedButton, friendlist}) {
+  //nhận danh sách đầu vào và Map mảng chuẩn bị render
+  const listFriend = friendlist?.map((e, i) => {
+    return (
+      <Conversation
+        avatar={e.avatar}
+        notifycation={e.notifycation}
+        isOnline={e.isOnline}
+        name={e.name}
+        newestMessage={e.newestMessage}
+        time={e.time}
+        onClickFriend={() => handleClickButton(i)}
+        isSentImage={e.isSentImage ? true : false}
+        isSentFile={e.isSentFile ? true : false}
+        isSelected={i == clickedButton ? true : false}
+        key={i}
+      />
+    );
+  });
+
   function handleClickButton(order) {
     setClickedButton(order);
   }
@@ -41,225 +59,7 @@ function FriendList({ isActive }) {
         {/* Recent Friend*/}
         <h5 className="mb-5 px-5 pt-4 font-medium text-[#343a40]">Recent</h5>
         <div className="list-chat h-[calc(100vh_-_270px)] overflow-auto scroll-smooth focus:scroll-auto">
-          <ul>
-            <Conversation isOnline={true}
-             isSelected={clickedButton == 1 ? true : false}
-             onClickFriend={()=>handleClickButton(1)}
-             />
-            <Conversation
-              notifycation={1}
-              name="Lorem ipsum, dolor sit... "
-              newestMessage="Lorem ipsum, dolor sit ..."
-              onClickFriend={()=>handleClickButton(2)}
-              isSelected={clickedButton == 2 ? true : false}
-            />
-            <Conversation
-              isOnline={true}
-              notifycation={3}
-              avatar="avatar-tinder.jpg"
-              name="Tinder"
-              newestMessage="Tải app tìm bạn ngay"
-              time="09:00 PM"
-              onClickFriend={()=>handleClickButton(3)}
-              isSelected={clickedButton == 3 ? true : false}
-              isSentFile={true}
-            />
-            <Conversation
-              isSentImage={true}
-              notifycation={2}
-              avatar="avatar-girl.jpg"
-              name="Em"
-              newestMessage="Hello anh cho em lên thuyền..."
-              onClickFriend={()=>handleClickButton(4) } 
-              isSelected={clickedButton == 4 ? true : false}
-            />
-            {/* <Conversation
-            notifycation="99+"
-            avatar="422673745_1431738810981438_8560367173620224784_n.jpg"
-            name="Em iu"
-            newestMessage="Nhớ anh Tâm An quá..."
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="428618563_757557076329500_7155410430265501585_n.jpg"
-            name="Dương Bảo Khanh"
-            newestMessage="A đặt bàn thọc bida lúc 12h đúng ko"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="320186702_823742058729606_3659513607149413256_n.jpg"
-            name="Bé iu 2"
-            newestMessage="Nhớ anh"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          />
-          <Conversation
-            notifycation="99+"
-            avatar="IMG_5226.jpg"
-            name="Shipper Shoppe"
-            newestMessage="Nợ anh 2 củ tỏi nha em"
-          /> */}
-          </ul>
+          <ul>{listFriend ?? listFriend}</ul>
         </div>
       </div>
     </>
@@ -267,3 +67,225 @@ function FriendList({ isActive }) {
 }
 
 export default FriendList;
+
+{
+  /* <ul>
+  <Conversation isOnline={true}
+   isSelected={clickedButton == 1 ? true : false}
+   onClickFriend={()=>handleClickButton(1)}
+   />
+  <Conversation
+    notifycation={1}
+    name="Lorem ipsum, dolor sit... "
+    newestMessage="Lorem ipsum, dolor sit ..."
+    onClickFriend={()=>handleClickButton(2)}
+    isSelected={clickedButton == 2 ? true : false}
+  />
+  <Conversation
+    isOnline={true}
+    notifycation={3}
+    avatar="avatar-tinder.jpg"
+    name="Tinder"
+    newestMessage="Tải app tìm bạn ngay"
+    time="09:00 PM"
+    onClickFriend={()=>handleClickButton(3)}
+    isSelected={clickedButton == 3 ? true : false}
+    isSentFile={true}
+  />
+  <Conversation
+    isSentImage={true}
+    notifycation={2}
+    avatar="avatar-girl.jpg"
+    name="Em"
+    newestMessage="Hello anh cho em lên thuyền..."
+    onClickFriend={()=>handleClickButton(4) } 
+    isSelected={clickedButton == 4 ? true : false}
+  />
+  <Conversation
+  notifycation="99+"
+  avatar="422673745_1431738810981438_8560367173620224784_n.jpg"
+  name="Em iu"
+  newestMessage="Nhớ anh Tâm An quá..."
+/>
+<Conversation
+  notifycation="99+"
+  avatar="428618563_757557076329500_7155410430265501585_n.jpg"
+  name="Dương Bảo Khanh"
+  newestMessage="A đặt bàn thọc bida lúc 12h đúng ko"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="320186702_823742058729606_3659513607149413256_n.jpg"
+  name="Bé iu 2"
+  newestMessage="Nhớ anh"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+<Conversation
+  notifycation="99+"
+  avatar="IMG_5226.jpg"
+  name="Shipper Shoppe"
+  newestMessage="Nợ anh 2 củ tỏi nha em"
+/>
+</ul> */
+}

@@ -9,11 +9,24 @@ import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
 import ChatContainer from "../components_Index/ChatContainer";
-import fakeDate from "./Test"
+import {fakeFriendList,fakeMessages} from "./Test"
 export function Index() {
   const [showUserInfo, setUserInfo] = useState(false);//ấn để hiện phần thông tin user ẩn 
   const [selectedButton, setSelectedButton] = useState("message");//ẩn để chọn 1 bên của navbar 
-  const [showChat, setShowChat] = useState(fakeDate); 
+  const [clickedChat, setClickedChat] = useState(0);//ấn để chọn tin nhắn và update vị trí được ấn 
+  const [showChat, setShowChat] = useState(fakeMessages["1"]); 
+  const [showFriendList, setshowFriendList] = useState(fakeFriendList); 
+ 
+
+
+  useEffect(()=> { 
+    //setshowChat sau khi an vao 1 nguoi 
+    if (fakeMessages[`${clickedChat + 1}`]) { 
+      setShowChat(fakeMessages[`${clickedChat + 1}`])
+    } else { 
+      setShowChat("")
+    }
+  },[clickedChat])
   // mặc định là hiện lên phần chat
   return (
     <>
@@ -30,8 +43,12 @@ export function Index() {
         <div className="me-lg-1 me-1 min-w-0 max-w-0 bg-[#f5f7fb] drop-shadow-lg md:min-w-[380px] md:max-w-[380px]	">
           <div className="contain ">
             <Profile isActive={selectedButton == "user" ? true : false} />
+
             <FriendList
               isActive={selectedButton == "message" ? true : false}
+              clickedButton={clickedChat}
+              setClickedButton={setClickedChat}
+              friendlist={showFriendList}
             ></FriendList>
             <GroupList isActive={selectedButton == "group" ? true : false} />
             <ContactList
@@ -59,7 +76,7 @@ export function Index() {
                           <div className="flex items-center">
                             <div className="ml-0 mr-4">
                               <img
-                                src="/images/422673745_1431738810981438_8560367173620224784_n.jpg"
+                                src={`images/${showFriendList[clickedChat].avatar}`}
                                 alt=""
                                 className="h-10 w-10 rounded-full"
                               />
@@ -70,7 +87,7 @@ export function Index() {
                                   href="#"
                                   className="decoration-0 outline-none	"
                                 >
-                                  Sử Thị Thuỷ Tiên
+                                  {showFriendList[clickedChat].name}
                                 </a>
                                 <i class="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
                               </h5>
@@ -106,7 +123,7 @@ export function Index() {
                       </div>
                     </div>
                     {/* Chat container */}
-                    <ChatContainer messages={showChat}/>
+                    <ChatContainer messages={showChat} friendInfo={showFriendList[clickedChat]}/>
                   </div>
                   {/* phần thông tin user được ẩn đi */}
                   <div className="user-profile-sidebar ms-1 hidden h-full basis-[23.5rem] bg-primary"></div>

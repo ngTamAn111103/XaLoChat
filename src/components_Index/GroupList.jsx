@@ -14,13 +14,13 @@ export default function GroupList({isActive}) {
         // Phần mở rộng bên tay phải chung hàng với heading
         extend={
           <>
-            <div class="user-chat-nav float-end">
+            <div className="user-chat-nav float-end">
               <div id="create-group">
                 <button
                   type="button"
-                  class="cursor-pointer px-4 py-0 text-lg font-normal text-text-muted"
+                  className="cursor-pointer px-4 py-0 text-lg font-normal text-text-muted"
                 >
-                  <i class="fa-solid fa-user-group"></i>
+                  <i className="fa-solid fa-user-group"></i>
                 </button>
               </div>
             </div>
