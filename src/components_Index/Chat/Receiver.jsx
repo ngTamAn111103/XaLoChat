@@ -27,8 +27,8 @@ export function Receiver({
         {isFirst == true ? (
           <>
             <img
-              class="mr-2 h-8 w-8 rounded-full"
-              src={avatarReceiver}
+              className="mr-2 h-8 w-8 rounded-full"
+              src={`images/${avatarReceiver}`}
               alt="User Avatar"
             />
             <div className="font-medium" >{nameReceiver}</div>

@@ -9,10 +9,11 @@ function Conversation({
   isSentImage = false,
   isSentFile = false,
   onClickFriend, 
+  i
 }) {
   return (
     <>
-      <li className="px-2" onClick={onClickFriend}>
+      <li className="px-2" onClick={onClickFriend} key={i}>
         <a
           href="#"
           className={`mb-[0.125rem] block rounded px-5 py-4 transition hover:bg-[#e6ebf5] ${isSelected ? "bg-[#e6ebf5]" : ""}`}
@@ -35,9 +36,9 @@ function Conversation({
             <div className="ms-4 flex-1">
               <div className="text-[.9375rem] font-semibold">{name}</div>
               <div className="text-sm text-[#7a7f9a]">
-                {isSentImage ? <i class="fa-regular fa-image me-1"></i> : ""}
+                {isSentImage ? <i className="fa-regular fa-image me-1"></i> : ""}
 
-                {isSentFile ? <i class="fa-solid fa-paperclip me-1"></i> : ""}
+                {isSentFile ? <i className="fa-solid fa-paperclip me-1"></i> : ""}
                 {newestMessage}
               </div>
             </div>

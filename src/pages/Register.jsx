@@ -181,6 +181,23 @@ export function Register() {
                     colorValidation="text-text-danger"
                   />
                   <Input
+                    textLabel="Full name"
+                    htmlFor="Full name"
+                    placeholder="Enter Full name"
+                    inputType="text"
+                    icon="fa-regular fa-user"
+                    onChange={(e) => handleChange(e)}
+                    onBlur={(e) => handleChange(e)}
+              
+                    /*
+                    onChange={(e) => handleChange(e)}
+                    onMouseLeave={(e) => handleChange(e)}
+                    value={formData.email}
+                    */
+                   
+                  />
+
+                  <Input
                     textLabel="Password"
                     htmlFor="password"
                     placeholder="Enter Password"
