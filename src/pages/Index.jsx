@@ -8,6 +8,8 @@ import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
+import { onAuthStateChanged } from "firebase/auth";
+import { Navigate, Outlet } from 'react-router-dom';
 import ChatContainer from "../components_Index/ChatContainer";
 import {fakeFriendList,fakeMessages} from "./Test"
 import Toast from "../general_component/Toast"
@@ -28,6 +30,7 @@ export function Index() {
       setShowChat("")
     }
   },[clickedChat])
+
   // mặc định là hiện lên phần chat
   return (
     <>
