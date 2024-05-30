@@ -2,36 +2,24 @@ import { useEffect, useRef } from "react";
 import { Sender } from "./Chat/Sender";
 import { Receiver } from "./Chat/Receiver";
 function ChatContainer({messages,friendInfo}) {
-  /*
-    uid: 1, 
-    isOnline: true,
-    notifycation: 3,
-    avatar: "avatar-tinder.jpg",
-    name: "No",
-    newestMessage: "Tải app tìm bạn ngay",
-    time: "09:00 PM",
-    isSentFile: true,
-
-       uid: 1,
-        createdAt: "9:00",
-        mes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium doloremque debitis dicta, excepturi temporibus pariatur perferendis culpa optio rem aspernatur nam consequatur eligendi eius iste aut provident, ad a.," ,
-     
-  */
   let msgs 
+  
   if (messages) { 
      msgs = messages.map((msg, index) => {
-      let isLastMessage = false;
-      let isFirstMessage = false;
-      //TH1: tin nhắn đầu tiên của mảng hoặc đầu tiên của chuỗi tin nhắn 
-      if (index == 0 || index - 1 >= 0 && messages[index-1].uid != msg.uid) { 
-        isFirstMessage = true
+       let isLastMessage = false;
+       let isFirstMessage = false;
+       //TH1: tin nhắn đầu tiên của mảng hoặc đầu tiên của chuỗi tin nhắn 
+       if (index == 0 || index + 1 != messages.length && index - 1 >= 0 && messages[index-1].uid != msg.uid) { 
+         isFirstMessage = true
+         console.log('index: '+index)
       }
       //TH2: tin nhắn cuối cùng của chuỗi tin nhắn 
       else if (index + 1 < messages.length && messages[index + 1].uid != msg.uid) {
         isLastMessage = true;
       }
       //TH3: tin nhắn cuối cùng của mảng
-      else if (index + 1 ==messages.length){ 
+      else if (index + 1 == messages.length){ 
+        
         isLastMessage = true;
       }
   

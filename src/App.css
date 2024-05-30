@@ -21,3 +21,35 @@
 .msg { 
     cursor: pointer;
 }
+.toast { 
+    left: 0px!important; 
+    animation: hideToast 5s forwards;
+    position: relative;
+}
+.duration { 
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 0; 
+    left: 0;
+    animation: countDown 4s 0.5s forwards;
+}
+@keyframes hideToast {
+    0% {  
+        transform: translateX(-100%);
+    } 
+    25%,90% { 
+        transform: translateX(0);
+    }
+    100% { 
+        transform: translateX(-100%);
+    }
+}
+@keyframes countDown {
+    0% {  
+        width: 100%;
+    }         
+    100% { 
+        width: 0%;
+    }
+}

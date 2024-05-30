@@ -10,6 +10,7 @@ import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
 import ChatContainer from "../components_Index/ChatContainer";
 import {fakeFriendList,fakeMessages} from "./Test"
+import Toast from "../general_component/Toast"
 export function Index() {
   const [showUserInfo, setUserInfo] = useState(false);//ấn để hiện phần thông tin user ẩn 
   const [selectedButton, setSelectedButton] = useState("message");//ẩn để chọn 1 bên của navbar 
@@ -33,14 +34,15 @@ export function Index() {
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
-
+        {/* <Toast status="success" content="lorem abc"></Toast> */}
+        <Toast status="success" content="Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet"></Toast>
         <NavbarLeft
           selectedButton={selectedButton}
           setSelectedButton={setSelectedButton}
         />
 
         {/* Thanh ở giữa*/}
-        <div className="me-lg-1 me-1 min-w-0 max-w-0 bg-[#f5f7fb] drop-shadow-lg md:min-w-[380px] md:max-w-[380px]	">
+        <div className="me-lg-1 me-1 w-full h-full bg-[#f5f7fb] drop-shadow-lg lg:min-w-[380px] lg:max-w-[380px]	">
           <div className="contain ">
             <Profile isActive={selectedButton == "user" ? true : false} />
 
@@ -60,7 +62,7 @@ export function Index() {
 
         {/* Phần chat + thông tin cá nhân  */}
 
-        <div className="user-chat relative h-screen flex-1">
+        <div className="user-chat fixed z-10 lg:z-0 lg:relative h-screen flex-1 lg:block">
           <div className="flex h-full flex-row">
             {/* phần chat */}
             <div className="userchat h-full flex-1 bg-text-danger">
@@ -132,8 +134,9 @@ export function Index() {
             </div>
             {/* phần thông tin user được ẩn đi */}
             <div
-              className={`user-profile-sidebar ms-1 h-full basis-[23.5rem] overflow-auto transition-all ${showUserInfo ? "block" : "hidden"}`}
+              className={` user-profile-sidebar ms-1 h-full basis-[23.5rem] overflow-auto transition-all ${showUserInfo ? "block" : "hidden"}`}
             >
+              
               <Profile
                 isHeader={false}
                 isActive={true}

@@ -3,8 +3,12 @@ import Conversation from "./Conversation";
 import OnlineFriend from "./OnlineFriend";
 
 function FriendList({ isActive, clickedButton, setClickedButton, friendlist}) {
+  let arrOnline = []
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
   const listFriend = friendlist?.map((e, i) => {
+    if (e.isOnline == true){ 
+      arrOnline.push(<OnlineFriend avatar={e.avatar} name={(e.name.length) > 8 ? e.name.substring(0,8) + '...' : e.name}/>)
+    }
     return (
       <Conversation
         avatar={e.avatar}
@@ -50,10 +54,7 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist}) {
         {/* Online Friends */}
         <div className="">
           <ul className="space-content-around flex px-5">
-            <OnlineFriend />
-            <OnlineFriend name="Nguyen..." />
-            <OnlineFriend />
-            <OnlineFriend />
+             {...arrOnline}
           </ul>
         </div>
         {/* Recent Friend*/}

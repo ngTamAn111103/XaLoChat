@@ -3,7 +3,7 @@
 export const fakeFriendList = [
   {
     uid: 1, 
-    isOnline: true,
+    isOnline: false,
     notifycation: 3,
     avatar: "avatar-tinder.jpg",
     name: "No",
