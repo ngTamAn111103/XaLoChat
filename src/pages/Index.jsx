@@ -1,6 +1,6 @@
 import { NavbarItem } from "../components_Index/side-menu/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Setting } from "../components_Index/Settings";
 
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
@@ -8,15 +8,17 @@ import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
- 
+import ChatContainer from "../components_Index/ChatContainer";
+import fakeDate from "./Test"
 export function Index() {
-  const [showUserInfo, setUserInfo] = useState(false);
-  const [selectedButton, setSelectedButton] = useState("message");
+  const [showUserInfo, setUserInfo] = useState(false);//ấn để hiện phần thông tin user ẩn 
+  const [selectedButton, setSelectedButton] = useState("message");//ẩn để chọn 1 bên của navbar 
+  const [showChat, setShowChat] = useState(fakeDate); 
   // mặc định là hiện lên phần chat
   return (
     <>
       {/* Toàn bộ trang index */}
-      <div className="layout-wrapper box-border flex ">
+      <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
 
         <NavbarLeft
@@ -78,7 +80,7 @@ export function Index() {
                         {/* Tìm kiếm, call, video, info, three dots */}
 
                         <div className="col-4 col-sm-8  ">
-                          <ul className="user-chat-nav mb-0 mt-0 list-none pl-0 ">
+                          <ul className="user-chat-nav chat-option mb-0 mt-0 list-none pl-0">
                             <li className="mr-7 inline-block">
                               <i class="fa-solid fa-magnifying-glass"></i>
                             </li>
@@ -88,7 +90,12 @@ export function Index() {
                             <li className="mr-7 inline-block">
                               <i class="fa-solid fa-video"></i>
                             </li>
-                            <li className="mr-7 inline-block" onClick={()=> {setUserInfo(true)}}>
+                            <li
+                              className="mr-7 inline-block"
+                              onClick={() => {
+                                setUserInfo(true);
+                              }}
+                            >
                               <i class="fa-solid fa-user"></i>
                             </li>
                             <li className="mr-7 inline-block">
@@ -99,196 +106,7 @@ export function Index() {
                       </div>
                     </div>
                     {/* Chat container */}
-                    <div className="chat-conversation py-5 ps-5 pe-1">
-                      <div class="flex h-[calc(100vh_-_120px)] flex-col">
-                        {/* Hiển thị đoạn chat */}
-                        <div class=" flex-1 overflow-y-scroll">
-                          <div class="px-4 py-2">
-                            {/* Người nhận */}
-                            {/* Thông tin người nhận */}
-                            <div class="mb-2 flex items-center">
-                              <img
-                                class="mr-2 h-8 w-8 rounded-full"
-                                src="/images/422673745_1431738810981438_8560367173620224784_n.jpg"
-                                alt="User Avatar"
-                              />
-                              <div class="font-medium">Tiên</div>
-                            </div>
-                            {/* Người nhận gửi tin nhắn */}
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Nhớ anh quá
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đang làm gì đó?
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đi ăn chung không?
-                            </div>
-                            {/* End người nhận */}
-                            {/* Người gửi */}
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đang chạy đồ án FE2{" "}
-                              </div>
-                            </div>
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đi :))
-                              </div>
-                            </div>
-                            {/* End người gửi */}
-                            {/* Người nhận */}
-                            {/* Thông tin người nhận */}
-                            <div class="mb-2 flex items-center">
-                              <img
-                                class="mr-2 h-8 w-8 rounded-full"
-                                src="/images/422673745_1431738810981438_8560367173620224784_n.jpg"
-                                alt="User Avatar"
-                              />
-                              <div class="font-medium">Tiên</div>
-                            </div>
-                            {/* Người nhận gửi tin nhắn */}
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Nhớ anh quá
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đang làm gì đó?
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đi ăn chung không?
-                            </div>
-                            {/* End người nhận */}
-                            {/* Người gửi */}
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đang chạy đồ án FE2{" "}
-                              </div>
-                            </div>
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đi :))
-                              </div>
-                            </div>
-                            {/* End người gửi */}
-                            {/* Người nhận */}
-                            {/* Thông tin người nhận */}
-                            <div class="mb-2 flex items-center">
-                              <img
-                                class="mr-2 h-8 w-8 rounded-full"
-                                src="/images/422673745_1431738810981438_8560367173620224784_n.jpg"
-                                alt="User Avatar"
-                              />
-                              <div class="font-medium">Tiên</div>
-                            </div>
-                            {/* Người nhận gửi tin nhắn */}
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Nhớ anh quá
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đang làm gì đó?
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đi ăn chung không?
-                            </div>
-                            {/* End người nhận */}
-                            {/* Người gửi */}
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đang chạy đồ án FE2{" "}
-                              </div>
-                            </div>
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đi :))
-                              </div>
-                            </div>
-                            {/* End người gửi */}
-                            {/* Người nhận */}
-                            {/* Thông tin người nhận */}
-                            <div class="mb-2 flex items-center">
-                              <img
-                                class="mr-2 h-8 w-8 rounded-full"
-                                src="/images/422673745_1431738810981438_8560367173620224784_n.jpg"
-                                alt="User Avatar"
-                              />
-                              <div class="font-medium">Tiên</div>
-                            </div>
-                            {/* Người nhận gửi tin nhắn */}
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Nhớ anh quá
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đang làm gì đó?
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đi ăn chung không?
-                            </div>
-                            {/* End người nhận */}
-                            {/* Người gửi */}
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đang chạy đồ án FE2{" "}
-                              </div>
-                            </div>
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đi :))
-                              </div>
-                            </div>
-                            {/* End người gửi */}
-                            {/* Người nhận */}
-                            {/* Thông tin người nhận */}
-                            <div class="mb-2 flex items-center">
-                              <img
-                                class="mr-2 h-8 w-8 rounded-full"
-                                src="/images/422673745_1431738810981438_8560367173620224784_n.jpg"
-                                alt="User Avatar"
-                              />
-                              <div class="font-medium">Tiên</div>
-                            </div>
-                            {/* Người nhận gửi tin nhắn */}
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Nhớ anh quá
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đang làm gì đó?
-                            </div>
-                            <div class="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                              Đi ăn chung không?
-                            </div>
-                            {/* End người nhận */}
-                            {/* Người gửi */}
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đang chạy đồ án FE2{" "}
-                              </div>
-                            </div>
-                            <div class="mb-2 flex items-center justify-end">
-                              <div class=" mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
-                                Đi :))
-                              </div>
-                            </div>
-                            {/* End người gửi */}
-                          </div>
-                        </div>
-                        {/*  Input */}
-                        <div className="chat-input-section">
-                          {/* form send */}
-                          <div class="bg-gray-100 px-4 py-2">
-                            <div class="flex items-center">
-                              <input
-                                class="mr-2 w-full rounded-full border px-4 py-2"
-                                type="text"
-                                placeholder="Type your message..."
-                              />
-                              <button class="bg-blue-500 hover:bg-blue-700 rounded-full px-4 py-2 font-medium text-white">
-                                Send
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <ChatContainer messages={showChat}/>
                   </div>
                   {/* phần thông tin user được ẩn đi */}
                   <div className="user-profile-sidebar ms-1 hidden h-full basis-[23.5rem] bg-primary"></div>
@@ -314,7 +132,6 @@ export function Index() {
                 }
               />
             </div>
-         
           </div>
         </div>
       </div>
