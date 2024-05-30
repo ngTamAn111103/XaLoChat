@@ -1,15 +1,47 @@
 import React from "react";
-import { Outlet, Link } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { useState } from "react";
+import { Outlet, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+
 
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
 import { Footer } from "../components_auth/Footer";
+import { toast } from "react-toastify";
+import { auth } from "../lib/firebase";
 export function Login() {
   // Khởi tạo mặc định usernmae có @gmail.com
-  const [username, setUsername] = useState("@gmail.com");
+  const [username, setUsername] = useState("admin@gmail.com");
+  const [loading, setLoading] = useState(false);
+
+  
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    // bật loading
+    setLoading(true);
+
+    // Lấy data người dùng nhập
+    const formData = new FormData(e.target);
+    const { password } = Object.fromEntries(formData);
+    console.log(username);
+    
+
+    try {
+      await signInWithEmailAndPassword(auth, username, password)
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      // Tắt loading
+      setLoading(false);
+    }
+  };
   // mặc đinh true
   let isValidationUsername = true;
   // Username không có @gmail.com
@@ -32,7 +64,7 @@ export function Login() {
           <div className="card mx-auto mb-6 flex max-w-lg rounded-lg bg-white p-8 shadow-md">
             <div className="flex flex-col items-center justify-center">
               <div className="p-4">
-                <form action="#">
+                <form method="post" onSubmit={handleLogin}>
                   <Input
                     textLabel="Username"
                     htmlFor="username"
@@ -74,9 +106,9 @@ export function Login() {
                       </a>
                     </div>
                   </div>
-                  <Link to="/index">
-                    <Button label="Sign in" type="submit" />
-                  </Link>
+                  {/* <Link to="/index"> */}
+                    <Button label="Sign in" type="submit" loading={loading} />
+                  {/* </Link> */}
                 </form>
               </div>
             </div>

@@ -1,0 +1,3 @@
+*Sign Up*
+1: toast để thông báo cho người dùng sau khi đăng ký thành công
+2: sau khi đăng ký thành công, tự động đổi qua trang login

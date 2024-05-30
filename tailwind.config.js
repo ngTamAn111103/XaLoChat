@@ -12,6 +12,7 @@ export default {
       black: "#000",
       "bg-color": "#f7f7ff",
       primary: "#7269ef",
+      "primary-loading": "#8A84FF",
       "text-muted": "#7a7f9a",
       "secondary-color": "#7a7f9a",
       "border-input": "#e6ebf5",

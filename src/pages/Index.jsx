@@ -1,6 +1,6 @@
 import { NavbarItem } from "../components_Index/side-menu/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Setting } from "../components_Index/Settings";
 
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
@@ -8,10 +8,14 @@ import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
+import { onAuthStateChanged } from "firebase/auth";
  
 export function Index() {
   const [showUserInfo, setUserInfo] = useState(false);
   const [selectedButton, setSelectedButton] = useState("message");
+
+
+
   // mặc định là hiện lên phần chat
   return (
     <>

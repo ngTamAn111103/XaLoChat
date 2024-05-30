@@ -9,21 +9,28 @@ import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
 import { Footer } from "../components_auth/Footer";
+import { useNavigate } from "react-router-dom";
 
 export function Register() {
   // Thiết lập các useState()
   const [formData, setFormData] = useState({
-    password: "",
-    email: "",
-    confirm_password: "",
+    password: "admin@gmail.com",
+    email: "admin@gmail.com",
+    confirm_password: "admin@gmail.com",
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false)
+  // Chuyển về trang đăng nhập sau khi đăng ký thành công
+  const navigate = useNavigate();
 
   //functions
   // TA: Back-end: Đăng ký với Auth
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // Bật loading
+    setLoading(true)
 
     // Lấy giá trị email từ state formData
     const { email, password, confirm_password } = formData;
@@ -46,26 +53,31 @@ export function Register() {
           toast.success("Create UserAuth thành công.");
 
           // Thực hiện hàm thêm dữ liệu vào firestore
-          await setDoc(doc(db, "Profile", res.user.uid),
-            {
-              ID: res.user.uid,
-              email,
-              Fullname: email,
-              Avatar: "avatar_default.jpg",
-              Location: "Viet Nam",
-              Description: "",
-              createdAt: Date() ,
-              updatedAt: Date(),
-              blocked: [],
-            });
+          await setDoc(doc(db, "Profile", res.user.uid), {
+            ID: res.user.uid,
+            email,
+            Fullname: email,
+            Avatar: "avatar_default.jpg",
+            Location: "Viet Nam",
+            Description: "",
+            createdAt: Date(),
+            updatedAt: Date(),
+            blocked: [],
+          });
 
           console.log("Create Profile thành công.");
           toast.success("Create Profile thành công.");
         }
+        // Chuyển hướng đến trang đăng nhập
+        navigate("/login");
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    }
+    finally{
+      // Tắt loading
+      setLoading(false)
     }
   };
 
@@ -191,34 +203,9 @@ export function Register() {
                     error={errors.confirm_password}
                     value={formData.confirm_password}
                     colorValidation="text-text-danger"
-
-                    /*
-                    textLabel="Username"
-                    htmlFor="username"
-                    placeholder="Enter Username"
-                    inputType="text"
-                    icon="fa-solid fa-user"
-                    onChange={(e) => handleChange(e)}
-                    onMouseLeave={(e) => handleChange(e)}
-                    error={errors.username}
-                    value={formData.username}
-                    colorValidation="text-text-danger"
-                  />
-                  <Input
-                    textLabel="Password"
-                    htmlFor="password"
-                    placeholder="Enter Password"
-                    inputType="password"
-                    icon="fa-solid fa-lock"
-                    onChange={(e) => handleChange(e)}
-                    onMouseLeave={(e) => handleChange(e)}
-                    error={errors.password}
-                    colorValidation="text-text-danger"
-                    value={formData.password}
-                    */
                   />
 
-                  <Button label="Register" type="submit" />
+                  <Button label="Register" type="submit" loading={loading} />
                 </form>
               </div>
             </div>
