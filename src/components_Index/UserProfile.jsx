@@ -2,7 +2,7 @@ import React from "react";
 
 function UserProfile({ name, avatarSrc, activityStatus, description }) {
   return (
-    <div className="border-b border-[#DCDCDC] p-4 text-center">
+    <div className="border-[#DCDCDC] p-4 text-center">
       <div className="border border-[#DCDCDC] inline-block p-1 rounded-full">
         <img src={avatarSrc || "./images/avt.png"} className="h-20 w-20 rounded-full" alt={avatarSrc} />
       </div>
@@ -13,7 +13,7 @@ function UserProfile({ name, avatarSrc, activityStatus, description }) {
       </p>
       <hr className="text-[#DCDCDC] p-2 "/>
       <div className="user-profile-desc text-left">
-        <div className="text-muted text-center">
+        <div className="text-muted text-left">
           <p className="mb-4 text-[#7A7F9A]">{description}</p>
         </div>
       </div>

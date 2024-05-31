@@ -149,3 +149,9 @@ export const profileSetting = {
   avatarSrc: "./images/avt.png",
   name: "Patricia Smith",
 };
+
+// Tạo mảng UserChat
+export const userChat = {
+  avatarSrc: "./images/avt.png",
+  name: "Patricia Smith",
+}
