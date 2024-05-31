@@ -14,6 +14,7 @@ import ChatContainer from "../components_Index/ChatContainer";
 import CallModal from "../components_Index/side-menu/Modal";
 import { fakeFriendList, fakeMessages, userProfile, profileDetails,profileSetting } from "./Test";
 import Toast from "../general_component/Toast";
+import { SearchFriend } from "../components_Index/search/SearchFriend";
 
 
  
@@ -73,6 +74,8 @@ export function Index() {
   // mặc định là hiện lên phần chat
   return (
     <>
+
+
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
@@ -106,6 +109,12 @@ export function Index() {
               isActive={selectedButton === "setting"}
               profileSetting={profileSetting}
               profileDetails={profileDetails}/>
+            <SearchFriend
+                  isActive={selectedButton == "plus" ? true : false}
+                  clickedButton={clickedChat}
+                  setClickedButton={setClickedChat}
+                  friendlist={showFriendList}
+                  />
           </div>
         </div>
 
@@ -127,7 +136,7 @@ export function Index() {
                           {/* an de tro ve */}
                           <div className="flex items-center">
                             <div className="block lg:hidden px-2" onClick={()=>handelBackButton()}>
-                             <i class="fa-solid fa-angle-left"></i>
+                             <i className="fa-solid fa-angle-left"></i>
                             </div>
                             <div className="ml-0 mr-4">
                               <img
@@ -235,28 +244,28 @@ export function Index() {
                                         }}
                                       >
                                         View profile
-                                        <i class="fa-solid fa-user float-end p-1"></i>
+                                        <i className="fa-solid fa-user float-end p-1"></i>
                                       </button>
                                       <button
                                         className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
                                         onClick={() => {}}
                                       >
                                         Archive
-                                        <i class="fa-solid fa-box-archive float-end p-1"></i>
+                                        <i className="fa-solid fa-box-archive float-end p-1"></i>
                                       </button>
                                       <button
                                         className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
                                         onClick={() => {}}
                                       >
                                         Muted
-                                        <i class="fa-solid fa-volume-xmark float-end p-1"></i>
+                                        <i className="fa-solid fa-volume-xmark float-end p-1"></i>
                                       </button>
                                       <button
                                         className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
                                         onClick={() => {}}
                                       >
                                         Delete
-                                        <i class="fa-solid fa-trash float-end p-1"></i>
+                                        <i className="fa-solid fa-trash float-end p-1"></i>
                                       </button>
                                     </div>
                                   </div>
