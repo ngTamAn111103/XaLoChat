@@ -3,7 +3,7 @@ import ProfileInfo from "./ProfileInfo";
 import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
-
+import { useUserStore } from "../lib/userStore";
 export function Profile({
   isHeader = true,
   extend,
@@ -11,6 +11,8 @@ export function Profile({
   userProfile,
   profileDetails,
 }) {
+  // Thông tin của người dùng
+  const { currentUser } = useUserStore();
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -132,14 +134,14 @@ export function Profile({
               </div>
               <div className={` ${toggleOne ? "block" : "hidden"}`}>
                 <div className="card-body">
-                  <div className="mt-4 pl-4">
-                    {profileDetails.map((detail, index) => (
-                      <ProfileInfo
-                        key={index} 
-                        label={detail.label}
-                        value={detail.value}
-                      />
-                    ))}
+                <div className="mt-4 pl-4">
+                    <ProfileInfo label={"Name"} value={currentUser.Fullname} />
+                    <ProfileInfo label={"Email"} value={currentUser.Email} />
+                    <ProfileInfo label={"Time"} value={currentUser.updatedAt} />
+                    <ProfileInfo
+                      label={"Location"}
+                      value={currentUser.Location}
+                    />
                   </div>
                 </div>
               </div>

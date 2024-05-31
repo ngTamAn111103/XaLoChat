@@ -13,7 +13,7 @@ function UserProfile({ name, avatarSrc, activityStatus, description }) {
       </p>
       <hr className="text-[#DCDCDC] p-2 "/>
       <div className="user-profile-desc text-left">
-        <div className="text-muted">
+        <div className="text-muted text-center">
           <p className="mb-4 text-[#7A7F9A]">{description}</p>
         </div>
       </div>
