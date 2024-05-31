@@ -49,17 +49,43 @@ function App() {
     <>
       <Router>
         <Routes>
-          {/* <Route path="/" element={<Login />} />
-           */}
+          {/* 
+          /: nếu đã đăng nhập? vào index : Chuyển qua login 
+          */}
           <Route
             path="/"
             element={currentUser ? <Navigate to="/index" /> : <Login />}
           />
 
-          <Route path="/login" element={<Login />} />
+          {/* 
+          /login: Nếu đã đăng nhập? vào index : chuyển qua login 
+          */}
+          <Route
+            path="/login"
+            element={currentUser ? <Navigate to="/index" /> : <Login />}
+          />
+
+          {/*
+           Mặc định register 
+           */}
           <Route path="/register" element={<Register />} />
-          <Route path="/index" element={<Index />} />
+
+          {/*
+           /index: nếu đã đăng nhập? Vào index: chuyển qua login 
+           */}
+          <Route
+            path="/index"
+            element={currentUser ? <Index /> : <Navigate to="/login" />}
+          />
+
+          {/*
+           Mặc định quên mật khẩu 
+           */}
           <Route path="/forget-password" element={<RecoverPass />} />
+
+          {/*
+           Mặc định profile 
+           */}
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>

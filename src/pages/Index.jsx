@@ -9,27 +9,25 @@ import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
 import { onAuthStateChanged } from "firebase/auth";
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from "react-router-dom";
 import ChatContainer from "../components_Index/ChatContainer";
-import {fakeFriendList,fakeMessages} from "./Test"
-import Toast from "../general_component/Toast"
+import { fakeFriendList, fakeMessages } from "./Test";
+import Toast from "../general_component/Toast";
 export function Index() {
-  const [showUserInfo, setUserInfo] = useState(false);//ấn để hiện phần thông tin user ẩn 
-  const [selectedButton, setSelectedButton] = useState("message");//ẩn để chọn 1 bên của navbar 
-  const [clickedChat, setClickedChat] = useState(0);//ấn để chọn tin nhắn và update vị trí được ấn 
-  const [showChat, setShowChat] = useState(fakeMessages["1"]); 
-  const [showFriendList, setshowFriendList] = useState(fakeFriendList); 
- 
+  const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
+  const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
+  const [clickedChat, setClickedChat] = useState(0); //ấn để chọn tin nhắn và update vị trí được ấn
+  const [showChat, setShowChat] = useState(fakeMessages["1"]);
+  const [showFriendList, setshowFriendList] = useState(fakeFriendList);
 
-
-  useEffect(()=> { 
-    //setshowChat sau khi an vao 1 nguoi 
-    if (fakeMessages[`${clickedChat + 1}`]) { 
-      setShowChat(fakeMessages[`${clickedChat + 1}`])
-    } else { 
-      setShowChat("")
+  useEffect(() => {
+    //setshowChat sau khi an vao 1 nguoi
+    if (fakeMessages[`${clickedChat + 1}`]) {
+      setShowChat(fakeMessages[`${clickedChat + 1}`]);
+    } else {
+      setShowChat("");
     }
-  },[clickedChat])
+  }, [clickedChat]);
 
   // mặc định là hiện lên phần chat
   return (
@@ -38,14 +36,17 @@ export function Index() {
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
         {/* <Toast status="success" content="lorem abc"></Toast> */}
-        <Toast status="success" content="Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet"></Toast>
+        <Toast
+          status="success"
+          content="Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet"
+        ></Toast>
         <NavbarLeft
           selectedButton={selectedButton}
           setSelectedButton={setSelectedButton}
         />
 
         {/* Thanh ở giữa*/}
-        <div className="me-lg-1 me-1 w-full h-full bg-[#f5f7fb] drop-shadow-lg lg:min-w-[380px] lg:max-w-[380px]	">
+        <div className="me-lg-1 me-1 h-full w-full bg-[#f5f7fb] drop-shadow-lg lg:min-w-[380px] lg:max-w-[380px]	">
           <div className="contain ">
             <Profile isActive={selectedButton == "user" ? true : false} />
 
@@ -65,7 +66,7 @@ export function Index() {
 
         {/* Phần chat + thông tin cá nhân  */}
 
-        <div className="user-chat fixed z-10 lg:z-0 lg:relative h-screen flex-1 lg:block">
+        <div className="user-chat fixed z-10 h-screen flex-1 lg:relative lg:z-0 lg:block">
           <div className="flex h-full flex-row">
             {/* phần chat */}
             <div className="userchat h-full flex-1 bg-text-danger">
@@ -128,7 +129,10 @@ export function Index() {
                       </div>
                     </div>
                     {/* Chat container */}
-                    <ChatContainer messages={showChat} friendInfo={showFriendList[clickedChat]}/>
+                    <ChatContainer
+                      messages={showChat}
+                      friendInfo={showFriendList[clickedChat]}
+                    />
                   </div>
                   {/* phần thông tin user được ẩn đi */}
                   <div className="user-profile-sidebar ms-1 hidden h-full basis-[23.5rem] bg-primary"></div>
@@ -139,7 +143,6 @@ export function Index() {
             <div
               className={` user-profile-sidebar ms-1 h-full basis-[23.5rem] overflow-auto transition-all ${showUserInfo ? "block" : "hidden"}`}
             >
-              
               <Profile
                 isHeader={false}
                 isActive={true}
