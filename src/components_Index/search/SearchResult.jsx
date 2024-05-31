@@ -1,12 +1,12 @@
-function Conversation({
-  key, 
+function SearchResult({
+  i, 
   avatar = "avatar-captain.jpg",
   name = "Lù Phi",
   email ="nono@gmail.com",
 }) {
   return (
     <>
-      <li className="px-2" key={key}>
+      <li className="px-2" key={i}>
         <a
           href="#"
           className={`mb-[0.125rem] block rounded px-5 py-4 transition hover:bg-[#e6ebf5]`}
@@ -33,4 +33,4 @@ function Conversation({
     </>
   );
 }
-export default Conversation;
+export default SearchResult;

@@ -23,7 +23,7 @@ export function SearchFriend({isActive}) {
    ]
    const resultList = fakeSearch 
    const result = resultList.map((e,i)=> { 
-      return <SearchResult avatar={e.avatar} name={e.name} email={e.email} key={i}></SearchResult>
+      return <SearchResult avatar={e.avatar} name={e.name} email={e.email} key={i} i={i}></SearchResult>
    })  
     return (<>
       {/* title */}
