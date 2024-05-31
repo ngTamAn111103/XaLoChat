@@ -53,9 +53,10 @@ function ContactList({isActive}) {
         ></Header>
 
         {/* Hiển thị danh sách liên hệ theo nhóm A-Z */}
-        <div className="scrollbar-config mt-5  h-[calc(100vh_-_140px)] overflow-auto scroll-smooth p-6 focus:scroll-auto">
-          {nameList.map((element) => (
+        <div className="scrollbar-config mt-5  h-[calc(100vh_-_140px)] overflow-auto scroll-smooth py-6 ps-6 pe-0 lg:p-6 focus:scroll-auto">
+          {nameList.map((element,index) => (
             <GroupContact
+            key={index}
               letter={Object.keys(element)[0]}
               nameList={element[Object.keys(element)[0]]}
             />

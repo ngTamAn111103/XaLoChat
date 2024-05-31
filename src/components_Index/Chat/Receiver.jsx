@@ -9,7 +9,8 @@ export function Receiver({
   createAtReceiver,
   msg,
   isLast,
-  isFirst
+  isFirst,
+  index
 }) {
 
     const [showTime,setShowTime] = useState(false)
@@ -23,12 +24,13 @@ export function Receiver({
 
   return (
     <>
+    <div key={index}>
       <div className="mb-3 flex items-center">
         {isFirst == true ? (
           <>
             <img
-              class="mr-2 h-8 w-8 rounded-full"
-              src={avatarReceiver}
+              className="mr-2 h-8 w-8 rounded-full"
+              src={`images/${avatarReceiver}`}
               alt="User Avatar"
             />
             <div className="font-medium" >{nameReceiver}</div>
@@ -49,6 +51,8 @@ export function Receiver({
           ""
         )}
       </div>
+
+    </div>
     </>
   );
 }

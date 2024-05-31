@@ -8,59 +8,81 @@ import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
 import GroupList from "../components_Index/GroupList";
 import ContactList from "../components_Index/Contacts/ContactList";
+import { onAuthStateChanged } from "firebase/auth";
+import { Navigate, Outlet } from "react-router-dom";
 import ChatContainer from "../components_Index/ChatContainer";
-import fakeDate from "./Test";
-import CallModal from "../components_Index/side-menu/Modal";
 
-// Tạo mảng userProfile
-const userProfile = {
-  avatarSrc: "./images/avt.png",
-  name: "Patricia Smith",
-  activityStatus: "Active",
-  description:
-    "If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.",
-};
+// import fakeDate from "./Test";
+// import CallModal from "../components_Index/side-menu/Modal";
 
-// Tạo mảng profileDetails
-const profileDetails = [
-  { label: "Name", value: "Patricia Smith" },
-  { label: "Email", value: "adc@123.com" },
-  { label: "Time", value: "11:40 AM" },
-  { label: "Location", value: "California, USA" },
-];
+// // Tạo mảng userProfile
+// const userProfile = {
+//   avatarSrc: "./images/avt.png",
+//   name: "Patricia Smith",
+//   activityStatus: "Active",
+//   description:
+//     "If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.",
+// };
 
-// Tạo mảng profileSetting
-const profileSetting = {
-  avatarSrc: "./images/avt.png",
-  name: "Patricia Smith",
-};
+// // Tạo mảng profileDetails
+// const profileDetails = [
+//   { label: "Name", value: "Patricia Smith" },
+//   { label: "Email", value: "adc@123.com" },
+//   { label: "Time", value: "11:40 AM" },
+//   { label: "Location", value: "California, USA" },
+// ];
 
+// // Tạo mảng profileSetting
+// const profileSetting = {
+//   avatarSrc: "./images/avt.png",
+//   name: "Patricia Smith",
+// };
+
+// export function Index() {
+//   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
+//   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
+//   const [showChat, setShowChat] = useState(fakeDate);
+//   const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
+//   const searchRef = useRef(null); // useRef
+
+//   // Dropdown state
+//   const [showDropdown, setShowDropdown] = useState(false);
+//   const dropdownRef = useRef(null);
+
+//   // Thêm sựu kiện khi click ra ngoài của thanh tiềm kiếm
+//   useEffect(() => {
+//     function handleClickOutside(event) {
+//       if (searchRef.current && !searchRef.current.contains(event.target)) {
+//         setShowSearch(false);
+//       }
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+//         setShowDropdown(false);
+//       }
+//     }
+//     document.addEventListener("mousedown", handleClickOutside);
+//     return () => {
+//       document.removeEventListener("mousedown", handleClickOutside);
+//     };
+//   }, [searchRef, dropdownRef]);
+
+import { fakeFriendList, fakeMessages } from "./Test";
+import Toast from "../general_component/Toast";
 export function Index() {
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
-  const [showChat, setShowChat] = useState(fakeDate);
-  const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
-  const searchRef = useRef(null); // useRef
+  const [clickedChat, setClickedChat] = useState(0); //ấn để chọn tin nhắn và update vị trí được ấn
+  const [showChat, setShowChat] = useState(fakeMessages["1"]);
+  const [showFriendList, setshowFriendList] = useState(fakeFriendList);
 
-  // Dropdown state
-  const [showDropdown, setShowDropdown] = useState(false);
-  const dropdownRef = useRef(null);
-
-  // Thêm sựu kiện khi click ra ngoài của thanh tiềm kiếm
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
-        setShowSearch(false);
-      }
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
-      }
+    //setshowChat sau khi an vao 1 nguoi
+    if (fakeMessages[`${clickedChat + 1}`]) {
+      setShowChat(fakeMessages[`${clickedChat + 1}`]);
+    } else {
+      setShowChat("");
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [searchRef, dropdownRef]);
+  }, [clickedChat]);
+
 
   // mặc định là hiện lên phần chat
   return (
@@ -68,23 +90,33 @@ export function Index() {
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
+        {/* <Toast status="success" content="lorem abc"></Toast> */}
+        <Toast status="alert" content="Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet"></Toast>
+
         <NavbarLeft
           selectedButton={selectedButton}
           setSelectedButton={setSelectedButton}
         />
 
         {/* Thanh ở giữa*/}
-        <div className="me-lg-1 me-1 min-w-0 max-w-0 bg-[#f5f7fb] drop-shadow-lg md:min-w-[380px] md:max-w-[380px]">
-          <div className="contain">
-            <Profile
+        <div className="me-lg-1 me-1 h-full w-full bg-[#f5f7fb] drop-shadow-lg lg:min-w-[380px] lg:max-w-[380px]	">
+          <div className="contain ">
+              <Profile
               isActive={selectedButton === "user"}
               userProfile={userProfile}
               profileDetails={profileDetails}
             />
-            <FriendList isActive={selectedButton === "message"} />
-            <GroupList isActive={selectedButton === "group"} />
-            <ContactList isActive={selectedButton === "contacts"} />
-            <Setting
+
+            <FriendList
+              isActive={selectedButton == "message" ? true : false}
+              clickedButton={clickedChat}
+              setClickedButton={setClickedChat}
+              friendlist={showFriendList}
+            ></FriendList>
+            <GroupList isActive={selectedButton == "group" ? true : false} />
+            <ContactList
+              isActive={selectedButton == "contacts" ? true : false}/> 
+                  <Setting
               isActive={selectedButton === "setting"}
               profileSetting={profileSetting}
               profileDetails={profileDetails}
@@ -93,7 +125,7 @@ export function Index() {
         </div>
 
         {/* Phần chat + thông tin cá nhân  */}
-        <div className="user-chat relative h-screen flex-1">
+        <div className="user-chat fixed z-10 h-screen flex-1 lg:relative lg:z-0 lg:block">
           <div className="flex h-full flex-row">
             {/* phần chat */}
             <div className="userchat h-full flex-1 bg-text-danger">
@@ -109,7 +141,7 @@ export function Index() {
                           <div className="flex items-center">
                             <div className="ml-0 mr-4">
                               <img
-                                src="/images/422673745_1431738810981438_8560367173620224784_n.jpg"
+                                src={`images/${showFriendList[clickedChat].avatar}`}
                                 alt=""
                                 className="h-10 w-10 rounded-full"
                               />
@@ -120,7 +152,7 @@ export function Index() {
                                   href="#"
                                   className="decoration-0 outline-none"
                                 >
-                                  Sử Thị Thuỷ Tiên
+                                  {showFriendList[clickedChat].name}
                                 </a>
                                 <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
                               </h5>
@@ -231,7 +263,10 @@ export function Index() {
                       </div>
                     </div>
                     {/* Chat container */}
-                    <ChatContainer messages={showChat} />
+                    <ChatContainer
+                      messages={showChat}
+                      friendInfo={showFriendList[clickedChat]}
+                    />
                   </div>
                   {/* phần thông tin user được ẩn đi */}
                   <div className="user-profile-sidebar ms-1 hidden h-full basis-[23.5rem] bg-primary"></div>
@@ -240,9 +275,9 @@ export function Index() {
             </div>
             {/* phần thông tin user được ẩn đi */}
             <div
-              className={`user-profile-sidebar ms-1 h-full basis-[23.5rem] overflow-auto transition-all ${
-                showUserInfo ? "block" : "hidden"
-              }`}
+
+              className={` user-profile-sidebar ms-1 h-full basis-[23.5rem] overflow-auto transition-all ${showUserInfo ? "block" : "hidden"}`}
+
             >
               <Profile
                 isHeader={false}

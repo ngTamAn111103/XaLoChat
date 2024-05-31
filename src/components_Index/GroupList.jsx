@@ -14,13 +14,13 @@ export default function GroupList({isActive}) {
         // Phần mở rộng bên tay phải chung hàng với heading
         extend={
           <>
-            <div class="user-chat-nav float-end">
+            <div className="user-chat-nav float-end">
               <div id="create-group">
                 <button
                   type="button"
-                  class="cursor-pointer px-4 py-0 text-lg font-normal text-text-muted"
+                  className="cursor-pointer px-4 py-0 text-lg font-normal text-text-muted"
                 >
-                  <i class="fa-solid fa-user-group"></i>
+                  <i className="fa-solid fa-user-group"></i>
                 </button>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function GroupList({isActive}) {
             <ItemGroup
               avatarTitle="M"
               groupName={"Massage"}
-              avatarGroup="https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/439763695_437295492320976_4220747883772936630_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5f2048&_nc_ohc=KMxHTxdFOOAQ7kNvgFuWWqk&_nc_ht=scontent.fsgn5-2.fna&oh=00_AfCTqOnz3h1LxWnXCqwwl2uVFPxaMYPKcfKNpvX_NPWEsA&oe=662F1B0B"
+              avatarGroup="images/320186702_823742058729606_3659513607149413256_n.jpg"
               
             />
             <ItemGroup
