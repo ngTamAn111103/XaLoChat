@@ -12,7 +12,7 @@ function ChatContainer({ messages, friendInfo }) {
       const isFirstMessage = index === 0 || messages[index - 1].uid !== msg.uid;
 
       // Render người gửi và người nhận
-      return msg.uid !== friendInfo.uid ? (
+      return msg?.uid !== friendInfo?.uid ? (
         <Sender
           msg={msg.mes}
           createdAt={msg.createdAt}

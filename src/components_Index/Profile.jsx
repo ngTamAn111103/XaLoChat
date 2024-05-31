@@ -65,7 +65,7 @@ export function Profile({
 
   return (
     <>
-      <div className={isActive ? "absolute block h-full w-[360px]" : "hidden"}>
+      <div className={isActive ? "absolute block h-full lg:w-[360px]" : "hidden"}>
         {isHeader && (
           <Header
             title={"My Profile"}
@@ -118,7 +118,7 @@ export function Profile({
           description={userProfile ? userProfile.description : ""}
         />
 
-        <div className="user-profile-desc p-4">
+        <div className="user-profile-desc px-4 pt-4">
           <div className="custom-accordion h-[calc(100vh_-_400px)] max-h-full overflow-auto scroll-smooth focus:scroll-auto">
             <div className="card mb-2 rounded-md border border-[#DCDCDC] bg-white p-1">
               <div className="cursor-pointer" onClick={handleToggleOne}>
