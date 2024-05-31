@@ -31,8 +31,9 @@ const DropdownMenu = () => {
   return (
     <div className="relative ms-2 rounded bg-[#E6EBF5] hover:bg-[#C4C8D0]">
       <button
-        aria-haspopup="true"
+        aria-haspopup="false"
         className="btn-sm w-20 text-xs"
+        aria-expanded={isOpen ? "true" : "false"}
         onClick={toggleMenu}
       >
         {selectedOption} <i className="fa fa-chevron-down fa-2xs"></i>
