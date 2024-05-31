@@ -113,8 +113,8 @@ export function Setting({isActive}) {
                 <div className="mt-4 pl-4">
                   {/* Thêm thông tin người dùng */}
                   <ProfileInfo label={"Name"} value={currentUser.Fullname} />
-                  <ProfileInfo label={"Email"} value={currentUser.email} />
-                  <ProfileInfo label={"Time"} value={currentUser.updatedAt} />
+                  <ProfileInfo label={"Email"} value={currentUser.Email} />
+                  <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
                   <ProfileInfo label={"Location"} value={currentUser.Location} />
                 </div>
               </div>

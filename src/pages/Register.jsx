@@ -56,12 +56,13 @@ export function Register() {
           // Thực hiện hàm thêm dữ liệu vào firestore
           await setDoc(doc(db, "Profile", res.user.uid), {
             ID: res.user.uid,
-            email,
+            Email : email,
             Fullname: fullname,
             Location: "Viet Nam",
-            createdAt: Date(),
-            updatedAt: Date(),
-            blocked: [],
+            CreatedAt: Date(),
+            UpdatedAt: Date(),
+            Blocked: [],
+            Chatroom: [],
           });
 
           console.log("Create Profile thành công.");
