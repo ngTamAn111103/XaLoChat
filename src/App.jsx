@@ -76,10 +76,11 @@ function App() {
           {/* 
           /: nếu đã đăng nhập? vào index : Chuyển qua login 
           */}
-          <Route
+          {/* <Route
             path="/"
             element={currentUser ? <Navigate to="/index" /> : <Login />}
-          />
+          /> */}
+          <Route path="/" element={<Index />} />
 
           {/* 
           /login: Nếu đã đăng nhập? vào index : chuyển qua login 
