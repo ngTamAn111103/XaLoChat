@@ -66,7 +66,7 @@ export default function GroupList({isActive}) {
               groupName={"Trộm chó"}
               
             />
-          
+
             <ItemGroup
               avatarGroup="public/images/320186702_823742058729606_3659513607149413256_n.jpg"
               avatarTitle="Đ"
