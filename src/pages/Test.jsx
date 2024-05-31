@@ -69,7 +69,7 @@ export const fakeMessages = {
       {
         uid: 0,
         createdAt: "9:02",
-        mes: "tin nhắn thôi mà2",
+        mes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium doloremque debitis dicta, excepturi temporibus pariatur perferendis culpa optio rem aspernatur nam consequatur eligendi eius iste aut provident, ad a., ",
       },
       {
         uid: 0, 
@@ -125,3 +125,27 @@ export const fakeMessages = {
 
       ],
 }
+
+
+// Tạo mảng userProfile
+export const userProfile = {
+  avatarSrc: "./images/avt.png",
+  name: "Patricia Smith",
+  activityStatus: "Active",
+  description:
+    "If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.",
+};
+
+// Tạo mảng profileDetails
+export const profileDetails = [
+  { label: "Name", value: "Patricia Smith" },
+  { label: "Email", value: "adc@123.com" },
+  { label: "Time", value: "11:40 AM" },
+  { label: "Location", value: "California, USA" },
+];
+
+// Tạo mảng profileSetting
+export const profileSetting = {
+  avatarSrc: "./images/avt.png",
+  name: "Patricia Smith",
+};

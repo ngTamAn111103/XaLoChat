@@ -3,51 +3,62 @@ import ProfileInfo from "./ProfileInfo";
 import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
-
 import { useUserStore } from "../lib/userStore";
 
-export function Profile({ isHeader = true, extend, isActive }) {
-  // State hooks để quản lý toggle và dropdown
+export function Profile({
+  isHeader = true,
+  extend,
+  isActive,
+  userProfile,
+  profileDetails,
+}) {
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-// Thông tin của người dùng
+  const [dropdownStyles, setDropdownStyles] = useState({
+    opacity: 0,
+    transform: "translateY(10px)",
+    transition: "opacity 0.3s ease, transform 0.3s ease",
+  });
+ // Thông tin của người dùng
   const { currentUser } = useUserStore();
 
-  // Ref để xác định click ngoài dropdown
   const dropdownRef = useRef(null);
 
-  // Xử lý toggle cho card 1
   const handleToggleOne = () => {
     setToggleOne(!toggleOne);
-    // Đóng card 2 nếu đang mở
     if (toggleTwo) {
       setToggleTwo(false);
     }
   };
 
-  // Xử lý toggle cho card 2
   const handleToggleTwo = () => {
     setToggleTwo(!toggleTwo);
-    // Đóng card 1 nếu đang mở
     if (toggleOne) {
       setToggleOne(false);
     }
   };
 
-  // Xử lý dropdown
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+    setDropdownStyles((prevStyles) => ({
+      ...prevStyles,
+      opacity: dropdownOpen ? 0 : 1,
+      transform: dropdownOpen ? "translateY(10px)" : "translateY(0)",
+    }));
   };
 
-  // Xử lý click ngoài dropdown để đóng dropdown
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setDropdownOpen(false);
+      setDropdownStyles((prevStyles) => ({
+        ...prevStyles,
+        opacity: 0,
+        transform: "translateY(10px)",
+      }));
     }
   };
 
-  // Sử dụng useEffect để thêm và loại bỏ sự kiện click ngoài dropdown
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
     return () => {
@@ -57,12 +68,8 @@ export function Profile({ isHeader = true, extend, isActive }) {
 
   return (
     <>
-      <div
-        className={
-          isActive ? "absolute block h-full w-[360px] bg-white " : "hidden"
-        }
-      >
-        {/*Thêm component Header vào nếu không truyền isHeader = false*/}
+
+      <div className={isActive ? "absolute block h-full lg:w-[360px]" : "hidden"}>
         {isHeader && (
           <Header
             title={"My Profile"}
@@ -76,36 +83,63 @@ export function Profile({ isHeader = true, extend, isActive }) {
                   >
                     <i className="fas fa-ellipsis-v"></i>
                   </button>
-                  {dropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg">
-                      <div className="py-1">
-                        <button
-                          className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-                          onClick={() => {}}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-                          onClick={() => {}}
-                        >
-                          Action
-                        </button>
-                        <div className="border-t border-[#DCDCDC]"></div>
-                        <button
-                          className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-                          onClick={() => {}}
-                        >
-                          Another action
-                        </button>
-                      </div>
+//                   {dropdownOpen && (
+//                     <div className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg">
+//                       <div className="py-1">
+//                         <button
+//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+//                           onClick={() => {}}
+//                         >
+//                           Edit
+//                         </button>
+//                         <button
+//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+//                           onClick={() => {}}
+//                         >
+//                           Action
+//                         </button>
+//                         <div className="border-t border-[#DCDCDC]"></div>
+//                         <button
+//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+//                           onClick={() => {}}
+//                         >
+//                           Another action
+//                         </button>
+//                       </div>
+//                     </div>
+//                   )}
+                  <div
+                    className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg"
+                    style={dropdownStyles}
+                  >
+                    <div className="py-1">
+                      <button
+                        className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+                        onClick={() => {}}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+                        onClick={() => {}}
+                      >
+                        Action
+                      </button>
+                      <div className="border-t border-[#DCDCDC]"></div>
+                      <button
+                        className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+                        onClick={() => {}}
+                      >
+                        Another action
+                      </button>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             }
           />
         )}
+
         {/* thêm phần extend vào */}
         {extend}
         {/* Component User Profile */}
@@ -121,12 +155,24 @@ export function Profile({ isHeader = true, extend, isActive }) {
           </div>
           <div className="custom-accordion">
             {/* First Card */}
+//         {extend}
+//         <UserProfile
+//           avatarSrc={userProfile ? userProfile.avatarSrc : ""}
+//           name={userProfile ? userProfile.name : ""}
+//           activityStatus={userProfile ? userProfile.activityStatus : ""}
+//           description={userProfile ? userProfile.description : ""}
+//         />
+
+//         <div className="user-profile-desc px-4 pt-4">
+//           <div className="custom-accordion h-[calc(100vh_-_400px)] max-h-full overflow-auto scroll-smooth focus:scroll-auto">
+
             <div className="card mb-2 rounded-md border border-[#DCDCDC] bg-white p-1">
               <div className="cursor-pointer" onClick={handleToggleOne}>
                 <h6 className="flex items-center text-xs font-bold">
                   <i className="far fa-user p-2 pl-4"></i>
                   About
                   {/* Thêm icon chevron cho toggle */}
+
                   <i
                     className={`fas fa-chevron-${toggleOne ? "up" : "down"} fa-xs ml-auto pr-4`}
                   ></i>
@@ -143,6 +189,13 @@ export function Profile({ isHeader = true, extend, isActive }) {
                       label={"Location"}
                       value={currentUser.Location}
                     />
+//                     {profileDetails.map((detail, index) => (
+//                       <ProfileInfo
+//                         key={index} 
+//                         label={detail.label}
+//                         value={detail.value}
+//                       />
+//                     ))}
                   </div>
                 </div>
               </div>
@@ -155,6 +208,7 @@ export function Profile({ isHeader = true, extend, isActive }) {
                   <i className="fas fa-paperclip p-2 pl-4"></i>
                   Attached Files
                   {/* Thêm icon chevron cho toggle */}
+
                   <i
                     className={`fas fa-chevron-${toggleTwo ? "up" : "down"} fa-xs ml-auto pr-4`}
                   ></i>

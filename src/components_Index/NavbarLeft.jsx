@@ -91,7 +91,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
         </ul>
       </div>
       {/* Phần cuối của nav */}
-      <div className="box-border block grow">
+      <div className="box-border block grow lg:grow-0">
         <ul className="side-menu-nav  nav mb-0 mt-0 box-border flex list-none flex-wrap justify-around pl-0 lg:justify-center">
           <NavbarItem
             icon="fa-solid fa-gear"

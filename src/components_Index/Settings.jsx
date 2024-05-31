@@ -5,7 +5,8 @@ import ProfileInfo from "./ProfileInfo";
 import DropdownMenu from "./Settings/DropdownProFile";
 import ToggleSwitch from "./Settings/ToggleSwitch";
 import { useUserStore } from "../lib/userStore";
-export function Setting({isActive}) {
+export function Setting({isActive, profileSetting, profileDetails}) {
+
   // State hooks để quản lý toggle và dropdown
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
@@ -82,7 +83,7 @@ export function Setting({isActive}) {
 
       {/* Component User Profile */}
       <UserSetting avatarSrc={currentUser.Avatar||"./images/avt.png"} name={currentUser.Fullname} />
-      <div className="user-profile-desc p-4">
+      <div className="user-profile-desc p-4 h-[calc(100vh_-_300px)] max-h-full overflow-auto scroll-smooth focus:scroll-auto">
         <div className="custom-accordion">
           {/* Card Personal Info*/}
           <div className="card mb-2 rounded border border-[#DCDCDC] bg-white">
@@ -112,10 +113,20 @@ export function Setting({isActive}) {
                 </div>
                 <div className="mt-4 pl-4">
                   {/* Thêm thông tin người dùng */}
+
                   <ProfileInfo label={"Name"} value={currentUser.Fullname} />
                   <ProfileInfo label={"Email"} value={currentUser.Email} />
                   <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
                   <ProfileInfo label={"Location"} value={currentUser.Location} />
+
+              {*/    {profileDetails.map((detail, index) => (
+                      <ProfileInfo
+                        key={index} 
+                        label={detail.label}
+                        value={detail.value}
+                      />
+                    ))}
+                    */}
                 </div>
               </div>
             </div>
