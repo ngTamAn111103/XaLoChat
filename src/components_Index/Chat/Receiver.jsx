@@ -24,7 +24,7 @@ export function Receiver({
 
   return (
     <>
-    <div key={index}>
+    <div key={index} className="w-1/2 lg:w-fit">
       <div className="mb-3 flex items-center">
         {isFirst == true ? (
           <>
@@ -40,7 +40,7 @@ export function Receiver({
         )}
       </div>
       <div className="ps-9">
-        <div className="w-fit msg max-w-sm rounded-lg bg-primary p-2 text-white shadow" onClick={handShowTime} >
+        <div className="msg w-fit lg:max-w-sm rounded-lg bg-primary p-2 text-white shadow" onClick={handShowTime} >
           {msg}
         </div>
         {isLast == true || showTime == true? (

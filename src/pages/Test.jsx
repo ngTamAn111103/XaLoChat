@@ -69,7 +69,7 @@ export const fakeMessages = {
       {
         uid: 0,
         createdAt: "9:02",
-        mes: "tin nhắn thôi mà2",
+        mes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium doloremque debitis dicta, excepturi temporibus pariatur perferendis culpa optio rem aspernatur nam consequatur eligendi eius iste aut provident, ad a., ",
       },
       {
         uid: 0, 

@@ -15,7 +15,7 @@ function GroupContact({
   const listName = nameList.map((element) => (
     <li
       key={element.id}
-      className="block max-w-[23.75rem] px-5 py-2.5 text-sm font-semibold"
+      className="block max-w-full lg:max-w-[23.75rem] px-5 py-2.5 text-sm font-semibold"
     >
       <div className="flex items-center">
         <div className="name flex-1 text-[#343A40]">{element.name}</div>
