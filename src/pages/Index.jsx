@@ -64,7 +64,7 @@ export function Index() {
 
         {/* Phần chat + thông tin cá nhân  */}
 
-        <div className="user-chat fixed z-10 h-screen flex-1 lg:relative lg:z-0 lg:block">
+        <div className="user-chat fixed z-10 left-0 right-0 h-screen flex-1 lg:relative lg:z-0 lg:block">
           <div className="flex h-full flex-row">
             {/* phần chat */}
             <div className="userchat h-full flex-1 bg-text-danger">
