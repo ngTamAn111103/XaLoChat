@@ -13,13 +13,9 @@ import { Footer } from "../components_auth/Footer";
 import { toast } from "react-toastify";
 import { auth } from "../lib/firebase";
 export function Login() {
-  
   // Khởi tạo mặc định usernmae có @gmail.com
   const [username, setUsername] = useState("admin@gmail.com");
   const [loading, setLoading] = useState(false);
-
-  
-
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,10 +26,9 @@ export function Login() {
     // Lấy data người dùng nhập
     const formData = new FormData(e.target);
     const { password } = Object.fromEntries(formData);
-    
 
     try {
-      await signInWithEmailAndPassword(auth, username, password)
+      await signInWithEmailAndPassword(auth, username, password);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -107,7 +102,7 @@ export function Login() {
                     </div>
                   </div>
                   {/* <Link to="/index"> */}
-                    <Button label="Sign in" type="submit" loading={loading} />
+                  <Button label="Sign in" type="submit" loading={loading} />
                   {/* </Link> */}
                 </form>
               </div>

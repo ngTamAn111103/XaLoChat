@@ -1,13 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+
 import Conversation from "./Conversation";
 import OnlineFriend from "./OnlineFriend";
+import { useUserStore } from "../../lib/userStore";
+import { db } from "../../lib/firebase";
 
-function FriendList({ isActive, clickedButton, setClickedButton, friendlist}) {
-  let arrOnline = []
+function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
+  // Lấy người dùng hiện tại
+  const { currentUser } = useUserStore();
+  const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, "ChatRoom", currentUser.ID),async (res) => {
+      const items = res.data().chats;
+
+      const promisses = items.map(async(item)=>{
+        const userDocRef = doc(db, 'Profile', item.receiverID);
+        const userDocSnap = await getDoc(userDocRef);
+
+        const user = userDocRef.data()
+
+        return {...items, user};
+      });
+      const chatData = await Promise.all(promisses);
+      setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
+    });
+
+    return () => {
+      unsub();
+    };
+  }, [currentUser.id]);
+  // console.log("FriendList.jsx:");
+  // console.log(chats);
+
+  let arrOnline = [];
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
-  const listFriend = friendlist?.map((e, i) => {
-    if (e.isOnline == true){ 
-      arrOnline.push(<OnlineFriend avatar={e.avatar} name={(e.name.length) > 8 ? e.name.substring(0,8) + '...' : e.name}/>)
+  // TA: chats: mảng các đoạn chat của thằng người dùng đã có
+  const listFriend = chats?.map((e, i) => {
+    if (e.isOnline == true) {
+      arrOnline.push(
+        <OnlineFriend
+          avatar={e.avatar}
+          name={e.name.length > 8 ? e.name.substring(0, 8) + "..." : e.name}
+        />,
+      );
     }
     return (
       <Conversation
@@ -29,6 +66,7 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist}) {
   function handleClickButton(order) {
     setClickedButton(order);
   }
+
   return (
     <>
       <div className={isActive ? "block" : "hidden"}>
@@ -53,9 +91,7 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist}) {
 
         {/* Online Friends */}
         <div className="">
-          <ul className="space-content-around flex px-5">
-             {...arrOnline}
-          </ul>
+          <ul className="space-content-around flex px-5">{...arrOnline}</ul>
         </div>
         {/* Recent Friend*/}
         <h5 className="mb-5 px-5 pt-4 font-medium text-[#343a40]">Recent</h5>
