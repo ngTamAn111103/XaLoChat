@@ -1,8 +1,8 @@
 function SearchResult({
   i, 
-  avatar = "avatar-captain.jpg",
-  name = "Lù Phi",
-  email ="nono@gmail.com",
+  avatar = "422673745_1431738810981438_8560367173620224784_n.jpg",
+  name,
+  email,
 }) {
   return (
     <>
