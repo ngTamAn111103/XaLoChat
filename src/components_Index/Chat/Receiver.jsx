@@ -9,7 +9,8 @@ export function Receiver({
   createAtReceiver,
   msg,
   isLast,
-  isFirst
+  isFirst,
+  index
 }) {
 
     const [showTime,setShowTime] = useState(false)
@@ -23,6 +24,7 @@ export function Receiver({
 
   return (
     <>
+    <div key={index}>
       <div className="mb-3 flex items-center">
         {isFirst == true ? (
           <>
@@ -49,6 +51,8 @@ export function Receiver({
           ""
         )}
       </div>
+
+    </div>
     </>
   );
 }

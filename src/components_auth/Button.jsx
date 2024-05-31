@@ -16,7 +16,7 @@ export function Button({ label, type = "button", loading = false }) {
                 `}
       >
         {loading ? "Loading" : label}
-      </button>
+       </button>
     </div>
   );
 }
