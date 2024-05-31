@@ -25,7 +25,7 @@ function ChatContainer({messages,friendInfo}) {
   
       //Render người gửi và người nhận 
       if (msg.uid !== friendInfo.uid) {
-        return <Sender msg={msg.mes} createdAt={msg.createdAt} isLast={isLastMessage}></Sender>;
+        return <Sender msg={msg.mes} createdAt={msg.createdAt} isLast={isLastMessage} key={index}></Sender>;
       }
       return (
         <Receiver
@@ -35,6 +35,7 @@ function ChatContainer({messages,friendInfo}) {
           createAtReceiver={msg.createdAt}
           isLast={isLastMessage}
           isFirst={isFirstMessage}
+          key={index}
         ></Receiver>
       );
     });
