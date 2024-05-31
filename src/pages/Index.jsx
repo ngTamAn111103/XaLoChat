@@ -11,68 +11,40 @@ import ContactList from "../components_Index/Contacts/ContactList";
 import { onAuthStateChanged } from "firebase/auth";
 import { Navigate, Outlet } from "react-router-dom";
 import ChatContainer from "../components_Index/ChatContainer";
-
-// import fakeDate from "./Test";
-// import CallModal from "../components_Index/side-menu/Modal";
-
-// // Tạo mảng userProfile
-// const userProfile = {
-//   avatarSrc: "./images/avt.png",
-//   name: "Patricia Smith",
-//   activityStatus: "Active",
-//   description:
-//     "If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual.",
-// };
-
-// // Tạo mảng profileDetails
-// const profileDetails = [
-//   { label: "Name", value: "Patricia Smith" },
-//   { label: "Email", value: "adc@123.com" },
-//   { label: "Time", value: "11:40 AM" },
-//   { label: "Location", value: "California, USA" },
-// ];
-
-// // Tạo mảng profileSetting
-// const profileSetting = {
-//   avatarSrc: "./images/avt.png",
-//   name: "Patricia Smith",
-// };
-
-// export function Index() {
-//   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
-//   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
-//   const [showChat, setShowChat] = useState(fakeDate);
-//   const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
-//   const searchRef = useRef(null); // useRef
-
-//   // Dropdown state
-//   const [showDropdown, setShowDropdown] = useState(false);
-//   const dropdownRef = useRef(null);
-
-//   // Thêm sựu kiện khi click ra ngoài của thanh tiềm kiếm
-//   useEffect(() => {
-//     function handleClickOutside(event) {
-//       if (searchRef.current && !searchRef.current.contains(event.target)) {
-//         setShowSearch(false);
-//       }
-//       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-//         setShowDropdown(false);
-//       }
-//     }
-//     document.addEventListener("mousedown", handleClickOutside);
-//     return () => {
-//       document.removeEventListener("mousedown", handleClickOutside);
-//     };
-//   }, [searchRef, dropdownRef]);
-
-import { fakeFriendList, fakeMessages } from "./Test";
+import CallModal from "../components_Index/side-menu/Modal";
+import { fakeFriendList, fakeMessages, userProfile, profileDetails,profileSetting } from "./Test";
 import Toast from "../general_component/Toast";
+
+
+ 
 export function Index() {
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
   const [clickedChat, setClickedChat] = useState(0); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
   const [showFriendList, setshowFriendList] = useState(fakeFriendList);
+  const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
+  const searchRef = useRef(null); // useRef
+
+  // Dropdown state
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Thêm sựu kiện khi click ra ngoài của thanh tiềm kiếm
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSearch(false);
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [searchRef, dropdownRef]);
 
   useEffect(() => {
     //setshowChat sau khi an vao 1 nguoi
@@ -116,11 +88,10 @@ export function Index() {
             <GroupList isActive={selectedButton == "group" ? true : false} />
             <ContactList
               isActive={selectedButton == "contacts" ? true : false}/> 
-                  <Setting
+            <Setting
               isActive={selectedButton === "setting"}
               profileSetting={profileSetting}
-              profileDetails={profileDetails}
-            />
+              profileDetails={profileDetails}/>
           </div>
         </div>
 
