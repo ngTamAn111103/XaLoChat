@@ -83,31 +83,7 @@ export function Profile({
                   >
                     <i className="fas fa-ellipsis-v"></i>
                   </button>
-//                   {dropdownOpen && (
-//                     <div className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg">
-//                       <div className="py-1">
-//                         <button
-//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-//                           onClick={() => {}}
-//                         >
-//                           Edit
-//                         </button>
-//                         <button
-//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-//                           onClick={() => {}}
-//                         >
-//                           Action
-//                         </button>
-//                         <div className="border-t border-[#DCDCDC]"></div>
-//                         <button
-//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
-//                           onClick={() => {}}
-//                         >
-//                           Another action
-//                         </button>
-//                       </div>
-//                     </div>
-//                   )}
+ 
                   <div
                     className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg"
                     style={dropdownStyles}
@@ -155,17 +131,7 @@ export function Profile({
           </div>
           <div className="custom-accordion">
             {/* First Card */}
-//         {extend}
-//         <UserProfile
-//           avatarSrc={userProfile ? userProfile.avatarSrc : ""}
-//           name={userProfile ? userProfile.name : ""}
-//           activityStatus={userProfile ? userProfile.activityStatus : ""}
-//           description={userProfile ? userProfile.description : ""}
-//         />
-
-//         <div className="user-profile-desc px-4 pt-4">
-//           <div className="custom-accordion h-[calc(100vh_-_400px)] max-h-full overflow-auto scroll-smooth focus:scroll-auto">
-
+ 
             <div className="card mb-2 rounded-md border border-[#DCDCDC] bg-white p-1">
               <div className="cursor-pointer" onClick={handleToggleOne}>
                 <h6 className="flex items-center text-xs font-bold">
@@ -189,18 +155,9 @@ export function Profile({
                       label={"Location"}
                       value={currentUser.Location}
                     />
-//                     {profileDetails.map((detail, index) => (
-//                       <ProfileInfo
-//                         key={index} 
-//                         label={detail.label}
-//                         value={detail.value}
-//                       />
-//                     ))}
                   </div>
                 </div>
               </div>
-            </div>
-
             {/* Second Card */}
             <div className=" mb-1 rounded-md border border-[#DCDCDC] bg-white p-1">
               <div className="cursor-pointer" onClick={handleToggleTwo}>
@@ -235,6 +192,7 @@ export function Profile({
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

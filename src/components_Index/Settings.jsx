@@ -119,7 +119,7 @@ export function Setting({isActive, profileSetting, profileDetails}) {
                   <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
                   <ProfileInfo label={"Location"} value={currentUser.Location} />
 
-              {*/    {profileDetails.map((detail, index) => (
+              {/*    {profileDetails.map((detail, index) => (
                       <ProfileInfo
                         key={index} 
                         label={detail.label}
