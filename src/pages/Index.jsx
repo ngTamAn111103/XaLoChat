@@ -95,7 +95,7 @@ export function Index() {
                                 >
                                   {showFriendList[clickedChat].name}
                                 </a>
-                                <i class="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
+                                <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
                               </h5>
                             </div>
                           </div>
@@ -105,13 +105,13 @@ export function Index() {
                         <div className="col-4 col-sm-8  ">
                           <ul className="user-chat-nav chat-option mb-0 mt-0 list-none pl-0">
                             <li className="mr-7 inline-block">
-                              <i class="fa-solid fa-magnifying-glass"></i>
+                              <i className="fa-solid fa-magnifying-glass"></i>
                             </li>
                             <li className="mr-7 inline-block">
-                              <i class="fa-solid fa-phone"></i>
+                              <i className="fa-solid fa-phone"></i>
                             </li>
                             <li className="mr-7 inline-block">
-                              <i class="fa-solid fa-video"></i>
+                              <i className="fa-solid fa-video"></i>
                             </li>
                             <li
                               className="mr-7 inline-block"
@@ -119,10 +119,10 @@ export function Index() {
                                 setUserInfo(true);
                               }}
                             >
-                              <i class="fa-solid fa-user"></i>
+                              <i className="fa-solid fa-user"></i>
                             </li>
                             <li className="mr-7 inline-block">
-                              <i class="fa-solid fa-ellipsis-vertical"></i>
+                              <i className="fa-solid fa-ellipsis-vertical"></i>
                             </li>
                           </ul>
                         </div>
@@ -153,7 +153,7 @@ export function Index() {
                       setUserInfo(!showUserInfo);
                     }}
                   >
-                    <i class="fa-solid fa-x font-extrabold"></i>
+                    <i className="fa-solid fa-x font-extrabold"></i>
                   </div>
                 }
               />

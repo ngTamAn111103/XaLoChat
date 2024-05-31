@@ -11,7 +11,7 @@ function ChatContainer({messages,friendInfo}) {
        //TH1: tin nhắn đầu tiên của mảng hoặc đầu tiên của chuỗi tin nhắn 
        if (index == 0 || index + 1 != messages.length && index - 1 >= 0 && messages[index-1].uid != msg.uid) { 
          isFirstMessage = true
-         console.log('index: '+index)
+        //  console.log('index: '+index)
       }
       //TH2: tin nhắn cuối cùng của chuỗi tin nhắn 
       else if (index + 1 < messages.length && messages[index + 1].uid != msg.uid) {

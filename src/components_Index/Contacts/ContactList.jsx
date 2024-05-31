@@ -56,6 +56,7 @@ function ContactList({isActive}) {
         <div className="scrollbar-config mt-5  h-[calc(100vh_-_140px)] overflow-auto scroll-smooth py-6 ps-6 pe-0 lg:p-6 focus:scroll-auto">
           {nameList.map((element) => (
             <GroupContact
+            key={element.id}
               letter={Object.keys(element)[0]}
               nameList={element[Object.keys(element)[0]]}
             />

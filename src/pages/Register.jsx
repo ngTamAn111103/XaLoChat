@@ -16,6 +16,7 @@ export function Register() {
   const [formData, setFormData] = useState({
     password: "admin@gmail.com",
     email: "admin@gmail.com",
+    fullname: "",
     confirm_password: "admin@gmail.com",
   });
 
@@ -33,7 +34,7 @@ export function Register() {
     setLoading(true)
 
     // Lấy giá trị email từ state formData
-    const { email, password, confirm_password } = formData;
+    const { email, password, confirm_password, fullname} = formData;
 
     // Xử lý ngoại lệ:
     try {
@@ -56,7 +57,7 @@ export function Register() {
           await setDoc(doc(db, "Profile", res.user.uid), {
             ID: res.user.uid,
             email,
-            Fullname: email,
+            Fullname: fullname,
             Avatar: "avatar_default.jpg",
             Location: "Viet Nam",
             Description: "",
@@ -182,10 +183,11 @@ export function Register() {
                   />
                   <Input
                     textLabel="Full name"
-                    htmlFor="Full name"
+                    htmlFor="fullname"
                     placeholder="Enter Full name"
                     inputType="text"
                     icon="fa-regular fa-user"
+                    value={formData.fullname}
                     onChange={(e) => handleChange(e)}
                     onBlur={(e) => handleChange(e)}
               

@@ -86,7 +86,6 @@ function App() {
           {/*
            Mặc định profile 
            */}
-          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>
