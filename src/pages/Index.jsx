@@ -80,7 +80,7 @@ export function Index() {
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
         {/* <Toast status="success" content="lorem abc"></Toast> */}
-        <Toast status="alert" content="Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet"></Toast>
+        {/* <Toast status="alert" content="Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet"></Toast> */}
 
         <NavbarLeft
           selectedButton={selectedButton}

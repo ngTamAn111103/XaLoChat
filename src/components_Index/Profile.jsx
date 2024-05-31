@@ -3,6 +3,7 @@ import ProfileInfo from "./ProfileInfo";
 import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
+import { useUserStore } from "../lib/userStore";
 
 export function Profile({
   isHeader = true,
@@ -19,6 +20,8 @@ export function Profile({
     transform: "translateY(10px)",
     transition: "opacity 0.3s ease, transform 0.3s ease",
   });
+ // Thông tin của người dùng
+  const { currentUser } = useUserStore();
 
   const dropdownRef = useRef(null);
 
@@ -65,6 +68,7 @@ export function Profile({
 
   return (
     <>
+
       <div className={isActive ? "absolute block h-full lg:w-[360px]" : "hidden"}>
         {isHeader && (
           <Header
@@ -79,6 +83,31 @@ export function Profile({
                   >
                     <i className="fas fa-ellipsis-v"></i>
                   </button>
+//                   {dropdownOpen && (
+//                     <div className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg">
+//                       <div className="py-1">
+//                         <button
+//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+//                           onClick={() => {}}
+//                         >
+//                           Edit
+//                         </button>
+//                         <button
+//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+//                           onClick={() => {}}
+//                         >
+//                           Action
+//                         </button>
+//                         <div className="border-t border-[#DCDCDC]"></div>
+//                         <button
+//                           className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+//                           onClick={() => {}}
+//                         >
+//                           Another action
+//                         </button>
+//                       </div>
+//                     </div>
+//                   )}
                   <div
                     className="absolute right-0 mt-2 w-40 rounded-md bg-white shadow-lg"
                     style={dropdownStyles}
@@ -110,21 +139,40 @@ export function Profile({
             }
           />
         )}
-        {extend}
-        <UserProfile
-          avatarSrc={userProfile ? userProfile.avatarSrc : ""}
-          name={userProfile ? userProfile.name : ""}
-          activityStatus={userProfile ? userProfile.activityStatus : ""}
-          description={userProfile ? userProfile.description : ""}
-        />
 
-        <div className="user-profile-desc px-4 pt-4">
-          <div className="custom-accordion h-[calc(100vh_-_400px)] max-h-full overflow-auto scroll-smooth focus:scroll-auto">
+        {/* thêm phần extend vào */}
+        {extend}
+        {/* Component User Profile */}
+        <UserProfile
+          avatarSrc={ currentUser.Avatar || "./images/avt.png"}
+          name={currentUser.Fullname}
+          activityStatus={"Active"}
+        />
+        <div className="user-profile-desc p-4">
+          <div className="text-muted">
+            {/* Thêm ProfileInfo với prop value */}
+            <ProfileInfo p={currentUser.Description} />
+          </div>
+          <div className="custom-accordion">
+            {/* First Card */}
+//         {extend}
+//         <UserProfile
+//           avatarSrc={userProfile ? userProfile.avatarSrc : ""}
+//           name={userProfile ? userProfile.name : ""}
+//           activityStatus={userProfile ? userProfile.activityStatus : ""}
+//           description={userProfile ? userProfile.description : ""}
+//         />
+
+//         <div className="user-profile-desc px-4 pt-4">
+//           <div className="custom-accordion h-[calc(100vh_-_400px)] max-h-full overflow-auto scroll-smooth focus:scroll-auto">
+
             <div className="card mb-2 rounded-md border border-[#DCDCDC] bg-white p-1">
               <div className="cursor-pointer" onClick={handleToggleOne}>
                 <h6 className="flex items-center text-xs font-bold">
                   <i className="far fa-user p-2 pl-4"></i>
                   About
+                  {/* Thêm icon chevron cho toggle */}
+
                   <i
                     className={`fas fa-chevron-${toggleOne ? "up" : "down"} fa-xs ml-auto pr-4`}
                   ></i>
@@ -133,23 +181,34 @@ export function Profile({
               <div className={` ${toggleOne ? "block" : "hidden"}`}>
                 <div className="card-body">
                   <div className="mt-4 pl-4">
-                    {profileDetails.map((detail, index) => (
-                      <ProfileInfo
-                        key={index} 
-                        label={detail.label}
-                        value={detail.value}
-                      />
-                    ))}
+                    {/* Thêm thông tin người dùng */}
+                    <ProfileInfo label={"Name"} value={currentUser.Fullname} />
+                    <ProfileInfo label={"Email"} value={currentUser.Email} />
+                    <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
+                    <ProfileInfo
+                      label={"Location"}
+                      value={currentUser.Location}
+                    />
+//                     {profileDetails.map((detail, index) => (
+//                       <ProfileInfo
+//                         key={index} 
+//                         label={detail.label}
+//                         value={detail.value}
+//                       />
+//                     ))}
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Second Card */}
             <div className=" mb-1 rounded-md border border-[#DCDCDC] bg-white p-1">
               <div className="cursor-pointer" onClick={handleToggleTwo}>
                 <h6 className="flex items-center text-xs font-bold">
                   <i className="fas fa-paperclip p-2 pl-4"></i>
                   Attached Files
+                  {/* Thêm icon chevron cho toggle */}
+
                   <i
                     className={`fas fa-chevron-${toggleTwo ? "up" : "down"} fa-xs ml-auto pr-4`}
                   ></i>
@@ -157,6 +216,7 @@ export function Profile({
               </div>
               <div className={` ${toggleTwo ? "block" : "hidden"} p-2 pb-6`}>
                 <div className="card-body">
+                  {/* Thêm FileCard với thông tin tập tin */}
                   <FileCard
                     fileName={"Admin-A.zip"}
                     fileSize={"12.5 MB"}

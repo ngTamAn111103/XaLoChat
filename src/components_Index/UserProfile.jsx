@@ -2,9 +2,9 @@ import React from "react";
 
 function UserProfile({ name, avatarSrc, activityStatus, description }) {
   return (
-    <div className="p-4 text-center">
-      <div className="inline-block rounded-full border border-[#DCDCDC] p-1">
-        <img src={avatarSrc} className="h-20 w-20 rounded-full" alt={name} />
+    <div className="border-b border-[#DCDCDC] p-4 text-center">
+      <div className="border border-[#DCDCDC] inline-block p-1 rounded-full">
+        <img src={avatarSrc || "./images/avt.png"} className="h-20 w-20 rounded-full" alt={avatarSrc} />
       </div>
       <h5 className="text-base text-black">{name}</h5>
       <p className="mb-5 text-xs text-[#7A7F9A] ">
