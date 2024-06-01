@@ -11,7 +11,6 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
   const { currentUser } = useUserStore();
   const [chats, setChats] = useState([]);
 
- const [listChatroomID]  = currentUser.Chatroom
  useEffect(() => {
   // Lấy danh sách ID phòng chat của người dùng hiện tại
   const listChatroomID = currentUser?.Chatroom || []; // Xử lý trường hợp currentUser chưa được load
@@ -64,7 +63,7 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
     }
     return (
       <Conversation
-        avatar={e.isGroup? e.Avatar:e.Members[0].Avatar}
+        avatar={e.avatar}
         notifycation={e.notifycation}
         isOnline={e.isOnline}
         name={e.name}
