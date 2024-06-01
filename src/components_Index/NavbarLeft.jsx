@@ -12,6 +12,7 @@ import { useUserStore } from "../lib/userStore"; // Hoặc đường dẫn đế
 export function NavbarLeft({ selectedButton, setSelectedButton }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { currentUser } = useUserStore();
 
   const handleClickButton = (selectedButtonName) => {
     setSelectedButton(selectedButtonName);
@@ -119,7 +120,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
               onClick={toggleDropdown}
             >
               <img
-                src={avatar}
+                src={currentUser.Avatar}
                 alt="Avatar"
                 className="
                 h-8 w-8 rounded-full"
