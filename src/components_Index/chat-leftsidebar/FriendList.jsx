@@ -8,19 +8,22 @@ import { db } from "../../lib/firebase";
 function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
   // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
+  // Lưu trữ danh sách các cuộc trò chuyện (mảng).
   const [chats, setChats] = useState([]);
-  // 1 Object lưu trữ thông tin đối phương cho mỗi cuộc trò chuyện với key là ID phòng
+  // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
   const [receiverInfos, setReceiverInfos] = useState({});
+
   useEffect(() => {
     // Lấy danh sách ID phòng chat của người dùng hiện tại
-    const listChatroomID = currentUser?.Chatroom || []; // Xử lý trường hợp currentUser chưa được load
-
+    const listChatroomID = currentUser?.Chatroom || []; 
     // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp
     const unsubscribeFunctions = [];
 
     // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
     listChatroomID.forEach((chatroomId) => {
+      // lắng nghe sự thay đổi của từng phòng chat trong listChatroomID:
       const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+        // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
         if (doc.exists()) {
           const chatroomData = doc.data();
           // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
@@ -87,28 +90,9 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
       );
     }
 
-    // Nếu không phải group
-    if (!e.isGroup) {
-      // Loại bỏ ID của người dùng hiện tại
-      const receiverId = e.Members.filter(
-        (member) => member !== currentUser.ID,
-      )[0];
-
-      // Lấy thông tin đối phương
-
-      getDoc(doc(db, "Profile", receiverId)).then((docSnap) => {
-        if (docSnap.exists()) {
-          console.log(
-            "FriendList.jsx: Thông tin đối phương của chat 1-1:",
-            docSnap.data(),
-          );
-        } else {
-          console.log("FriendList.jsx: Lỗi truy vấn đối phương của chat 1-1");
-        }
-      });
-    }
     // Sử dụng receiverInfo từ state
     const receiverInfo = receiverInfos[e.id];
+
 
     return (
       <Conversation
