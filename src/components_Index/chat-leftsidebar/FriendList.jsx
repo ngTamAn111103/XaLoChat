@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
-
 import Conversation from "./Conversation";
 import OnlineFriend from "./OnlineFriend";
 import { useUserStore } from "../../lib/userStore";
@@ -10,8 +9,8 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
   // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
   const [chats, setChats] = useState([]);
-  // Khởi tạo receiverInfo
-  const [receiverInfo, setReceiverInfo] = useState(null); 
+  // 1 Object lưu trữ thông tin đối phương cho mỗi cuộc trò chuyện với key là ID phòng
+  const [receiverInfos, setReceiverInfos] = useState({});
   useEffect(() => {
     // Lấy danh sách ID phòng chat của người dùng hiện tại
     const listChatroomID = currentUser?.Chatroom || []; // Xử lý trường hợp currentUser chưa được load
@@ -47,11 +46,38 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
     };
   }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
 
+  useEffect(() => {
+    const fetchReceiverInfos = async () => {
+      const newReceiverInfos = {};
+      // Lặp qua từng chat trong chats
+      for (const chat of chats) {
+        // Kiểm tra ko phải nhóm chat
+        if (!chat.isGroup) {
+          // Lấy ID người còn lại
+          const otherMembers = chat.Members.filter(
+            (member) => member !== currentUser.ID,
+          );
+          const receiverId = otherMembers[0];
+          // lấy profile người còn lại
+          const docRef = doc(db, "Profile", receiverId);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            newReceiverInfos[chat.id] = docSnap.data();
+          }
+        }
+      }
+      setReceiverInfos(newReceiverInfos);
+    };
+
+    fetchReceiverInfos();
+  }, [chats, currentUser.ID]);
+
   let arrOnline = [];
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
   // TA: chats: mảng các đoạn chat của thằng người dùng đã có
   // const listFriend = friendlist?.map((e, i) => {
-  const listFriend = chats?.map ((e, i) => {
+  const listFriend = chats?.map((e, i) => {
     if (e.isOnline == true) {
       arrOnline.push(
         <OnlineFriend
@@ -61,7 +87,6 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
       );
     }
 
-  
     // Nếu không phải group
     if (!e.isGroup) {
       // Loại bỏ ID của người dùng hiện tại
@@ -71,17 +96,19 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
 
       // Lấy thông tin đối phương
 
-
-      getDoc(doc(db, "Profile", receiverId)).then(docSnap => {
+      getDoc(doc(db, "Profile", receiverId)).then((docSnap) => {
         if (docSnap.exists()) {
-          console.log("FriendList.jsx: Thông tin đối phương của chat 1-1:", docSnap.data());
-          setReceiverInfo(docSnap.data())
+          console.log(
+            "FriendList.jsx: Thông tin đối phương của chat 1-1:",
+            docSnap.data(),
+          );
         } else {
           console.log("FriendList.jsx: Lỗi truy vấn đối phương của chat 1-1");
         }
-      })
-      
+      });
     }
+    // Sử dụng receiverInfo từ state
+    const receiverInfo = receiverInfos[e.id];
 
     return (
       <Conversation
