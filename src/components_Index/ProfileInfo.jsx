@@ -1,10 +1,37 @@
 import React, { useState } from "react";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { useUserStore } from "../lib/userStore";
+import { toast } from "react-toastify";
 
 function ProfileInfo({ label, value, isEditing, onSave }) {
   const [editedValue, setEditedValue] = useState(value);
+  const { currentUser } = useUserStore();
 
-  const handleSaveClick = () => {
-    onSave(editedValue); // gửi giá trị mới của input về component cha để lưu
+  const handleSaveClick = async () => {
+    onSave(editedValue);
+    // TA: Backend: Xử lý update doc
+    try {
+      // Cập nhật trên Firebase Realtime Database
+      const db = getFirestore();  // Thay getDatabase bằng getFirestore
+      const profileRef = doc(db, "Profile", currentUser.ID); // Thay ref bằng doc
+      await updateDoc(profileRef, { // Thay update bằng updateDoc
+          Fullname: editedValue 
+      });
+      
+      console.log("Cập nhật fullname thành công!");
+      toast("Cập nhật thành công!")
+
+    } catch (error) {
+      console.error("Lỗi khi cập nhật fullname:", error);
+
+      
+    }
+    
+
+   
+
+    
+    
   };
 
   return (
