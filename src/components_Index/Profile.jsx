@@ -137,7 +137,7 @@ export function Profile({
                 <div className="mt-4 pl-4">
                     <ProfileInfo label={"Name"} value={currentUser.Fullname} />
                     <ProfileInfo label={"Email"} value={currentUser.Email} />
-                    <ProfileInfo label={"Time"} value={currentUser.updatedAt} />
+                    <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
                     <ProfileInfo
                       label={"Location"}
                       value={currentUser.Location}
