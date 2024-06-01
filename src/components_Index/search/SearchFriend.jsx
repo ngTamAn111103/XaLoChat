@@ -10,11 +10,21 @@ import {
   doc,
 } from "firebase/firestore";
 import { db } from "../../lib/firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function SearchFriend({ isActive }) {
-  // TA: Backend
-  const [users, setUsers] = useState([]);
+export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setUsers, setFlag }) {
+  //TN: Front-end: xu ly khi an vao 1 user dang tim 
+  function handleClickUser (order,e) { 
+    console.log(order)
+    setClickedChat((order))
+    setFlag("search")
+    console.log(clickedChat)
+  }
+  useEffect(()=>{ 
+
+  },[]) 
+  // // TA: Backend
+  // const [users, setUsers] = useState([]); => doi qua index.jsx
   // Click vào 1 li của kết quả search
   const handleClickItem = (e)=>{
     console.log(e.target);
@@ -39,13 +49,16 @@ export function SearchFriend({ isActive }) {
       querySnapshot.forEach((doc) => {
         // mỗi doc là 1 user
         const user = doc.data();
-
+        
         // Kiểm tra tên
         if (user.Fullname.includes(q)) {
           result.push(user);
         }
       });
       setUsers(result);
+      //reload lai cai da an 
+    
+
       // result.map((e) => {
       //   console.log(e.Fullname);
       //   console.log(e.Email);
@@ -55,27 +68,7 @@ export function SearchFriend({ isActive }) {
       console.error("SearchFriend.jsx LỖI TRUY VẤN: " + error);
     }
   };
-  const fakeSearch = [
-    {
-      uid: 1,
-      avatar: "avatar-girl.jpg",
-      name: "Nguyen van A",
-      email: "nva@gmail.com",
-    },
-    {
-      uid: 2,
-      name: "Nguyen van A",
-      avatar: "avatar-girl.jpg",
-      email: "nva@gmail.com",
-    },
-    {
-      uid: 2,
-      name: "Nguyen van A",
-      avatar: "avatar-girl.jpg",
-      email: "nva@gmail.com",
-    },
-  ];
-  const resultList = fakeSearch;
+
   const result = users.map((e, i) => {
     return (
       <SearchResult
@@ -84,7 +77,7 @@ export function SearchFriend({ isActive }) {
         email={e.Email}
         key={i}
         i={i}
-        onClick={handleClickItem}
+        onClick={(e)=>handleClickUser(i,e)}
 
       ></SearchResult>
     );
@@ -116,3 +109,5 @@ export function SearchFriend({ isActive }) {
     </>
   );
 }
+
+

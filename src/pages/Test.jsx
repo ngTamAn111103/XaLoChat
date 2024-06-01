@@ -155,3 +155,25 @@ export const userChat = {
   avatarSrc: "./images/avt.png",
   name: "Patricia Smith",
 }
+
+//ds tìm kiếm 
+ export const fakeSearch = [
+    {
+      uid: 1,
+      avatar: "avatar-girl.jpg",
+      name: "Nguyen van A",
+      email: "nva@gmail.com",
+    },
+    {
+      uid: 2,
+      name: "Nguyen van A",
+      avatar: "avatar-girl.jpg",
+      email: "nva@gmail.com",
+    },
+    {
+      uid: 2,
+      name: "Nguyen van A",
+      avatar: "avatar-girl.jpg",
+      email: "nva@gmail.com",
+    },
+  ];

@@ -27,13 +27,19 @@ export function Index() {
   const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
-  const [clickedChat, setClickedChat] = useState(-1); //ấn để chọn tin nhắn và update vị trí được ấn
+  const [clickedChat, setClickedChat] = useState(-5); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
   const [showFriendList, setshowFriendList] = useState(fakeFriendList);
   const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
   const searchRef = useRef(null); // useRef
   const chatRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
+  const [flagSearchOrChat,setFlag] = useState("message"); 
+  let image = useRef() 
+  let name = useRef()
+
+  // TA: Backend
+  const [users, setUsers] = useState([]);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -62,13 +68,49 @@ export function Index() {
     };
   }, [searchRef, dropdownRef, showModal]);
 
+  //An de hien thi chat tuong ung
   useEffect(() => {
-    //setshowChat sau khi an vao 1 nguoi
-    if (fakeMessages[`${clickedChat + 1}`]) {
-      setShowChat(fakeMessages[`${clickedChat + 1}`]);
-    } else {
-      setShowChat("");
+    if (flagSearchOrChat == "message") { 
+      //setshowChat sau khi an vao 1 nguoi
+      if (fakeMessages[`${clickedChat + 1}`]) {
+        setShowChat(fakeMessages[`${clickedChat + 1}`]);
+        image.current = <img src={`images/${showFriendList[clickedChat]?.avatar}`}  className="h-10 w-10 rounded-full"/>
+        name.current = 
+          <>
+            <a href="#" className="decoration-0 outline-none sm:hidden">
+              {showFriendList[clickedChat]?.name.length > 14
+                ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
+                : showFriendList[clickedChat]?.name.substring(0, 17)}
+            </a>
+            <a
+              href="#"
+              className="hidden decoration-0 outline-none sm:inline-block"
+            >
+              {showFriendList[clickedChat]?.name}
+            </a>
+          </>
+      } 
+      else {
+        setShowChat("");
+      }
+    }else if (flagSearchOrChat == "search") { 
+      image.current = <img src={`images/${users[clickedChat].Avatar ? users[clickedChat].Avatar : "avatar-captain" }`}  className="h-10 w-10 rounded-full"/>
+      name.current = 
+        <>
+          <a href="#" className="decoration-0 outline-none sm:hidden">
+            {users[clickedChat]?.Fullname.length > 14
+              ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
+              : users[clickedChat]?.Fullname.substring(0, 17)}
+          </a>
+          <a
+            href="#"
+            className="hidden decoration-0 outline-none sm:inline-block"
+          >
+            {users[clickedChat]?.Fullname}
+          </a>
+        </>
     }
+    //responsive
     if (chatRef.current.classList.contains("left-full")) {
       chatRef.current.classList.remove("left-full");
       chatRef.current.classList.add("left-0");
@@ -87,7 +129,6 @@ export function Index() {
   }
   // đóng modal khi click ra ngoài
   const modalRef = useRef(null);
-
 
   // mặc định là hiện lên phần chat
   return (
@@ -117,6 +158,7 @@ export function Index() {
               clickedButton={clickedChat}
               setClickedButton={setClickedChat}
               friendlist={showFriendList}
+              setFlag={setFlag}
             ></FriendList>
             <GroupList isActive={selectedButton == "group" ? true : false} />
             <ContactList
@@ -129,9 +171,12 @@ export function Index() {
             />
             <SearchFriend
               isActive={selectedButton == "plus" ? true : false}
-              clickedButton={clickedChat}
-              setClickedButton={setClickedChat}
+              clickedChat={clickedChat}
+              setClickedChat={setClickedChat}
               friendlist={showFriendList}
+              setUsers={setUsers}
+              users={users}
+              setFlag={setFlag}
             />
           </div>
         </div>
@@ -162,33 +207,10 @@ export function Index() {
                             >
                               <i className="fa-solid fa-angle-left"></i>
                             </div>
-                            <div className="ml-0 mr-4">
-                              <img
-                                src={`images/${showFriendList[clickedChat]?.avatar}`}
-                                alt=""
-                                className="h-10 w-10 rounded-full"
-                              />
-                            </div>
+                            <div className="ml-0 mr-4">{image.current}</div>
                             <div className="flex-grow overflow-hidden">
                               <h5 className="mb-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-bs-dark">
-                                <a
-                                  href="#"
-                                  className="decoration-0 outline-none sm:hidden"
-                                >
-                                  {showFriendList[clickedChat]?.name.length > 14
-                                    ? showFriendList[
-                                        clickedChat
-                                      ]?.name.substring(0, 17) + "..."
-                                    : showFriendList[
-                                        clickedChat
-                                      ]?.name.substring(0, 17)}
-                                </a>
-                                <a
-                                  href="#"
-                                  className="hidden decoration-0 outline-none sm:inline-block"
-                                >
-                                  {showFriendList[clickedChat]?.name}
-                                </a>
+                                {name.current}
                                 <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
                               </h5>
                             </div>
