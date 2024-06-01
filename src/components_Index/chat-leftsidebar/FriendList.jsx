@@ -13,19 +13,22 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist, set
   // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
   const [receiverInfos, setReceiverInfos] = useState({});
 
+  // Lắng nghe sự kiện khi profile được thay đổi
   useEffect(() => {
-    // Lấy danh sách ID phòng chat của người dùng hiện tại
+    // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
     const listChatroomID = currentUser?.Chatroom || []; 
-    // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp
+    // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom 
     const unsubscribeFunctions = [];
 
-    // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
+    // Duyệt qua từng id chatroom
     listChatroomID.forEach((chatroomId) => {
-      // lắng nghe sự thay đổi của từng phòng chat trong listChatroomID:
-      const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+      // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
+      const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => { // Lấy thông tin chatroom dựa vào chatroomID
         // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
         if (doc.exists()) {
+
           const chatroomData = doc.data();
+
           // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
           setChats((prevChats) => {
             const index = prevChats.findIndex((chat) => chat.id === chatroomId);
