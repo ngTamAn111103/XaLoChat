@@ -34,9 +34,9 @@ export function Index() {
   const searchRef = useRef(null); // useRef
   const chatRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
-  const [flagSearchOrChat,setFlag] = useState("message"); 
-  const [avatar,setAvatar] = useState()
-  const [name,setName] = useState()
+  const [flagSearchOrChat, setFlag] = useState("message");
+  const [avatar, setAvatar] = useState();
+  const [name, setName] = useState();
 
   // TA: Backend
   const [users, setUsers] = useState([]);
@@ -70,19 +70,23 @@ export function Index() {
 
   //An de hien thi chat tuong ung
   useEffect(() => {
-    console.log("eff: " + clickedChat + flagSearchOrChat)
-  
-    if (flagSearchOrChat == "message") { 
+    // console.log("eff: " + clickedChat + flagSearchOrChat)
+
+    if (flagSearchOrChat == "message") {
       //setshowChat sau khi an vao 1 nguoi
       if (fakeMessages[`${clickedChat + 1}`]) {
         setShowChat(fakeMessages[`${clickedChat + 1}`]);
-        console.log(showFriendList[clickedChat])
-      } 
-      else {
+        console.log(showFriendList[clickedChat]);
+      } else {
         setShowChat("");
       }
-      setAvatar(<img src={`images/${showFriendList[clickedChat]?.avatar}`}  className="h-10 w-10 rounded-full"/>)
-      setName (  
+      setAvatar(
+        <img
+          src={`${showFriendList[clickedChat]?.avatar}`}
+          className="h-10 w-10 rounded-full"
+        />,
+      );
+      setName(
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {showFriendList[clickedChat]?.name.length > 14
@@ -95,11 +99,16 @@ export function Index() {
           >
             {showFriendList[clickedChat]?.name}
           </a>
-        </>
-      ) 
-    }else if (flagSearchOrChat == "search") { 
-      setAvatar(<img src={`images/${users[clickedChat].Avatar ? users[clickedChat].Avatar : "avatar-captain" }`}  className="h-10 w-10 rounded-full"/>)
-      setName ( 
+        </>,
+      );
+    } else if (flagSearchOrChat == "search") {
+      setAvatar(
+        <img
+          src={`${users[clickedChat].Avatar ? users[clickedChat].Avatar : "avatar-captain"}`}
+          className="h-10 w-10 rounded-full"
+        />,
+      );
+      setName(
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {users[clickedChat]?.Fullname.length > 14
@@ -112,9 +121,8 @@ export function Index() {
           >
             {users[clickedChat]?.Fullname}
           </a>
-        </>
-      )
-       
+        </>,
+      );
     }
     //responsive
     if (chatRef.current.classList.contains("left-full")) {

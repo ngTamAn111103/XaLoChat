@@ -71,7 +71,7 @@ export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setU
   const result = users.map((e, i) => {
     return (
       <SearchResult
-        avatar={e.avatar}
+        avatar={e.Avatar}
         name={e.Fullname}
         email={e.Email}
         key={i}
