@@ -15,6 +15,11 @@ import { useState } from "react";
 export function SearchFriend({ isActive }) {
   // TA: Backend
   const [users, setUsers] = useState([]);
+  // Click vào 1 li của kết quả search
+  const handleClickItem = (e)=>{
+    console.log(e.target);
+  }
+  // Xử lý thay đổi value input -> Search realtime
   const handleChangeValue = async (e) => {
     try {
       // lấy chuỗi người dùng nhập
@@ -79,6 +84,8 @@ export function SearchFriend({ isActive }) {
         email={e.Email}
         key={i}
         i={i}
+        onClick={handleClickItem}
+
       ></SearchResult>
     );
   });
