@@ -162,9 +162,12 @@ export function Index() {
       setName(
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
-            {showFriendList[clickedChat]?.name.length > 14
-              ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
-              : showFriendList[clickedChat]?.name.substring(0, 17)}
+            {
+              "Hello bà già"
+            // showFriendList[clickedChat]?.name.length > 14
+            //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
+            //   : showFriendList[clickedChat]?.name.substring(0, 17)
+              }
           </a>
           <a
             href="#"
