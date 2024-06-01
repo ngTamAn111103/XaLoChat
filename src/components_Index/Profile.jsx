@@ -115,7 +115,7 @@ export function Profile({
         {extend}
         <UserProfile
           avatarSrc={userProfile ? userProfile.avatarSrc : ""}
-          name={userProfile ? userProfile.name : ""}
+          name={currentUser.Fullname}
           activityStatus={userProfile ? userProfile.activityStatus : ""}
           description={userProfile ? userProfile.description : ""}
         />

@@ -11,14 +11,20 @@ import ContactList from "../components_Index/Contacts/ContactList";
 import { onAuthStateChanged } from "firebase/auth";
 import { Navigate, Outlet } from "react-router-dom";
 import ChatContainer from "../components_Index/ChatContainer";
-import CallModal from "../components_Index/side-menu/Modal";
-import { fakeFriendList, fakeMessages, userProfile, profileDetails,profileSetting } from "./Test";
+// import CallModal from "../components_Index/side-menu/Modal";
+import {
+  fakeFriendList,
+  fakeMessages,
+  userProfile,
+  profileDetails,
+  profileSetting,
+} from "./Test";
 import Toast from "../general_component/Toast";
 import { SearchFriend } from "../components_Index/search/SearchFriend";
+import { useUserStore } from "../lib/userStore";
 
-
- 
 export function Index() {
+  const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
   const [clickedChat, setClickedChat] = useState(-1); //ấn để chọn tin nhắn và update vị trí được ấn
@@ -26,7 +32,13 @@ export function Index() {
   const [showFriendList, setshowFriendList] = useState(fakeFriendList);
   const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
   const searchRef = useRef(null); // useRef
-  const chatRef = useRef(null)
+  const chatRef = useRef(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -40,12 +52,15 @@ export function Index() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setShowDropdown(false);
       }
+      if (showModal && !modalRef.current.contains(event.target)) {
+        setShowModal(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [searchRef, dropdownRef]);
+  }, [searchRef, dropdownRef, showModal]);
 
   useEffect(() => {
     //setshowChat sau khi an vao 1 nguoi
@@ -54,28 +69,29 @@ export function Index() {
     } else {
       setShowChat("");
     }
-    if (chatRef.current.classList.contains("left-full")) { 
-       chatRef.current.classList.remove("left-full")
-       chatRef.current.classList.add("left-0")
-    }else { 
-      chatRef.current.classList.add("left-full")
+    if (chatRef.current.classList.contains("left-full")) {
+      chatRef.current.classList.remove("left-full");
+      chatRef.current.classList.add("left-0");
+    } else {
+      chatRef.current.classList.add("left-full");
     }
-  
   }, [clickedChat]);
 
-  function handelBackButton() { 
-    if (chatRef.current.classList.contains("left-full")) { 
-      chatRef.current.classList.remove("left-full")
-      chatRef.current.classList.add("left-0")
-   }else { 
-     chatRef.current.classList.add("left-full")
-   }
+  function handelBackButton() {
+    if (chatRef.current.classList.contains("left-full")) {
+      chatRef.current.classList.remove("left-full");
+      chatRef.current.classList.add("left-0");
+    } else {
+      chatRef.current.classList.add("left-full");
+    }
   }
+  // đóng modal khi click ra ngoài
+  const modalRef = useRef(null);
+
+
   // mặc định là hiện lên phần chat
   return (
     <>
-
-
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
@@ -90,7 +106,7 @@ export function Index() {
         {/* Thanh ở giữa*/}
         <div className="me-lg-1 me-1 h-full w-full bg-[#f5f7fb] drop-shadow-lg lg:min-w-[380px] lg:max-w-[380px]	">
           <div className="contain ">
-              <Profile
+            <Profile
               isActive={selectedButton === "user"}
               userProfile={userProfile}
               profileDetails={profileDetails}
@@ -104,23 +120,28 @@ export function Index() {
             ></FriendList>
             <GroupList isActive={selectedButton == "group" ? true : false} />
             <ContactList
-              isActive={selectedButton == "contacts" ? true : false}/> 
+              isActive={selectedButton == "contacts" ? true : false}
+            />
             <Setting
               isActive={selectedButton === "setting"}
               profileSetting={profileSetting}
-              profileDetails={profileDetails}/>
+              profileDetails={profileDetails}
+            />
             <SearchFriend
-                  isActive={selectedButton == "plus" ? true : false}
-                  clickedButton={clickedChat}
-                  setClickedButton={setClickedChat}
-                  friendlist={showFriendList}
-                  />
+              isActive={selectedButton == "plus" ? true : false}
+              clickedButton={clickedChat}
+              setClickedButton={setClickedChat}
+              friendlist={showFriendList}
+            />
           </div>
         </div>
 
         {/* Phần chat + thông tin cá nhân  */}
 
-        <div ref={chatRef} className="user-chat fixed z-10 transition-all duration-300 left-full lg:left-0 right-0 h-screen flex-1 lg:relative lg:z-0 lg:block">
+        <div
+          ref={chatRef}
+          className="user-chat fixed left-full right-0 z-10 h-screen flex-1 transition-all duration-300 lg:relative lg:left-0 lg:z-0 lg:block"
+        >
           <div className="flex h-full flex-row">
             {/* phần chat */}
             <div className="userchat h-full flex-1 bg-text-danger">
@@ -135,8 +156,11 @@ export function Index() {
                         <div className="col-8 col-sm-4">
                           {/* an de tro ve */}
                           <div className="flex items-center">
-                            <div className="block lg:hidden px-2" onClick={()=>handelBackButton()}>
-                             <i className="fa-solid fa-angle-left"></i>
+                            <div
+                              className="block px-2 lg:hidden"
+                              onClick={() => handelBackButton()}
+                            >
+                              <i className="fa-solid fa-angle-left"></i>
                             </div>
                             <div className="ml-0 mr-4">
                               <img
@@ -151,13 +175,19 @@ export function Index() {
                                   href="#"
                                   className="decoration-0 outline-none sm:hidden"
                                 >
-                                  {showFriendList[clickedChat]?.name.length > 14 ? showFriendList[clickedChat]?.name.substring(0,17) + "..." : showFriendList[clickedChat]?.name.substring(0,17)}
+                                  {showFriendList[clickedChat]?.name.length > 14
+                                    ? showFriendList[
+                                        clickedChat
+                                      ]?.name.substring(0, 17) + "..."
+                                    : showFriendList[
+                                        clickedChat
+                                      ]?.name.substring(0, 17)}
                                 </a>
                                 <a
                                   href="#"
-                                  className="decoration-0 outline-none hidden sm:inline-block"
+                                  className="hidden decoration-0 outline-none sm:inline-block"
                                 >
-                                 {showFriendList[clickedChat]?.name}
+                                  {showFriendList[clickedChat]?.name}
                                 </a>
                                 <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
                               </h5>
@@ -199,21 +229,19 @@ export function Index() {
                             </li>
                             {/*======================= call ===============  */}
                             <li className="mr-7 hidden min-[450px]:inline-block">
+                              {/*toggle modal */}
                               <i
                                 className="fa-solid fa-phone"
-                                onClick={() => setShowModal(true)}
+                                onClick={toggleModal}
                               ></i>
-                              {/* Component CallModal */}
-                              <CallModal avatarSrc={"./images/avt.png"} name={"Patricia Smith"}></CallModal>
                             </li>
                             {/*======================= video ===============  */}
                             <li className="mr-7 hidden min-[450px]:inline-block">
+                              {/*toggle modal */}
                               <i
                                 className="fa-solid fa-video"
-                                onClick={() => setShowModal(true)}
+                                onClick={toggleModal}
                               ></i>
-                              {/* Component CallModal  */}
-                              <CallModal avatarSrc={"./images/avt.png"} name={"Patricia Smith"}></CallModal>
                             </li>
                             {/*======================= user ===============  */}
                             <li
@@ -238,7 +266,7 @@ export function Index() {
                                   <div className="absolute right-0 mt-2 w-40 rounded-md bg-white text-[#495057] shadow-lg">
                                     <div className="py-1">
                                       <button
-                                        className="block lg:hidden w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
+                                        className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5] lg:hidden"
                                         onClick={() => {
                                           setUserInfo(true);
                                         }}
@@ -282,14 +310,12 @@ export function Index() {
                       friendInfo={showFriendList[clickedChat]}
                     />
                   </div>
-                  </div>
+                </div>
               </div>
             </div>
             {/* phần thông tin user được ẩn đi */}
             <div
-
-              className={`fixed z-[11] left-0 right-0 transition-all bg-white lg:static user-profile-sidebar ms-1 h-full basis-[23.5rem] overflow-auto ${showUserInfo ? "block" : "hidden"}`}
-
+              className={`user-profile-sidebar fixed left-0 right-0 z-[11] ms-1 h-full basis-[23.5rem] overflow-auto bg-white transition-all lg:static ${showUserInfo ? "block" : "hidden"}`}
             >
               <Profile
                 isHeader={false}
@@ -311,6 +337,66 @@ export function Index() {
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+          }}
+        >
+          <div
+            className="h-[350px] w-[500px]"
+            ref={modalRef}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              backgroundColor: "#fff",
+              padding: "20px",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <div style={{ textAlign: "center" }}>
+              <div className="mb-4 mt-5 inline-block">
+                <img
+                  src={"avatarSrc"}
+                  className="h-20 w-20 rounded-full"
+                  alt={currentUser.Fullname}
+                />
+              </div>
+              <h5 className="text-truncate text-2xl">{currentUser.Fullname}</h5>
+              <p className="text-[#7A7F9A]">Start Audio Call</p>
+            </div>
+            <div
+              className="mt-5"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <button
+                type="button"
+                className="btn btn-danger avatar-sm rounded-circle me-2 p-4 pt-5"
+                onClick={toggleModal}
+              >
+                <i className="fa-solid fa-circle-xmark fa-2x"></i>
+              </button>
+              <button
+                type="button"
+                className="btn btn-success avatar-sm rounded-circle me-2 p-4 pt-5"
+              >
+                <i className="fa-solid fa-square-phone fa-2x"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
