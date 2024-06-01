@@ -10,49 +10,48 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
   // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
   const [chats, setChats] = useState([]);
+  // Khởi tạo receiverInfo
+  const [receiverInfo, setReceiverInfo] = useState(null); 
+  useEffect(() => {
+    // Lấy danh sách ID phòng chat của người dùng hiện tại
+    const listChatroomID = currentUser?.Chatroom || []; // Xử lý trường hợp currentUser chưa được load
 
- useEffect(() => {
-  // Lấy danh sách ID phòng chat của người dùng hiện tại
-  const listChatroomID = currentUser?.Chatroom || []; // Xử lý trường hợp currentUser chưa được load
+    // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp
+    const unsubscribeFunctions = [];
 
-  // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp
-  const unsubscribeFunctions = [];
-
-  // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
-  listChatroomID.forEach((chatroomId) => {
-    const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
-      if (doc.exists()) {
-        const chatroomData = doc.data();
-        // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
-        setChats((prevChats) => {
-          const index = prevChats.findIndex(chat => chat.id === chatroomId);
-          if (index > -1) {
-            // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
-            prevChats[index] = { id: chatroomId, ...chatroomData };
-          } else {
-            // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
-            prevChats.unshift({ id: chatroomId, ...chatroomData });
-          }
-          return [...prevChats];
-        });
-      }
+    // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
+    listChatroomID.forEach((chatroomId) => {
+      const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+        if (doc.exists()) {
+          const chatroomData = doc.data();
+          // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
+          setChats((prevChats) => {
+            const index = prevChats.findIndex((chat) => chat.id === chatroomId);
+            if (index > -1) {
+              // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
+              prevChats[index] = { id: chatroomId, ...chatroomData };
+            } else {
+              // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
+              prevChats.unshift({ id: chatroomId, ...chatroomData });
+            }
+            return [...prevChats];
+          });
+        }
+      });
+      unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
     });
-    unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
-  });
 
-  // Dọn dẹp khi component unmount
-  return () => {
-    unsubscribeFunctions.forEach(unsubscribe => unsubscribe());
-  };
-}, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
-
-
+    // Dọn dẹp khi component unmount
+    return () => {
+      unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+    };
+  }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
 
   let arrOnline = [];
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
   // TA: chats: mảng các đoạn chat của thằng người dùng đã có
   // const listFriend = friendlist?.map((e, i) => {
-    const listFriend = chats?.map((e, i) => {
+  const listFriend = chats?.map ((e, i) => {
     if (e.isOnline == true) {
       arrOnline.push(
         <OnlineFriend
@@ -61,12 +60,35 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
         />,
       );
     }
+
+  
+    // Nếu không phải group
+    if (!e.isGroup) {
+      // Loại bỏ ID của người dùng hiện tại
+      const receiverId = e.Members.filter(
+        (member) => member !== currentUser.ID,
+      )[0];
+
+      // Lấy thông tin đối phương
+
+
+      getDoc(doc(db, "Profile", receiverId)).then(docSnap => {
+        if (docSnap.exists()) {
+          console.log("FriendList.jsx: Thông tin đối phương của chat 1-1:", docSnap.data());
+          setReceiverInfo(docSnap.data())
+        } else {
+          console.log("FriendList.jsx: Lỗi truy vấn đối phương của chat 1-1");
+        }
+      })
+      
+    }
+
     return (
       <Conversation
-        avatar={e.avatar}
+        avatar={e.isGroup ? null : receiverInfo?.Avatar}
         notifycation={e.notifycation}
         isOnline={e.isOnline}
-        name={e.name}
+        name={e.isGroup ? e.Name : receiverInfo?.Fullname} // Sử dụng receiverInfo (không còn là Promise)
         newestMessage={e.newestMessage}
         time={e.time}
         onClickFriend={() => handleClickButton(i)}
@@ -119,225 +141,3 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
 }
 
 export default FriendList;
-
-{
-  /* <ul>
-  <Conversation isOnline={true}
-   isSelected={clickedButton == 1 ? true : false}
-   onClickFriend={()=>handleClickButton(1)}
-   />
-  <Conversation
-    notifycation={1}
-    name="Lorem ipsum, dolor sit... "
-    newestMessage="Lorem ipsum, dolor sit ..."
-    onClickFriend={()=>handleClickButton(2)}
-    isSelected={clickedButton == 2 ? true : false}
-  />
-  <Conversation
-    isOnline={true}
-    notifycation={3}
-    avatar="avatar-tinder.jpg"
-    name="Tinder"
-    newestMessage="Tải app tìm bạn ngay"
-    time="09:00 PM"
-    onClickFriend={()=>handleClickButton(3)}
-    isSelected={clickedButton == 3 ? true : false}
-    isSentFile={true}
-  />
-  <Conversation
-    isSentImage={true}
-    notifycation={2}
-    avatar="avatar-girl.jpg"
-    name="Em"
-    newestMessage="Hello anh cho em lên thuyền..."
-    onClickFriend={()=>handleClickButton(4) } 
-    isSelected={clickedButton == 4 ? true : false}
-  />
-  <Conversation
-  notifycation="99+"
-  avatar="422673745_1431738810981438_8560367173620224784_n.jpg"
-  name="Em iu"
-  newestMessage="Nhớ anh Tâm An quá..."
-/>
-<Conversation
-  notifycation="99+"
-  avatar="428618563_757557076329500_7155410430265501585_n.jpg"
-  name="Dương Bảo Khanh"
-  newestMessage="A đặt bàn thọc bida lúc 12h đúng ko"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="320186702_823742058729606_3659513607149413256_n.jpg"
-  name="Bé iu 2"
-  newestMessage="Nhớ anh"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-<Conversation
-  notifycation="99+"
-  avatar="IMG_5226.jpg"
-  name="Shipper Shoppe"
-  newestMessage="Nợ anh 2 củ tỏi nha em"
-/>
-</ul> */
-}

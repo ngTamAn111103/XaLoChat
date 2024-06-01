@@ -22,7 +22,7 @@ function Conversation({
             {/* Avatar  */}
             <div className="avatar relative ">
               <img
-                src={`images/` + avatar}
+                src={avatar}
                 alt="err"
                 className="h-9  w-9 rounded-full"
               />
