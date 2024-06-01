@@ -35,8 +35,8 @@ export function Index() {
   const chatRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [flagSearchOrChat,setFlag] = useState("message"); 
-  let image = useRef() 
-  let name = useRef()
+  const [avatar,setAvatar] = useState()
+  const [name,setName] = useState()
 
   // TA: Backend
   const [users, setUsers] = useState([]);
@@ -70,12 +70,15 @@ export function Index() {
 
   //An de hien thi chat tuong ung
   useEffect(() => {
+    console.log("eff: " + clickedChat + flagSearchOrChat)
+  
     if (flagSearchOrChat == "message") { 
       //setshowChat sau khi an vao 1 nguoi
       if (fakeMessages[`${clickedChat + 1}`]) {
         setShowChat(fakeMessages[`${clickedChat + 1}`]);
-        image.current = <img src={`images/${showFriendList[clickedChat]?.avatar}`}  className="h-10 w-10 rounded-full"/>
-        name.current = 
+        console.log(`images/${showFriendList[clickedChat]?.avatar}`)
+        setAvatar(<img src={`images/${showFriendList[clickedChat]?.avatar}`}  className="h-10 w-10 rounded-full"/>)
+        setName (  
           <>
             <a href="#" className="decoration-0 outline-none sm:hidden">
               {showFriendList[clickedChat]?.name.length > 14
@@ -89,13 +92,14 @@ export function Index() {
               {showFriendList[clickedChat]?.name}
             </a>
           </>
+        ) 
       } 
       else {
         setShowChat("");
       }
     }else if (flagSearchOrChat == "search") { 
-      image.current = <img src={`images/${users[clickedChat].Avatar ? users[clickedChat].Avatar : "avatar-captain" }`}  className="h-10 w-10 rounded-full"/>
-      name.current = 
+      setAvatar(<img src={`images/${users[clickedChat].Avatar ? users[clickedChat].Avatar : "avatar-captain" }`}  className="h-10 w-10 rounded-full"/>)
+      setName ( 
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {users[clickedChat]?.Fullname.length > 14
@@ -109,6 +113,8 @@ export function Index() {
             {users[clickedChat]?.Fullname}
           </a>
         </>
+      )
+       
     }
     //responsive
     if (chatRef.current.classList.contains("left-full")) {
@@ -207,10 +213,10 @@ export function Index() {
                             >
                               <i className="fa-solid fa-angle-left"></i>
                             </div>
-                            <div className="ml-0 mr-4">{image.current}</div>
+                            <div className="ml-0 mr-4">{avatar}</div>
                             <div className="flex-grow overflow-hidden">
                               <h5 className="mb-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-bs-dark">
-                                {name.current}
+                                {name}
                                 <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
                               </h5>
                             </div>

@@ -57,7 +57,7 @@ export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setU
       });
       setUsers(result);
       //reload lai cai da an 
-    
+      setClickedChat(-1)
 
       // result.map((e) => {
       //   console.log(e.Fullname);
