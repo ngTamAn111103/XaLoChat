@@ -22,14 +22,18 @@ import {
 import Toast from "../general_component/Toast";
 import { SearchFriend } from "../components_Index/search/SearchFriend";
 import { useUserStore } from "../lib/userStore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 export function Index() {
+    // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
   const [clickedChat, setClickedChat] = useState(-5); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
-  const [showFriendList, setshowFriendList] = useState(fakeFriendList);
+    // Lưu trữ danh sách các cuộc trò chuyện (mảng).
+  const [showFriendList, setshowFriendList] = useState([]);
   const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
   const searchRef = useRef(null); // useRef
   const chatRef = useRef(null);
@@ -37,6 +41,8 @@ export function Index() {
   const [flagSearchOrChat, setFlag] = useState("message");
   const [avatar, setAvatar] = useState();
   const [name, setName] = useState();
+   // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
+   const [receiverInfos, setReceiverInfos] = useState({});
 
   // TA: Backend
   const [users, setUsers] = useState([]);
@@ -44,6 +50,73 @@ export function Index() {
   const toggleModal = () => {
     setShowModal(!showModal);
   };
+
+  // Lắng nghe sự kiện khi profile được thay đổi
+  useEffect(() => {
+    // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
+    const listChatroomID = currentUser?.Chatroom || []; 
+    // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom 
+    const unsubscribeFunctions = [];
+
+    // Duyệt qua từng id chatroom
+    listChatroomID.forEach((chatroomId) => {
+      // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
+      const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => { // Lấy thông tin chatroom dựa vào chatroomID
+        // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
+        if (doc.exists()) {
+
+          const chatroomData = doc.data();
+
+          // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
+          setshowFriendList((prevChats) => {
+            const index = prevChats.findIndex((chat) => chat.id === chatroomId);
+            if (index > -1) {
+              // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
+              prevChats[index] = { id: chatroomId, ...chatroomData };
+            } else {
+              // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
+              prevChats.unshift({ id: chatroomId, ...chatroomData });
+            }
+            return [...prevChats];
+          });
+        }
+      });
+      unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
+    });
+
+    // Dọn dẹp khi component unmount
+    return () => {
+      unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+    };
+  }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
+
+  useEffect(() => {
+    const fetchReceiverInfos = async () => {
+      const newReceiverInfos = {};
+      // Lặp qua từng chat trong chats
+      for (const chat of showFriendList) {
+        // Kiểm tra ko phải nhóm chat
+        if (!chat.isGroup) {
+          // Lấy ID người còn lại
+          const otherMembers = chat.Members.filter(
+            (member) => member !== currentUser.ID,
+          );
+          const receiverId = otherMembers[0];
+          // lấy profile người còn lại
+          const docRef = doc(db, "Profile", receiverId);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            newReceiverInfos[chat.id] = docSnap.data();
+          }
+        }
+      }
+      setReceiverInfos(newReceiverInfos);
+    };
+
+    fetchReceiverInfos();
+  }, [showFriendList, currentUser.ID]);
+
 
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
@@ -172,6 +245,7 @@ export function Index() {
               clickedButton={clickedChat}
               setClickedButton={setClickedChat}
               friendlist={showFriendList}
+              receiverInfos = {receiverInfos}// cái này của TAO, đừng hỏi
               setFlag={setFlag}
             ></FriendList>
             <GroupList isActive={selectedButton == "group" ? true : false} />
