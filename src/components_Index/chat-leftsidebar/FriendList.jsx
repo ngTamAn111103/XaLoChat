@@ -11,34 +11,49 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
   const { currentUser } = useUserStore();
   const [chats, setChats] = useState([]);
 
-  useEffect(() => {
-    const unsub = onSnapshot(doc(db, "ChatRoom", currentUser.ID),async (res) => {
-      const items = res.data().chats;
+ const [listChatroomID]  = currentUser.Chatroom
+ useEffect(() => {
+  // Lấy danh sách ID phòng chat của người dùng hiện tại
+  const listChatroomID = currentUser?.Chatroom || []; // Xử lý trường hợp currentUser chưa được load
 
-      const promisses = items.map(async(item)=>{
-        const userDocRef = doc(db, 'Profile', item.receiverID);
-        const userDocSnap = await getDoc(userDocRef);
+  // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp
+  const unsubscribeFunctions = [];
 
-        const user = userDocRef.data()
-
-        return {...items, user};
-      });
-      const chatData = await Promise.all(promisses);
-      setChats(chatData.sort((a,b) => b.updatedAt - a.updatedAt));
+  // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
+  listChatroomID.forEach((chatroomId) => {
+    const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+      if (doc.exists()) {
+        const chatroomData = doc.data();
+        // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
+        setChats((prevChats) => {
+          const index = prevChats.findIndex(chat => chat.id === chatroomId);
+          if (index > -1) {
+            // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
+            prevChats[index] = { id: chatroomId, ...chatroomData };
+          } else {
+            // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
+            prevChats.unshift({ id: chatroomId, ...chatroomData });
+          }
+          return [...prevChats];
+        });
+      }
     });
+    unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
+  });
 
-    return () => {
-      unsub();
-    };
-  }, [currentUser.id]);
-  // console.log("FriendList.jsx:");
-  // console.log(chats);
+  // Dọn dẹp khi component unmount
+  return () => {
+    unsubscribeFunctions.forEach(unsubscribe => unsubscribe());
+  };
+}, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
+
+
 
   let arrOnline = [];
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
   // TA: chats: mảng các đoạn chat của thằng người dùng đã có
-  const listFriend = friendlist?.map((e, i) => {
-  // const listFriend = chats?.map((e, i) => {
+  // const listFriend = friendlist?.map((e, i) => {
+    const listFriend = chats?.map((e, i) => {
     if (e.isOnline == true) {
       arrOnline.push(
         <OnlineFriend
@@ -49,7 +64,7 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
     }
     return (
       <Conversation
-        avatar={e.avatar}
+        avatar={e.isGroup? e.Avatar:e.Members[0].Avatar}
         notifycation={e.notifycation}
         isOnline={e.isOnline}
         name={e.name}
