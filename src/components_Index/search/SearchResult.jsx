@@ -1,12 +1,13 @@
 function SearchResult({
   i, 
-  avatar = "avatar-captain.jpg",
-  name = "Lù Phi",
-  email ="nono@gmail.com",
+  avatar = "422673745_1431738810981438_8560367173620224784_n.jpg",
+  name,
+  email,
+  onClick = ()=>{}
 }) {
   return (
     <>
-      <li className="px-2" key={i}>
+      <li className="px-2" key={i} onClick={onClick}>
         <a
           href="#"
           className={`mb-[0.125rem] block rounded px-5 py-4 transition hover:bg-[#e6ebf5]`}

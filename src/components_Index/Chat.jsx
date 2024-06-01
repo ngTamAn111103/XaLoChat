@@ -108,17 +108,17 @@ export function Chat() {
 
 
 {/* Đoạn chat người nhận gửi cho người gửi */}
-<div className="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
+{/* <div className="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
 Nhớ anh quá
 </div>
 <div className="mb-2 w-fit max-w-sm rounded-lg bg-primary p-2 text-white shadow">
 Anh đang làm gì đó?
-</div>
+</div> */}
 
 {/* Người gửi */}
-<div className="mb-2 flex items-center justify-end">
+{/* <div className="mb-2 flex items-center justify-end">
 <div className="mr-2 max-w-sm rounded-lg bg-primary p-2 text-white shadow">
   Anh đang làm đồ án
 </div>
-</div>
+</div> */}
 {/* END người gửi */}

@@ -37,8 +37,8 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
   let arrOnline = [];
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
   // TA: chats: mảng các đoạn chat của thằng người dùng đã có
-  // const listFriend = friendlist?.map((e, i) => {
-  const listFriend = chats?.map((e, i) => {
+  const listFriend = friendlist?.map((e, i) => {
+  // const listFriend = chats?.map((e, i) => {
     if (e.isOnline == true) {
       arrOnline.push(
         <OnlineFriend

@@ -114,10 +114,10 @@ export function Profile({
         )}
         {extend}
         <UserProfile
-          avatarSrc={userProfile ? userProfile.avatarSrc : ""}
-          name={currentUser.Fullname}
-          activityStatus={userProfile ? userProfile.activityStatus : ""}
-          description={userProfile ? userProfile.description : ""}
+          avatarSrc={userProfile ? currentUser.avatarSrc : ""}
+          name={userProfile ? currentUser.Fullname : ""}
+          activityStatus={userProfile ? currentUser.activityStatus : ""}
+          description={userProfile ? currentUser.Description : ""}
         />
 
         <div className="user-profile-desc px-4 pt-4">
