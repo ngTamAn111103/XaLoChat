@@ -76,27 +76,27 @@ export function Index() {
       //setshowChat sau khi an vao 1 nguoi
       if (fakeMessages[`${clickedChat + 1}`]) {
         setShowChat(fakeMessages[`${clickedChat + 1}`]);
-        console.log(`images/${showFriendList[clickedChat]?.avatar}`)
-        setAvatar(<img src={`images/${showFriendList[clickedChat]?.avatar}`}  className="h-10 w-10 rounded-full"/>)
-        setName (  
-          <>
-            <a href="#" className="decoration-0 outline-none sm:hidden">
-              {showFriendList[clickedChat]?.name.length > 14
-                ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
-                : showFriendList[clickedChat]?.name.substring(0, 17)}
-            </a>
-            <a
-              href="#"
-              className="hidden decoration-0 outline-none sm:inline-block"
-            >
-              {showFriendList[clickedChat]?.name}
-            </a>
-          </>
-        ) 
+        console.log(showFriendList[clickedChat])
       } 
       else {
         setShowChat("");
       }
+      setAvatar(<img src={`images/${showFriendList[clickedChat]?.avatar}`}  className="h-10 w-10 rounded-full"/>)
+      setName (  
+        <>
+          <a href="#" className="decoration-0 outline-none sm:hidden">
+            {showFriendList[clickedChat]?.name.length > 14
+              ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
+              : showFriendList[clickedChat]?.name.substring(0, 17)}
+          </a>
+          <a
+            href="#"
+            className="hidden decoration-0 outline-none sm:inline-block"
+          >
+            {showFriendList[clickedChat]?.name}
+          </a>
+        </>
+      ) 
     }else if (flagSearchOrChat == "search") { 
       setAvatar(<img src={`images/${users[clickedChat].Avatar ? users[clickedChat].Avatar : "avatar-captain" }`}  className="h-10 w-10 rounded-full"/>)
       setName ( 
