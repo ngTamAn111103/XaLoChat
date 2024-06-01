@@ -6,7 +6,7 @@ import OnlineFriend from "./OnlineFriend";
 import { useUserStore } from "../../lib/userStore";
 import { db } from "../../lib/firebase";
 
-function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
+function FriendList({ isActive, clickedButton, setClickedButton, friendlist, setFlag }) {
   // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
   const [chats, setChats] = useState([]);
@@ -66,6 +66,8 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist }) {
 
   function handleClickButton(order) {
     setClickedButton(order);
+    console.log("set")
+    setFlag("message")
   }
 
   return (
