@@ -81,9 +81,9 @@ function ChatContainer({ messages, friendInfo,setMessages }) {
            {/* Đánh dấu để cuộn xuống đoạn chat mới nhất */}
            <div ref={newestChat} />
           </div>
-          <div className="chat-input-section border-t border-t-[#f5f7fb] relative">
+          <div className="chat-input-section border-t border-t-[#f5f7fb]">
             {/* Hiển thị hình ảnh đã chọn */}
-            <div className="bg-[#fffcfc66] w-full  h-[6rem] absolute -top-full left-0  z-2">
+            <div className="bg-[#fffcfc66] w-full ">
               <div className="photoContainer flex gap-2 w-full  h-[6rem]" >
                 <div className="w-fit h-full relative">
                   <img className="w-auto bg-bs-dark h-full rounded-2xl" src="./images/avatar-captain.jpg"/>
