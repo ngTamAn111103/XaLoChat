@@ -3,7 +3,7 @@ import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import { useEffect, useRef, useState } from "react";
 import { Setting } from "../components_Index/Settings";
 import { ToastContainer, toast } from "react-toastify";
-
+import notify from "../../public/audio/milestone_ios_17.mp3"
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
 import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
@@ -27,6 +27,8 @@ import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc, arrayUnion  } f
 import { db } from "../lib/firebase";
 
 export function Index() {
+  (new Audio(notify)).play()
+
   // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
