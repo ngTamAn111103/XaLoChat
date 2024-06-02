@@ -81,20 +81,22 @@ function ChatContainer({ messages, friendInfo,setMessages }) {
            {/* Đánh dấu để cuộn xuống đoạn chat mới nhất */}
            <div ref={newestChat} />
           </div>
+          {/* Hien thi input chat */}
           <div className="chat-input-section border-t border-t-[#f5f7fb]">
             {/* Hiển thị hình ảnh đã chọn */}
             <div className="bg-[#fffcfc66] w-full ">
               <div className="photoContainer flex gap-2 w-full  h-[6rem]" >
                 <div className="w-fit h-full relative">
-                  <img className="w-auto bg-bs-dark h-full rounded-2xl" src="./images/avatar-captain.jpg"/>
+                  <img className="w-auto bg-bs-dark h-full border-1 border-[#060375] rounded-2xl" src="./images/avatar-captain.jpg"/>
                   <button className="p-3 w-4 h-4 rounded-full absolute top-1 right-1 text-lg bg-black shadow">
                     <i className="fa-solid fa-circle-xmark -translate-x-1/2 -translate-y-1/2 absolute text-white"></i>
                     </button>
                 </div>
+               
 
               </div>
-              <div className="w-fit h-full bg-primary">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor sint laboriosam nesciunt repellendus necessitatibus quidem ratione repudiandae voluptas amet. Ab quaerat sint illo repellendus sunt expedita dolor laboriosam delectus.
+              <div className="w-fit h-full bg-[#fff] text-text-danger">
+                  2 <b className="text-black">image selected </b>
               </div>
             </div> 
           <div className="bg-gray-100 px-4 py-2">
