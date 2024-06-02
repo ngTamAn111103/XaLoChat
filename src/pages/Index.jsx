@@ -23,7 +23,7 @@ import {
 import Toast from "../general_component/Toast";
 import { SearchFriend } from "../components_Index/search/SearchFriend";
 import { useUserStore } from "../lib/userStore";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc, arrayUnion  } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
 export function Index() {
@@ -49,18 +49,53 @@ export function Index() {
   // TA: Backend
   const [users, setUsers] = useState([]);
 
-  //TA: Viết cho search friend: Bắt index click thay đổi
-  useEffect(() => {
-    // lấy ra user được chọn
-    const user_click = resultSearch[clickedChat];
-    console.log(user_click);
-    
-  }, [clickedChat]);
+  //TA: Viết cho search friend
+  const createChatroom = async (receiverId) => {
+    try {
+      // Gọi hàm tạo phòng chat từ backend (hoặc logic xử lý tương tự)
+      // 1. Tạo  chatroom mới
+      const docRef = await addDoc(collection(db, "Chatroom"), {
+        // Các trường dữ liệu của bạn
+        Name: "Tên phòng chat",
+        Members: [receiverId, currentUser.ID],
+        isGroup: false,
+        CreateBy: currentUser.ID,
+        Description: "Description",
+        
+        
+        Message: []
+      });
+      const newChatroomId= docRef.id
+      // 2. Cập nhật mảng Chatroom trong document Profile của người dùng hiện tại
+      const currentUserRef = doc(db, "Profile", currentUser.ID);
+      await updateDoc(currentUserRef, {
+        Chatroom: arrayUnion(newChatroomId),
+      });
+        // 3 Cập nhật mảng Chatroom trong document Profile của người dùng được click
+      const receiverRef = doc(db, "Profile", receiverId);
+      await updateDoc(receiverRef, {
+        Chatroom: arrayUnion(newChatroomId),
+      });
+  
+      // Cập nhật id vào chính chatroom
+      const chatroomRef = doc(db, "Chatroom", docRef.id);
+      await updateDoc(chatroomRef, {
+        ID: (newChatroomId),
+      });
+      console.log("Document written with ID: ", docRef.id);
+  
+    } catch (error) {
+      // Xử lý lỗi
+      console.log("createChatroom thất bại " + error);
+    }
+  };
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
+  
 
+  
   // Lắng nghe sự kiện khi profile được thay đổi
   useEffect(() => {
     // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
@@ -290,6 +325,8 @@ export function Index() {
               setUsers={setResultSearch}
               users={resultSearch}
               setFlag={setFlag}
+              createChatroom={createChatroom} // Truyền hàm createChatroom vào SearchFriend
+
             />
           </div>
         </div>

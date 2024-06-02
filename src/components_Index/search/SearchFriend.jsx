@@ -12,13 +12,18 @@ import {
 import { db } from "../../lib/firebase";
 import { useEffect, useState } from "react";
 
-export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setUsers, setFlag }) {
+export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setUsers, setFlag,createChatroom }) {
   //TN: Front-end: xu ly khi an vao 1 user dang tim 
-  function handleClickUser (order,e) { 
+ async function handleClickUser (order,e) { 
 
     setClickedChat((order))
     setFlag("search")
     console.log(clickedChat)
+    // TA
+    const selectedUser = users[order];
+    const receiverId = selectedUser.ID;
+    await createChatroom(receiverId); 
+
   }
 
 
