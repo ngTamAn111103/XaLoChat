@@ -48,6 +48,10 @@ export function Index() {
   // TA: Backend
   const [users, setUsers] = useState([]);
 
+
+// querry message chat
+
+
   const toggleModal = () => {
     setShowModal(!showModal);
   };
@@ -141,7 +145,7 @@ export function Index() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [searchRef, dropdownRef, showModal]);
-
+ 
   //An de hien thi chat tuong ung
   useEffect(() => {
     // console.log("eff: " + clickedChat + flagSearchOrChat)
@@ -190,6 +194,7 @@ export function Index() {
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {
+              
               showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"
             // users[clickedChat]?.Fullname.length > 14
             //   ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
@@ -225,6 +230,7 @@ export function Index() {
   // đóng modal khi click ra ngoài
   const modalRef = useRef(null);
   // mặc định là hiện lên phần chat
+
   return (
     <>
       <ToastContainer />
@@ -425,9 +431,10 @@ export function Index() {
                     </div>
                     {/* Chat container */}
                     <ChatContainer
-                      messages={showChat}
+                      messages={showFriendList[clickedChat]? showFriendList[clickedChat].Message:showChat }
                       setMessages={setShowChat}
                       friendInfo={showFriendList[clickedChat]}
+                      chatroomId={showFriendList[clickedChat]? showFriendList[clickedChat].ID: ""}
                     />
                    
                   </div>

@@ -15,11 +15,13 @@ import { useEffect, useState } from "react";
 export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setUsers, setFlag }) {
   //TN: Front-end: xu ly khi an vao 1 user dang tim 
   function handleClickUser (order,e) { 
-    console.log(order)
+
     setClickedChat((order))
     setFlag("search")
-    console.log(clickedChat)
+    // console.log(clickedChat)
   }
+
+
   useEffect(()=>{ 
 
   },[]) 
