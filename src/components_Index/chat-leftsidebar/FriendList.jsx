@@ -6,77 +6,6 @@ import { useUserStore } from "../../lib/userStore";
 import { db } from "../../lib/firebase";
 
 function FriendList({ isActive, clickedButton, setClickedButton, friendlist, setFlag, receiverInfos }) {
-  // const { currentUser } = useUserStore();
-  // const [chats, setChats] = useState([]);
-  // // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
-  // const [receiverInfos, setReceiverInfos] = useState({});
-
-  // // Lắng nghe sự kiện khi profile được thay đổi
-  // useEffect(() => {
-  //   // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
-  //   const listChatroomID = currentUser?.Chatroom || []; 
-  //   // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom 
-  //   const unsubscribeFunctions = [];
-
-  //   // Duyệt qua từng id chatroom
-  //   listChatroomID.forEach((chatroomId) => {
-  //     // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
-  //     const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => { // Lấy thông tin chatroom dựa vào chatroomID
-  //       // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
-  //       if (doc.exists()) {
-
-  //         const chatroomData = doc.data();
-
-  //         // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
-  //         setChats((prevChats) => {
-  //           const index = prevChats.findIndex((chat) => chat.id === chatroomId);
-  //           if (index > -1) {
-  //             // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
-  //             prevChats[index] = { id: chatroomId, ...chatroomData };
-  //           } else {
-  //             // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
-  //             prevChats.unshift({ id: chatroomId, ...chatroomData });
-  //           }
-  //           return [...prevChats];
-  //         });
-  //       }
-  //     });
-  //     unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
-  //   });
-
-  //   // Dọn dẹp khi component unmount
-  //   return () => {
-  //     unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
-  //   };
-  // }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
-
-  // useEffect(() => {
-  //   const fetchReceiverInfos = async () => {
-  //     const newReceiverInfos = {};
-  //     // Lặp qua từng chat trong chats
-  //     for (const chat of chats) {
-  //       // Kiểm tra ko phải nhóm chat
-  //       if (!chat.isGroup) {
-  //         // Lấy ID người còn lại
-  //         const otherMembers = chat.Members.filter(
-  //           (member) => member !== currentUser.ID,
-  //         );
-  //         const receiverId = otherMembers[0];
-  //         // lấy profile người còn lại
-  //         const docRef = doc(db, "Profile", receiverId);
-  //         const docSnap = await getDoc(docRef);
-
-  //         if (docSnap.exists()) {
-  //           newReceiverInfos[chat.id] = docSnap.data();
-  //         }
-  //       }
-  //     }
-  //     setReceiverInfos(newReceiverInfos);
-  //   };
-
-  //   fetchReceiverInfos();
-  // }, [chats, currentUser.ID]);
-
   let arrOnline = [];
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
   // TA: chats: mảng các đoạn chat của thằng người dùng đã có
@@ -155,3 +84,73 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist, set
 }
 
 export default FriendList;
+ // const { currentUser } = useUserStore();
+  // const [chats, setChats] = useState([]);
+  // // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
+  // const [receiverInfos, setReceiverInfos] = useState({});
+
+  // // Lắng nghe sự kiện khi profile được thay đổi
+  // useEffect(() => {
+  //   // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
+  //   const listChatroomID = currentUser?.Chatroom || []; 
+  //   // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom 
+  //   const unsubscribeFunctions = [];
+
+  //   // Duyệt qua từng id chatroom
+  //   listChatroomID.forEach((chatroomId) => {
+  //     // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
+  //     const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => { // Lấy thông tin chatroom dựa vào chatroomID
+  //       // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
+  //       if (doc.exists()) {
+
+  //         const chatroomData = doc.data();
+
+  //         // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
+  //         setChats((prevChats) => {
+  //           const index = prevChats.findIndex((chat) => chat.id === chatroomId);
+  //           if (index > -1) {
+  //             // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
+  //             prevChats[index] = { id: chatroomId, ...chatroomData };
+  //           } else {
+  //             // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
+  //             prevChats.unshift({ id: chatroomId, ...chatroomData });
+  //           }
+  //           return [...prevChats];
+  //         });
+  //       }
+  //     });
+  //     unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
+  //   });
+
+  //   // Dọn dẹp khi component unmount
+  //   return () => {
+  //     unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+  //   };
+  // }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
+
+  // useEffect(() => {
+  //   const fetchReceiverInfos = async () => {
+  //     const newReceiverInfos = {};
+  //     // Lặp qua từng chat trong chats
+  //     for (const chat of chats) {
+  //       // Kiểm tra ko phải nhóm chat
+  //       if (!chat.isGroup) {
+  //         // Lấy ID người còn lại
+  //         const otherMembers = chat.Members.filter(
+  //           (member) => member !== currentUser.ID,
+  //         );
+  //         const receiverId = otherMembers[0];
+  //         // lấy profile người còn lại
+  //         const docRef = doc(db, "Profile", receiverId);
+  //         const docSnap = await getDoc(docRef);
+
+  //         if (docSnap.exists()) {
+  //           newReceiverInfos[chat.id] = docSnap.data();
+  //         }
+  //       }
+  //     }
+  //     setReceiverInfos(newReceiverInfos);
+  //   };
+
+  //   fetchReceiverInfos();
+  // }, [chats, currentUser.ID]);
