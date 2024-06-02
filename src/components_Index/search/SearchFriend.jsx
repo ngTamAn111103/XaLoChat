@@ -12,23 +12,28 @@ import {
 import { db } from "../../lib/firebase";
 import { useEffect, useState } from "react";
 
-export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setUsers, setFlag }) {
+export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setUsers, setFlag,createChatroom }) {
   //TN: Front-end: xu ly khi an vao 1 user dang tim 
-  function handleClickUser (order,e) { 
-    console.log(order)
+ async function handleClickUser (order,e) { 
+
     setClickedChat((order))
     setFlag("search")
     console.log(clickedChat)
+    // TA
+    const selectedUser = users[order];
+    const receiverId = selectedUser.ID;
+    await createChatroom(receiverId); 
+
   }
+
+
   useEffect(()=>{ 
 
   },[]) 
   // // TA: Backend
   // const [users, setUsers] = useState([]); => doi qua index.jsx
   // Click vào 1 li của kết quả search
-  const handleClickItem = (e)=>{
-    console.log(e.target);
-  }
+
   // Xử lý thay đổi value input -> Search realtime
   const handleChangeValue = async (e) => {
     try {
