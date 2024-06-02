@@ -2,6 +2,7 @@ import { NavbarItem } from "../components_Index/side-menu/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import { useEffect, useRef, useState } from "react";
 import { Setting } from "../components_Index/Settings";
+import { ToastContainer, toast } from 'react-toastify';
 
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
 import { NavbarLeft } from "../components_Index/NavbarLeft";
@@ -30,7 +31,7 @@ export function Index() {
   const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
-  const [clickedChat, setClickedChat] = useState(-5); //ấn để chọn tin nhắn và update vị trí được ấn
+  const [clickedChat, setClickedChat] = useState(0); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
     // Lưu trữ danh sách các cuộc trò chuyện (mảng).
   const [showFriendList, setshowFriendList] = useState([]);
@@ -42,7 +43,7 @@ export function Index() {
   const [avatar, setAvatar] = useState();
   const [name, setName] = useState();
    // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
-   const [receiverInfos, setReceiverInfos] = useState({});
+  const [receiverInfos, setReceiverInfos] = useState({});
 
   // TA: Backend
   const [users, setUsers] = useState([]);
@@ -147,9 +148,10 @@ export function Index() {
 
     if (flagSearchOrChat == "message") {
       //setshowChat sau khi an vao 1 nguoi
-      if (fakeMessages[`${clickedChat + 1}`]) {
-        setShowChat(fakeMessages[`${clickedChat + 1}`]);
-        console.log(showFriendList[clickedChat]);
+      // console.log(receiverInfos[`${}`])
+      if (showFriendList[clickedChat]) {
+        const key = showFriendList[clickedChat].id
+        setShowChat(fakeMessages[key]);
       } else {
         setShowChat("");
       }
@@ -219,10 +221,10 @@ export function Index() {
   }
   // đóng modal khi click ra ngoài
   const modalRef = useRef(null);
-
   // mặc định là hiện lên phần chat
   return (
     <>
+      <ToastContainer />
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
@@ -421,8 +423,10 @@ export function Index() {
                     {/* Chat container */}
                     <ChatContainer
                       messages={showChat}
+                      setMessages={setShowChat}
                       friendInfo={showFriendList[clickedChat]}
                     />
+                   
                   </div>
                 </div>
               </div>

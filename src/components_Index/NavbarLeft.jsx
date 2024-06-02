@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import avatar from "/public/images/320186702_823742058729606_3659513607149413256_n.jpg";
 import { NavbarItem } from "./side-menu/NavbarItem";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
@@ -54,6 +55,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
       style={{ zIndex: 1000 }}
       className="side-menu fixed bottom-0 left-0 right-0 z-10 flex bg-white shadow-black lg:static lg:z-0 lg:mr-1 lg:h-[100vh] lg:min-h-[570px] lg:min-w-[75px] lg:max-w-[75px] lg:flex-col lg:items-center"
     >
+      
       <div className="navbar-brand-box box-border hidden text-center lg:my-5 lg:block">
         <a
           className="logo logo-dark h-[70px] items-center justify-center leading-[70px] decoration-0 outline-none"

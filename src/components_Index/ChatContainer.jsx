@@ -1,35 +1,66 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Sender } from "./Chat/Sender";
 import { Receiver } from "./Chat/Receiver";
 
-function ChatContainer({ messages, friendInfo }) {
+function ChatContainer({ messages, friendInfo,setMessages }) {
   let msgs;
+  const [inputValue, setInputValue] = useState('')
+
+  //xử lý dữ liệu khi ấn enter hoặc nút gửi   
+  const handleSendMessage = ()=>{ 
+    if (inputValue) { 
+      //lấy dữ liệu từ input chat
+      const enteredMessage = inputValue
+      const now = new Date()
+      const hours = now.getHours() 
+      const minutes = now.getMinutes()
+  
+      //gửi dữ liệu 
+  
+      setMessages([...messages,{
+        uid: 0,
+        createdAt: `${hours}:${minutes}`,
+        mes: inputValue
+      }])
+   
+      //clear ô input
+      setInputValue('')
+    }
+  }
+
+  //bắt sự kiện khi ấn phím< 
+  const handleChangeKey = (e) =>{ 
+    if (e.key == 'Enter') { 
+      handleSendMessage()
+    }
+  }
 
   if (messages) {
-    msgs = messages.map((msg, index) => {
+    console.log("message chunk: ")
+    console.log(messages)
+    msgs = messages.map((msg, index) => {  
       const isLastMessage =
         index === messages.length - 1 || messages[index + 1].uid !== msg.uid; // Kiểm tra isLastMessage chính xác hơn
       const isFirstMessage = index === 0 || messages[index - 1].uid !== msg.uid;
-
       // Render người gửi và người nhận
-      return msg?.uid !== friendInfo?.uid ? (
+      return msg?.uid !== friendInfo?.id ? 
         <Sender
           msg={msg.mes}
           createdAt={msg.createdAt}
           isLast={isLastMessage}
           key={index}
         />
-      ) : (
+      : 
         <Receiver
-          avatarReceiver={friendInfo.avatar}
-          nameReceiver={friendInfo.name}
+          avatarReceiver={friendInfo.Avatar}
+          nameReceiver={"Name"}
           msg={msg.mes}
           createAtReceiver={msg.createdAt}
           isLast={isLastMessage}
           isFirst={isFirstMessage}
           key={index}
         />
-      );
+      
     });
   }
 
@@ -50,13 +81,31 @@ function ChatContainer({ messages, friendInfo }) {
            {/* Đánh dấu để cuộn xuống đoạn chat mới nhất */}
            <div ref={newestChat} />
           </div>
-          <div className="chat-input-section border-t border-t-[#f5f7fb]">
+          <div className="chat-input-section border-t border-t-[#f5f7fb] relative">
+            {/* Hiển thị hình ảnh đã chọn */}
+            <div className="bg-[#fffcfc66] w-full  h-[6rem] absolute -top-full left-0  z-2">
+              <div className="photoContainer flex gap-2 w-full  h-[6rem]" >
+                <div className="w-fit h-full relative">
+                  <img className="w-auto bg-bs-dark h-full rounded-2xl" src="./images/avatar-captain.jpg"/>
+                  <button className="p-3 w-4 h-4 rounded-full absolute top-1 right-1 text-lg bg-black shadow">
+                    <i className="fa-solid fa-circle-xmark -translate-x-1/2 -translate-y-1/2 absolute text-white"></i>
+                    </button>
+                </div>
+
+              </div>
+              <div className="w-fit h-full bg-primary">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor sint laboriosam nesciunt repellendus necessitatibus quidem ratione repudiandae voluptas amet. Ab quaerat sint illo repellendus sunt expedita dolor laboriosam delectus.
+              </div>
+            </div>
           <div className="bg-gray-100 px-4 py-2">
               <div className="flex items-center">
                 <input
                   className="mr-2 w-full rounded bg-[#f5f7fb] px-4 py-2"
                   type="text"
                   placeholder="Type your message..."
+                  value={inputValue}
+                  onChange={(e)=> setInputValue(e.target.value)}
+                  onKeyDown={(e)=> handleChangeKey(e)}
                 />
                 <div className="mx-3 text-[#7269ef]">
                 <label htmlFor="imgImport" className="cursor-pointer">
@@ -71,7 +120,9 @@ function ChatContainer({ messages, friendInfo }) {
                     <i className="fa-regular fa-image"></i>
                   </label>
                 </div>
-                <button className="bg-blue-500 rounded bg-[#7269ef] px-4 py-2 font-medium text-white hover:bg-[#4f48a9]">
+                <button className="bg-blue-500 rounded bg-[#7269ef] px-4 py-2 font-medium text-white hover:bg-[#4f48a9]"
+                  onClick={handleSendMessage}
+                >
                   <i className="fa-regular fa-paper-plane"></i>
                 </button>
               </div>

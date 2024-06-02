@@ -71,7 +71,8 @@ function App() {
 
   return (
     <>
-      <Router>
+
+       <Router>
         <Routes>
           {/* 
           /: nếu đã đăng nhập? vào index : Chuyển qua login 
@@ -113,6 +114,7 @@ function App() {
            */}
         </Routes>
       </Router>
+      
     </>
   );
 }

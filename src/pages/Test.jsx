@@ -47,21 +47,21 @@ export const fakeFriendList = [
 ];
 
 export const fakeMessages = {
-    "1":  [
+    "LEIzlEWXnVjEIJF3pEF6":  [
       {
-        uid: 1,
+        uid: "LEIzlEWXnVjEIJF3pEF6",
         createdAt: "9:00",
         mes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium doloremque debitis dicta, excepturi temporibus pariatur perferendis culpa optio rem aspernatur nam consequatur eligendi eius iste aut provident, ad a.," ,
      
       },
       {
-        uid: 1,
+        uid: "LEIzlEWXnVjEIJF3pEF6",
         createdAt: "9:01",
         mes: "tin nhắn thôi mà",
      
       },
       {
-        uid: 1,
+        uid: "LEIzlEWXnVjEIJF3pEF6",
         createdAt: "9:02",
         mes: "tin nhắn thôi mà",
      
@@ -77,13 +77,13 @@ export const fakeMessages = {
         mes: "tin nhắn thôi mà2",
       },
       {
-        uid: 1,
+        uid: "LEIzlEWXnVjEIJF3pEF6",
         createdAt: "9:02",
         mes: "tin nhắn thôi mà",
      
       },
       {
-        uid: 1,
+        uid: "LEIzlEWXnVjEIJF3pEF6",
         createdAt: "9:02",
         mes: "tin nhắn thôi mà",
      
@@ -95,9 +95,9 @@ export const fakeMessages = {
      
       },
       ],
-    "2" : [
+    "fWtiBrou3e7zkDFx0NrS" : [
       {
-        uid: 2,
+        uid: "fWtiBrou3e7zkDFx0NrS",
         createdAt: "9:00",
         mes: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore laudantium doloremque debitis dicta, excepturi temporibus pariatur perferendis culpa optio rem aspernatur nam consequatur eligendi eius iste aut provident, ad a.," ,
       },

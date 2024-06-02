@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { useUserStore } from "../../lib/userStore";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function UserSetting({ name, avatarSrc }) {
   const handleIconClick = () => {
@@ -41,7 +42,7 @@ function UserSetting({ name, avatarSrc }) {
           Avatar: downloadURL,
         });
 
-
+        
         console.log("Tải ảnh và cập nhật URL thành công!");
         // toast: CHo tao cái toast ở đây nha
       } catch (error) {
@@ -52,6 +53,7 @@ function UserSetting({ name, avatarSrc }) {
 
   return (
     <div className="relative border-b border-[#DCDCDC] p-4 text-center">
+        <ToastContainer />
       <div className="relative inline-block rounded-full border border-[#DCDCDC] p-1">
         <img src={avatarSrc} className="h-20 w-20 rounded-full" alt={name} />
         <button
