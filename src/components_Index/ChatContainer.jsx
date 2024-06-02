@@ -73,7 +73,7 @@ function ChatContainer({ messages, friendInfo,setMessages, chatroomId }) {
         index === messages.length - 1 || messages[index + 1].uid !== msg.uid; // Kiểm tra isLastMessage chính xác hơn
       const isFirstMessage = index === 0 || messages[index - 1].uid !== msg.uid;
       // Render người gửi và người nhận
-      return msg?.uid !== friendInfo?.id ? 
+      return msg?.SenderID === currentUser.ID ? 
         <Sender
           msg={msg.Content}
           createdAt={msg.createdAt}
@@ -84,7 +84,7 @@ function ChatContainer({ messages, friendInfo,setMessages, chatroomId }) {
         <Receiver
           avatarReceiver={friendInfo.Avatar}
           nameReceiver={"Name"}
-          msg={msg.mes}
+          msg={msg.Content}
           createAtReceiver={msg.createdAt}
           isLast={isLastMessage}
           isFirst={isFirstMessage}

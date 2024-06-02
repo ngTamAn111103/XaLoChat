@@ -2,7 +2,7 @@ import { NavbarItem } from "../components_Index/side-menu/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import { useEffect, useRef, useState } from "react";
 import { Setting } from "../components_Index/Settings";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
 import { NavbarLeft } from "../components_Index/NavbarLeft";
@@ -27,13 +27,13 @@ import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
 export function Index() {
-    // Lấy người dùng hiện tại
+  // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
   const [clickedChat, setClickedChat] = useState(-1); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
-    // Lưu trữ danh sách các cuộc trò chuyện (mảng).
+  // Lưu trữ danh sách các cuộc trò chuyện (mảng).
   const [showFriendList, setshowFriendList] = useState([]);
   const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
   const searchRef = useRef(null); // useRef
@@ -42,15 +42,20 @@ export function Index() {
   const [flagSearchOrChat, setFlag] = useState("message");
   const [avatar, setAvatar] = useState();
   const [name, setName] = useState();
-   // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
+  const [resultSearch, setResultSearch] = useState([]);
+  // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
   const [receiverInfos, setReceiverInfos] = useState({});
 
   // TA: Backend
   const [users, setUsers] = useState([]);
 
-
-// querry message chat
-
+  //TA: Viết cho search friend: Bắt index click thay đổi
+  useEffect(() => {
+    // lấy ra user được chọn
+    const user_click = resultSearch[clickedChat];
+    console.log(user_click);
+    
+  }, [clickedChat]);
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -59,17 +64,17 @@ export function Index() {
   // Lắng nghe sự kiện khi profile được thay đổi
   useEffect(() => {
     // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
-    const listChatroomID = currentUser?.Chatroom || []; 
-    // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom 
+    const listChatroomID = currentUser?.Chatroom || [];
+    // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom
     const unsubscribeFunctions = [];
 
     // Duyệt qua từng id chatroom
     listChatroomID.forEach((chatroomId) => {
       // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
-      const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => { // Lấy thông tin chatroom dựa vào chatroomID
+      const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+        // Lấy thông tin chatroom dựa vào chatroomID
         // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
         if (doc.exists()) {
-
           const chatroomData = doc.data();
 
           // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
@@ -122,7 +127,6 @@ export function Index() {
     fetchReceiverInfos();
   }, [showFriendList, currentUser.ID]);
 
-
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -145,7 +149,7 @@ export function Index() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [searchRef, dropdownRef, showModal]);
- 
+
   //An de hien thi chat tuong ung
   useEffect(() => {
     // console.log("eff: " + clickedChat + flagSearchOrChat)
@@ -154,14 +158,14 @@ export function Index() {
       //setshowChat sau khi an vao 1 nguoi
       // console.log(receiverInfos[`${}`])
       if (showFriendList[clickedChat]) {
-        const key = showFriendList[clickedChat].id
+        const key = showFriendList[clickedChat].id;
         setShowChat(fakeMessages[key]);
       } else {
         setShowChat("");
       }
       setAvatar(
         <img
-          src={`${showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
+          src={`${showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Avatar : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
           className="h-10 w-10 rounded-full"
         />,
       );
@@ -169,24 +173,28 @@ export function Index() {
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {
-            showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"
-            // showFriendList[clickedChat]?.name.length > 14
-            //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
-            //   : showFriendList[clickedChat]?.name.substring(0, 17)
-              }
+              showFriendList[clickedChat]
+                ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+                : "NULL"
+              // showFriendList[clickedChat]?.name.length > 14
+              //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
+              //   : showFriendList[clickedChat]?.name.substring(0, 17)
+            }
           </a>
           <a
             href="#"
             className="hidden decoration-0 outline-none sm:inline-block"
           >
-            {showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"}
+            {showFriendList[clickedChat]
+              ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+              : "NULL"}
           </a>
         </>,
       );
     } else if (flagSearchOrChat == "search") {
       setAvatar(
         <img
-          src={`${showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
+          src={`${showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Avatar : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
           className="h-10 w-10 rounded-full"
         />,
       );
@@ -194,18 +202,21 @@ export function Index() {
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {
-              
-              showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"
-            // users[clickedChat]?.Fullname.length > 14
-            //   ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
-            //   : users[clickedChat]?.Fullname.substring(0, 17)
-              }
+              showFriendList[clickedChat]
+                ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+                : "NULL"
+              // users[clickedChat]?.Fullname.length > 14
+              //   ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
+              //   : users[clickedChat]?.Fullname.substring(0, 17)
+            }
           </a>
           <a
             href="#"
             className="hidden decoration-0 outline-none sm:inline-block"
           >
-            {showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"}
+            {showFriendList[clickedChat]
+              ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+              : "NULL"}
           </a>
         </>,
       );
@@ -252,7 +263,6 @@ export function Index() {
               isActive={selectedButton === "user"}
               userProfile={currentUser}
               profileDetails={profileDetails}
-
             />
 
             <FriendList
@@ -260,7 +270,7 @@ export function Index() {
               clickedButton={clickedChat}
               setClickedButton={setClickedChat}
               friendlist={showFriendList}
-              receiverInfos = {receiverInfos}// cái này của TAO, đừng hỏi
+              receiverInfos={receiverInfos} // cái này của TAO, đừng hỏi
               setFlag={setFlag}
             ></FriendList>
             <GroupList isActive={selectedButton == "group" ? true : false} />
@@ -276,9 +286,9 @@ export function Index() {
               isActive={selectedButton == "plus" ? true : false}
               clickedChat={clickedChat}
               setClickedChat={setClickedChat}
-              friendlist={showFriendList}
-              setUsers={setUsers}
-              users={users}
+              // friendlist={showFriendList}
+              setUsers={setResultSearch}
+              users={resultSearch}
               setFlag={setFlag}
             />
           </div>
@@ -431,12 +441,19 @@ export function Index() {
                     </div>
                     {/* Chat container */}
                     <ChatContainer
-                      messages={showFriendList[clickedChat]? showFriendList[clickedChat].Message:showChat }
+                      messages={
+                        showFriendList[clickedChat]
+                          ? showFriendList[clickedChat].Message
+                          : showChat
+                      }
                       setMessages={setShowChat}
                       friendInfo={showFriendList[clickedChat]}
-                      chatroomId={showFriendList[clickedChat]? showFriendList[clickedChat].ID: ""}
+                      chatroomId={
+                        showFriendList[clickedChat]
+                          ? showFriendList[clickedChat].ID
+                          : ""
+                      }
                     />
-                   
                   </div>
                 </div>
               </div>
@@ -458,13 +475,17 @@ export function Index() {
                     <i className="fa-solid fa-x font-extrabold"></i>
                   </div>
                 }
-                userProfile={
-                  {
-                    Fullname:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL",  
-                    Avatar:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png", 
-                    Description:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Description:"Mô tả ở đây"
-                  }
-                }
+                userProfile={{
+                  Fullname: showFriendList[clickedChat]
+                    ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+                    : "NULL",
+                  Avatar: showFriendList[clickedChat]
+                    ? receiverInfos[showFriendList[clickedChat].ID].Avatar
+                    : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
+                  Description: showFriendList[clickedChat]
+                    ? receiverInfos[showFriendList[clickedChat].ID].Description
+                    : "Mô tả ở đây",
+                }}
                 profileDetails={profileDetails}
               />
             </div>

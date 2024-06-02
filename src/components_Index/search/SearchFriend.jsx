@@ -18,7 +18,7 @@ export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setU
 
     setClickedChat((order))
     setFlag("search")
-    // console.log(clickedChat)
+    console.log(clickedChat)
   }
 
 
@@ -28,9 +28,7 @@ export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setU
   // // TA: Backend
   // const [users, setUsers] = useState([]); => doi qua index.jsx
   // Click vào 1 li của kết quả search
-  const handleClickItem = (e)=>{
-    console.log(e.target);
-  }
+
   // Xử lý thay đổi value input -> Search realtime
   const handleChangeValue = async (e) => {
     try {
