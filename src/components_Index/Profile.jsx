@@ -67,7 +67,7 @@ export function Profile({
 
   return (
     <>
-      <div className={isActive ? "absolute block h-full lg:w-[360px]" : "hidden"}>
+      <div className={isActive ? "absolute block w-full h-full lg:w-[360px]" : "hidden"}>
         {isHeader && (
           <Header
             title={"My Profile"}
