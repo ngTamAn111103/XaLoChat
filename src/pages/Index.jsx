@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Setting } from "../components_Index/Settings";
 import { ToastContainer, toast } from "react-toastify";
 import notify from "../../public/audio/milestone_ios_17.mp3"
+import notify_send from "../../public/audio/send_sms.mp3"
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
 import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
@@ -27,7 +28,6 @@ import { addDoc, collection, doc, getDoc, onSnapshot, updateDoc, arrayUnion  } f
 import { db } from "../lib/firebase";
 
 export function Index() {
-  (new Audio(notify)).play()
 
   // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
@@ -109,10 +109,19 @@ export function Index() {
     listChatroomID.forEach((chatroomId) => {
       // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
       const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+        
+
         // Lấy thông tin chatroom dựa vào chatroomID
         // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
         if (doc.exists()) {
           const chatroomData = doc.data();
+          if (chatroomData.Message[chatroomData.Message.length-1].SenderID == currentUser.ID) {
+             
+            (new Audio(notify_send)).play()
+          }
+          else{
+            (new Audio(notify)).play()
+          }
 
           // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
           setshowFriendList((prevChats) => {
