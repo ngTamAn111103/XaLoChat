@@ -96,7 +96,7 @@ function ChatContainer({ messages, friendInfo,setMessages }) {
               <div className="w-fit h-full bg-primary">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere dolor sint laboriosam nesciunt repellendus necessitatibus quidem ratione repudiandae voluptas amet. Ab quaerat sint illo repellendus sunt expedita dolor laboriosam delectus.
               </div>
-            </div>
+            </div> 
           <div className="bg-gray-100 px-4 py-2">
               <div className="flex items-center">
                 <input
