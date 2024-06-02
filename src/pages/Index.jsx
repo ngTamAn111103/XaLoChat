@@ -31,7 +31,7 @@ export function Index() {
   const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
-  const [clickedChat, setClickedChat] = useState(0); //ấn để chọn tin nhắn và update vị trí được ấn
+  const [clickedChat, setClickedChat] = useState(-1); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
     // Lưu trữ danh sách các cuộc trò chuyện (mảng).
   const [showFriendList, setshowFriendList] = useState([]);
@@ -157,7 +157,7 @@ export function Index() {
       }
       setAvatar(
         <img
-          src={`${showFriendList[clickedChat]?.avatar}`}
+          src={`${showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
           className="h-10 w-10 rounded-full"
         />,
       );
@@ -165,7 +165,7 @@ export function Index() {
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {
-              "Hello bà già"
+            showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"
             // showFriendList[clickedChat]?.name.length > 14
             //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
             //   : showFriendList[clickedChat]?.name.substring(0, 17)
@@ -175,29 +175,32 @@ export function Index() {
             href="#"
             className="hidden decoration-0 outline-none sm:inline-block"
           >
-            {showFriendList[clickedChat]?.name}
+            {showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"}
           </a>
         </>,
       );
     } else if (flagSearchOrChat == "search") {
       setAvatar(
         <img
-          src={`${users[clickedChat].Avatar ? users[clickedChat].Avatar : "avatar-captain"}`}
+          src={`${showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
           className="h-10 w-10 rounded-full"
         />,
       );
       setName(
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
-            {users[clickedChat]?.Fullname.length > 14
-              ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
-              : users[clickedChat]?.Fullname.substring(0, 17)}
+            {
+              showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"
+            // users[clickedChat]?.Fullname.length > 14
+            //   ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
+            //   : users[clickedChat]?.Fullname.substring(0, 17)
+              }
           </a>
           <a
             href="#"
             className="hidden decoration-0 outline-none sm:inline-block"
           >
-            {users[clickedChat]?.Fullname}
+            {showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"}
           </a>
         </>,
       );
@@ -448,7 +451,13 @@ export function Index() {
                     <i className="fa-solid fa-x font-extrabold"></i>
                   </div>
                 }
-                userProfile={{Fullname:"Nguyễn Huy Hàng",  Avatar:"123", Description:""}}
+                userProfile={
+                  {
+                    Fullname:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL",  
+                    Avatar:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png", 
+                    Description:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Description:"Mô tả ở đây"
+                  }
+                }
                 profileDetails={profileDetails}
               />
             </div>
