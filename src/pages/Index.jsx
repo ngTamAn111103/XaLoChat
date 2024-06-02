@@ -239,8 +239,9 @@ export function Index() {
           <div className="contain ">
             <Profile
               isActive={selectedButton === "user"}
-              userProfile={userProfile}
+              userProfile={currentUser}
               profileDetails={profileDetails}
+
             />
 
             <FriendList
@@ -443,7 +444,7 @@ export function Index() {
                     <i className="fa-solid fa-x font-extrabold"></i>
                   </div>
                 }
-                userProfile={userProfile}
+                userProfile={{Fullname:"Nguyễn Huy Hàng",  Avatar:"123", Description:""}}
                 profileDetails={profileDetails}
               />
             </div>
