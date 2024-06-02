@@ -114,7 +114,7 @@ function ChatContainer({ messages, friendInfo,setMessages, chatroomId }) {
           {/* Hien thi input chat */}
           <div className="chat-input-section border-t border-t-[#f5f7fb]">
             {/* Hiển thị hình ảnh đã chọn */}
-            <div className="bg-[#fffcfc66] w-full ">
+            <div className="bg-[#fffcfc66] w-full bg-[#f4f4f4]">
               <div className="photoContainer flex gap-2 w-full  h-[6rem]" >
                 <div className="w-fit h-full relative">
                   <img className="w-auto bg-bs-dark h-full border-1 border-[#060375] rounded-2xl" src="./images/avatar-captain.jpg"/>
@@ -125,6 +125,7 @@ function ChatContainer({ messages, friendInfo,setMessages, chatroomId }) {
                
 
               </div>
+              <hr />
               <div className="w-fit h-full bg-[#fff] text-text-danger">
                   2 <b className="text-black">image selected </b>
               </div>
