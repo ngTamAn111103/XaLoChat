@@ -2,7 +2,7 @@ function Conversation({
   avatar = "avatar-captain.jpg",
   name = "Lù Phi",
   time = "03:00 AM",
-  newestMessage = "Ra khơi em ơi!",
+  newestMessage = "...",
   isSelected = false,
   isOnline = false,
   notifycation = 0,

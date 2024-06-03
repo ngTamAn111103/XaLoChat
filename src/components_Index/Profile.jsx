@@ -3,7 +3,6 @@ import ProfileInfo from "./ProfileInfo";
 import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
-import { useUserStore } from "../lib/userStore";
 export function Profile({
   isHeader = true,
   extend,
@@ -12,7 +11,6 @@ export function Profile({
   profileDetails,
 }) {
   // Thông tin của người dùng
-  const { currentUser } = useUserStore();
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -118,10 +116,17 @@ export function Profile({
         )}
         {extend}
         <UserProfile
+
           avatarSrc={userProfile ? currentUser.Avatar : ""}
           name={userProfile ? currentUser.Fullname : ""}
           activityStatus={userProfile ? userProfile.activityStatus : ""}
           description={userProfile ? userProfile.description : ""}
+
+//           avatarSrc={userProfile.Avatar}
+//           name={userProfile.Fullname}
+//           activityStatus={userProfile.activityStatus}
+//           description={userProfile.Description}
+
         />
 
         <div className="user-profile-desc px-4 pt-4">
@@ -147,13 +152,20 @@ export function Profile({
                 }}
               >
                 <div className="card-body">
-                  <div className="mt-4 pl-4">
-                    <ProfileInfo label={"Name"} value={currentUser.Fullname} />
-                    <ProfileInfo label={"Email"} value={currentUser.Email} />
-                    <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
+
+                   <div className="mt-4 pl-4">
+                     <ProfileInfo label={"Name"} value={currentUser.Fullname} />
+                     <ProfileInfo label={"Email"} value={currentUser.Email} />
+                     <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
+
+//                 <div className="mt-4 pl-4">
+//                     <ProfileInfo label={"Name"} value={userProfile.Fullname} />
+//                     <ProfileInfo label={"Email"} value={userProfile.Email} />
+//                     <ProfileInfo label={"Time"} value={userProfile.UpdatedAt} />
+
                     <ProfileInfo
                       label={"Location"}
-                      value={currentUser.Location}
+                      value={userProfile.Location}
                     />
                   </div>
                 </div>
