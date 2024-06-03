@@ -44,8 +44,7 @@ const PulseCircle = styled.div`
   }
 `;
 
-export function CallScreen({ toggleCallScreen }) {
-  const { currentUser } = useUserStore();
+export function CallScreen({ toggleCallScreen, receiverAvatar="", receiverName="" }) {
   const [isVolumeLow, setIsVolumeLow] = useState(true);
   const [isSpeakerOn, setIsSpeakerOn] = useState(false); // Trạng thái loa
   const [audio] = useState(new Audio("/audio/nhac_cho.mp3")); // Sử dụng URL tương đối từ thư mục public
@@ -107,9 +106,9 @@ export function CallScreen({ toggleCallScreen }) {
           <PulseCircle />
           <PulseCircle />
           <img
-            src={currentUser.Avatar}
+            src={receiverAvatar}
             className="h-20 w-20 rounded-full"
-            alt={currentUser.Avatar}
+            alt={receiverAvatar}
             style={{
               position: "relative",
               top: "50%",
@@ -119,7 +118,7 @@ export function CallScreen({ toggleCallScreen }) {
             }}
           />
         </PulseAnimation>
-        <h5 className="text-truncate text-2xl">{currentUser.Fullname}</h5>
+        <h5 className="text-truncate text-2xl">{receiverName}</h5>
         <p className="text-[#7A7F9A]">Calling...</p>
         {isSpeakerOn && (
           <p className="text-[#7A7F9A]">Bạn đang bật loa ngoài</p>

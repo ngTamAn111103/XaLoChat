@@ -12,7 +12,7 @@ export function Receiver({
   isFirst=true,
   index
 }) {
-
+console.log(avatarReceiver);
     const [showTime,setShowTime] = useState(false)
 
     function handShowTime () { 
