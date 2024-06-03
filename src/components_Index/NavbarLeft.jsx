@@ -19,7 +19,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
 
   const handleClickButton = (selectedButtonName) => {
     setSelectedButton(selectedButtonName);
-    console.log(selectedButton);
+    // console.log(selectedButton);
   };
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -37,10 +37,13 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
       .then(() => {
         useUserStore.getState().fetchUserInfo(null);
         console.log("NavbarLeft.jsx: Đăng xuất thành công");
-        toast.success("Đăng xuất thành công!");
+        
 
         // Chuyển hướng về trang đăng nhập sau khi đăng xuất thành công
         navigate("/login");
+        toast.success("Đăng xuất thành công!",{
+          position:"top-left"
+        });
       })
       .catch((error) => {
         console.error("NavbarLeft.jsx: Lỗi đăng xuất:", error);

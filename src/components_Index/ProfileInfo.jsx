@@ -19,10 +19,14 @@ function ProfileInfo({ label, value, isEditing, onSave }) {
       });
       
       console.log("Cập nhật fullname thành công!");
-      toast.success("Cập nhật thành công!")
+      toast.success("Cập nhật thành công!",{
+        position: "top-left"
+      })
 
     } catch (error) {
-      toast.error("Lỗi khi cập nhật fullname:", error);
+      toast.error(`Cập nhật thất bại! ${error}`,{
+        position: "top-left"
+      })
 
       
     }

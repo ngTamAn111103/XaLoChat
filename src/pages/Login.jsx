@@ -39,9 +39,14 @@ export function Login() {
         isOnline: true,
       });
       setLoading(false);
+      toast.success(`Đăng nhập thành công!`, {
+        position: "top-left"
+      })
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error(error.message,{
+        position: "top-left"
+      });
       setLoading(false);
     }
 

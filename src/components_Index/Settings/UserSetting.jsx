@@ -44,10 +44,14 @@ function UserSetting({ name, avatarSrc }) {
         
         toast.success("Đổi ảnh thành công")
         console.log("Tải ảnh và cập nhật URL thành công!");
-        // toast: CHo tao cái toast ở đây nhza
+        toast.success(`Đổi ảnh thành công!`,{
+          position: "top-left"
+        } )
         
       } catch (error) {
-        toast.error("Đổi ảnh không thành công")
+        toast.error(`Đổi ảnh không thành công! ${error}`,{
+          position: "top-left"
+        } )
         console.error("Lỗi khi tải ảnh hoặc cập nhật URL:", error);  
         // toast.success("hello")
       }
