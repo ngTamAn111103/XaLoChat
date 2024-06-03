@@ -12,7 +12,7 @@ export function Receiver({
   isFirst,
   index
 }) {
-
+console.log(avatarReceiver);
     const [showTime,setShowTime] = useState(false)
 
     function handShowTime () { 
@@ -30,7 +30,7 @@ export function Receiver({
           <>
             <img
               className="mr-2 h-8 w-8 rounded-full"
-              src={`images/${avatarReceiver}`}
+              src={avatarReceiver}
               alt="User Avatar"
             />
             <div className="font-medium" >{nameReceiver}</div>

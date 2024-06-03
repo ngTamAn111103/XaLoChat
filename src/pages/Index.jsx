@@ -58,7 +58,7 @@ export function Index() {
   // Trạng thái để quản lý cờ cho chế độ xem tìm kiếm hoặc chat.
   const [flagSearchOrChat, setFlag] = useState("message");
   // Trạng thái để lưu trữ ảnh đại diện của người dùng.
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState("");
   // Trạng thái để lưu trữ tên của người dùng.
   const [name, setName] = useState();
 
@@ -623,7 +623,8 @@ export function Index() {
                           : showChat
                       }
                       setMessages={setShowChat}
-                      friendInfo={showFriendList[clickedChat]}
+                      receiverAvatar={avatar.props?.src}
+                      receiverName={name}
                       chatroomId={
                         showFriendList[clickedChat]
                           ? showFriendList[clickedChat].ID
@@ -682,17 +683,19 @@ export function Index() {
           showModal={showModal}
           toggleModal={toggleModal}
           toggleCallScreen={startCall}
-          currentUser={currentUser}
+          receiverAvatar={avatar.props.src}
+           receiverName={name}
           actionType={actionType}
         />
       )}
 
-      {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} />}
+      {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} receiverAvatar={avatar.props.src} receiverName={name} />}
 
       {showVideoScreen && (
         <CallVideoScreen
           showModal={showVideoScreen}
-          currentUser={currentUser}
+          receiverAvatar={avatar.props.src} 
+          receiverName={name}
           toggleModal={toggleModal}
           toggleCallScreen={toggleCallScreen}
           modalRef={modalRef}

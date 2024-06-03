@@ -8,7 +8,7 @@ import { db } from "../lib/firebase";
 import { SendImage } from "./Chat/SendImage";
 
 
-function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
+function ChatContainer({ messages, receiverName="", receiverAvatar="", setMessages, chatroomId }) {
   let msgs;
   const [inputValue, setInputValue] = useState('')
   const [images, setImages] = useState([])
@@ -21,8 +21,8 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
       //lấy dữ liệu từ input chat
       const enteredMessage = inputValue
       const now = new Date()
-      const hours = now.getHours()
-      const minutes = now.getMinutes()
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
 
       //gửi dữ liệu 
 
@@ -83,13 +83,14 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
         />
         :
         <Receiver
-          avatarReceiver={friendInfo.Avatar}
-          nameReceiver={"Name"}
+          avatarReceiver={receiverAvatar}
+          nameReceiver={receiverName}
           msg={msg.Content}
           createAtReceiver={msg.CreateAt}
           isLast={isLastMessage}
           isFirst={isFirstMessage}
           key={index}
+
         />
 
     });

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen }) => {
+const CallVideoScreen = ({ showModal, receiverAvatar="",receiverName="", toggleModal, toggleCallScreen }) => {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
 
@@ -62,11 +62,11 @@ const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen
           <div className="flex items-center justify-between">
             <div className="flex items-center ml-20 ">
               <img
-                src={currentUser.Avatar}
+                src={receiverAvatar}
                 className="w-12 h-12 rounded-full mr-4"
-                alt={currentUser.Fullname}
+                alt={receiverName}
               />
-              <h5 className="text-xl font-semibold">{currentUser.Fullname}</h5>
+              <h5 className="text-xl font-semibold">{receiverName}</h5>
             </div>
           </div>
           <div className="flex justify-center">
