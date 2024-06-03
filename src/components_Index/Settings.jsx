@@ -7,7 +7,7 @@ import ToggleSwitch from "./Settings/ToggleSwitch";
 import { useUserStore } from "../lib/userStore";
 import { ToastContainer } from "react-toastify";
 
-export function Setting({ isActive, profileSetting, profileDetails}) {
+export function Setting({ isActive, profileSetting, profileDetails }) {
   // State hooks để quản lý toggle và dropdown
   const [toggleOne, setToggleOne] = useState(false);
   const [toggleTwo, setToggleTwo] = useState(false);
@@ -33,7 +33,7 @@ export function Setting({ isActive, profileSetting, profileDetails}) {
     toggleSetter((prev) => !prev);
     otherToggles.forEach((setter) => setter(false));
   };
-  
+
   return (
     <>
       <div className={isActive ? "block" : "hidden"}>
@@ -67,18 +67,28 @@ export function Setting({ isActive, profileSetting, profileDetails}) {
                   ></i>
                 </h6>
               </div>
-              <div className={` ${toggleOne ? "block" : "hidden"}`}>
-              <div className="card-body">
+              <div
+                style={{
+                  maxHeight: toggleOne ? "1000px" : "0",
+                  opacity: toggleOne ? 1 : 0,
+                  overflow: "hidden",
+                  transition: toggleOne
+                    ? "max-height 1s ease-in, opacity 0.3s ease-in"
+                    : "max-height .3s ease-out, opacity 0.3s ease-out",
+                }}
+              >
+                <div className="card-body">
                   <div className="float-right pr-5">
-                  {!editedName && ( // ản nút edit
-                    <button
-                      type="button"
-                      className="flex items-center rounded bg-[#E6EBF5] px-3 py-1 text-xs hover:bg-[#C4C8D0]"
-                      onClick={handleEditClick}
-                    >
-                      <i className="fa-solid fa-pen pr-2"></i>
-                      Edit
-                    </button>)}
+                    {!editedName && ( // ản nút edit
+                      <button
+                        type="button"
+                        className="flex items-center rounded bg-[#E6EBF5] px-3 py-1 text-xs hover:bg-[#C4C8D0]"
+                        onClick={handleEditClick}
+                      >
+                        <i className="fa-solid fa-pen pr-2"></i>
+                        Edit
+                      </button>
+                    )}
                   </div>
                   <div className="mt-4 pl-4">
                     <ProfileInfo
@@ -129,7 +139,16 @@ export function Setting({ isActive, profileSetting, profileDetails}) {
                   ></i>
                 </h6>
               </div>
-              <div className={` ${toggleTwo ? "block" : "hidden"} p-2 pb-6`}>
+              <div
+                style={{
+                  maxHeight: toggleTwo ? "1000px" : "0",
+                  opacity: toggleTwo ? 1 : 0,
+                  overflow: "hidden",
+                  transition: toggleTwo
+                    ? "max-height 1s ease-in, opacity 0.3s ease-in"
+                    : "max-height .3s ease-out, opacity 0.3s ease-out",
+                }}
+              >
                 <div className="card-body">
                   <div className="py-3 pl-3">
                     <div className="flex items-center">
@@ -212,7 +231,16 @@ export function Setting({ isActive, profileSetting, profileDetails}) {
                   ></i>
                 </h6>
               </div>
-              <div className={` ${toggleThree ? "block" : "hidden"}`}>
+              <div
+                style={{
+                  maxHeight: toggleThree ? "1000px" : "0",
+                  opacity: toggleThree ? 1 : 0,
+                  overflow: "hidden",
+                  transition: toggleThree
+                    ? "max-height 1s ease-in, opacity 0.3s ease-in"
+                    : "max-height .3s ease-out, opacity 0.3s ease-out",
+                }}
+              >
                 <div className="card-body">
                   <div className="mt-4 pb-4 pl-5">
                     <div className="flex items-center">
@@ -250,7 +278,16 @@ export function Setting({ isActive, profileSetting, profileDetails}) {
                   ></i>
                 </h6>
               </div>
-              <div className={` ${toggleFour ? "block" : "hidden"}`}>
+              <div
+                style={{
+                  maxHeight: toggleFour ? "1000px" : "0",
+                  opacity: toggleFour ? 1 : 0,
+                  overflow: "hidden",
+                  transition: toggleFour
+                    ? "max-height 1s ease-in, opacity 0.3s ease-in"
+                    : "max-height .3s ease-out, opacity 0.3s ease-out",
+                }}
+              >
                 <div className="mt-4 pl-5">
                   <div className="card-body font-medium">
                     <div className="py-3">

@@ -30,8 +30,8 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist, set
         notifycation={e.notifycation}
         isOnline={e.isOnline}
         name={e.isGroup ? e.Name : receiverInfo?.Fullname} // Sử dụng receiverInfo (không còn là Promise)
-        newestMessage={e.newestMessage}
-        time={e.time}
+        newestMessage={e.Message[e.Message.length-1]?.Content}
+        time={e.Message[e.Message.length-1]?.CreateAt}
         onClickFriend={() => handleClickButton(i)}
         isSentImage={e.isSentImage ? true : false}
         isSentFile={e.isSentFile ? true : false}

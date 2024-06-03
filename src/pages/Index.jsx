@@ -13,7 +13,9 @@ import ContactList from "../components_Index/Contacts/ContactList";
 import { onAuthStateChanged } from "firebase/auth";
 import { Navigate, Outlet } from "react-router-dom";
 import ChatContainer from "../components_Index/ChatContainer";
-// import CallModal from "../components_Index/side-menu/Modal";
+import Modal from "../components_Index/side-menu/ModalCall";
+import CallScreen from "../components_Index/side-menu/CallScreen";
+import CallVideoScreen from "../components_Index/side-menu/CallVideoScreen";
 import {
   fakeFriendList,
   fakeMessages,
@@ -36,6 +38,8 @@ import {
 import { db } from "../lib/firebase";
 import { useNavigate } from "react-router-dom";
 
+import { set } from "firebase/database";
+
 export function Index() {
   // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
@@ -44,25 +48,62 @@ export function Index() {
   const [clickedChat, setClickedChat] = useState(-1); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
   // Lưu trữ danh sách các cuộc trò chuyện (mảng).
-  const [showFriendList, setshowFriendList] = useState([]);
-  const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
-  const searchRef = useRef(null); // useRef
+
+  const [showFriendList, setshowFriendList] = useState([]); // Trạng thái để lưu trữ danh sách các cuộc trò chuyện (mảng).
+  const [showSearch, setShowSearch] = useState(false); // Trạng thái để kiểm soát việc hiển thị của hộp văn bản tìm kiếm.
+  const searchRef = useRef(null); // useRef để tham chiếu đến phần tử đầu vào tìm kiếm.
+  // useRef để tham chiếu đến phần tử đầu vào chat.
+
   const chatRef = useRef(null);
-  const [showModal, setShowModal] = useState(false);
+  // Trạng thái để quản lý cờ cho chế độ xem tìm kiếm hoặc chat.
   const [flagSearchOrChat, setFlag] = useState("message");
+  // Trạng thái để lưu trữ ảnh đại diện của người dùng.
   const [avatar, setAvatar] = useState();
+  // Trạng thái để lưu trữ tên của người dùng.
   const [name, setName] = useState();
+
   const [resultSearch, setResultSearch] = useState([]);
+
   // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
   const [receiverInfos, setReceiverInfos] = useState({});
 
-  // TA: Backend
-  const [users, setUsers] = useState([]);
+  // Trạng thái để kiểm soát việc hiển thị của modal và các màn hình cuộc gọi.
+  const [showModal, setShowModal] = useState(false);
+  const [showCallScreen, setShowCallScreen] = useState(false);
+  const [showVideoScreen, setShowVideoScreen] = useState(false);
+  const [actionType, setActionType] = useState(""); // Loại hành động: audio hoặc video.
+
+  // Hàm để chuyển đổi trạng thái hiển thị của modal.
+  const toggleModal = () => setShowModal(!showModal);
+
+  // Hàm để chuyển đổi trạng thái hiển thị của màn hình cuộc gọi.
+  const toggleCallScreen = () => {
+    setShowModal(false); // Đóng modal nếu mở.
+    setShowCallScreen(!showCallScreen); // Chuyển đổi trạng thái màn hình cuộc gọi.
+    setShowVideoScreen(false); // Đảm bảo rằng màn hình video đóng khi chuyển đổi.
+  };
+
+  // Hàm để chuyển đổi trạng thái hiển thị của màn hình video.
+  const toggleVideoScreen = () => {
+    setShowModal(false); // Đóng modal nếu mở.
+    setShowVideoScreen(!showVideoScreen); // Chuyển đổi trạng thái màn hình video.
+    if (!showVideoScreen) {
+      setShowCallScreen(false); // Nếu đang mở màn hình video, đảm bảo rằng màn hình cuộc gọi đóng.
+    }
+  };
+
+  // Hàm xử lý sự kiện khi biểu tượng được nhấp (gọi hoặc nhắn tin).
+//   const handleIconClick = (type) => {
+//     setActionType(type);
+//     toggleModal();
 
   //TA: Viết cho search friend
   const createChatroom = async (receiverId) => {
     try {
       // Gọi hàm tạo phòng chat từ backend (hoặc logic xử lý tương tự)
+      const now = new Date()
+      const hours = now.getHours()
+      const minutes = now.getMinutes()
       // 1. Tạo  chatroom mới
       const docRef = await addDoc(collection(db, "Chatroom"), {
         // Các trường dữ liệu của bạn
@@ -71,6 +112,7 @@ export function Index() {
         isGroup: false,
         CreateBy: currentUser.ID,
         Description: "Description",
+        CreatedAt: `${hours}:${minutes}`,
 
         Message: [],
       });
@@ -103,7 +145,21 @@ export function Index() {
 
   const toggleModal = () => {
     setShowModal(!showModal);
+
   };
+
+  // Hàm bắt đầu cuộc gọi.
+  const startCall = () => {
+    setShowModal(false); // Đóng modal.
+    if (actionType === "video") {
+      toggleVideoScreen(); // Mở màn hình video nếu hành động là video.
+    } else {
+      toggleCallScreen(); // Mở màn hình cuộc gọi âm thanh nếu không phải là video.
+    }
+  };
+
+  // TA: Backend
+  const [users, setUsers] = useState([]);
 
   // Lắng nghe sự kiện khi profile được thay đổi
   // ... (các import khác)
@@ -112,6 +168,19 @@ export function Index() {
 
   // Lắng nghe sự kiện khi profile được thay đổi
   useEffect(() => {
+
+//     // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
+//     const listChatroomID = currentUser?.Chatroom || [];
+//     // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom
+//     const unsubscribeFunctions = [];
+
+//     // Duyệt qua từng id chatroom
+//     listChatroomID.forEach((chatroomId) => {
+//       // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
+//       const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+//         // Lấy thông tin chatroom dựa vào chatroomID
+//         // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
+
     if (!currentUser) return; // Thoát nếu chưa có thông tin người dùng
 
     const listChatroomID = currentUser.Chatroom || [];
@@ -119,6 +188,7 @@ export function Index() {
     // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
     const unsubscribeFunctions = listChatroomID.map((chatroomId) => {
       return onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+
         if (doc.exists()) {
           const chatroomData = doc.data();
 
@@ -274,9 +344,11 @@ export function Index() {
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {
+
               showFriendList[clickedChat]
                 ? receiverInfos[showFriendList[clickedChat].ID].Fullname
                 : "NULL"
+
               // showFriendList[clickedChat]?.name.length > 14
               //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
               //   : showFriendList[clickedChat]?.name.substring(0, 17)
@@ -453,6 +525,11 @@ export function Index() {
                                     role="menu"
                                     aria-hidden="true"
                                     className="absolute right-0 mt-1 w-64 rounded-md border border-[#DCDCDC] bg-white p-0 shadow-lg"
+                                    style={{
+                                      transition: "opacity 0.3s, transform 1s ",
+                                      opacity: 1,
+                                      transform: "translateY(0)",
+                                    }}
                                   >
                                     <div className="p-2">
                                       <input
@@ -467,18 +544,16 @@ export function Index() {
                             </li>
                             {/*======================= call ===============  */}
                             <li className="mr-7 hidden min-[450px]:inline-block">
-                              {/*toggle modal */}
                               <i
                                 className="fa-solid fa-phone"
-                                onClick={toggleModal}
+                                onClick={() => handleIconClick("audio")}
                               ></i>
                             </li>
                             {/*======================= video ===============  */}
                             <li className="mr-7 hidden min-[450px]:inline-block">
-                              {/*toggle modal */}
                               <i
                                 className="fa-solid fa-video"
-                                onClick={toggleModal}
+                                onClick={() => handleIconClick("video")}
                               ></i>
                             </li>
                             {/*======================= user ===============  */}
@@ -603,64 +678,27 @@ export function Index() {
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal Call */}
       {showModal && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 999,
-          }}
-        >
-          <div
-            className="h-[350px] w-[500px]"
-            ref={modalRef}
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "#fff",
-              padding: "20px",
-              borderRadius: "8px",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <div style={{ textAlign: "center" }}>
-              <div className="mb-4 mt-5 inline-block">
-                <img
-                  src={"avatarSrc"}
-                  className="h-20 w-20 rounded-full"
-                  alt={currentUser.Fullname}
-                />
-              </div>
-              <h5 className="text-truncate text-2xl">{currentUser.Fullname}</h5>
-              <p className="text-[#7A7F9A]">Start Audio Call</p>
-            </div>
-            <div
-              className="mt-5"
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <button
-                type="button"
-                className="btn btn-danger avatar-sm rounded-circle me-2 p-4 pt-5"
-                onClick={toggleModal}
-              >
-                <i className="fa-solid fa-circle-xmark fa-2x"></i>
-              </button>
-              <button
-                type="button"
-                className="btn btn-success avatar-sm rounded-circle me-2 p-4 pt-5"
-              >
-                <i className="fa-solid fa-square-phone fa-2x"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          showModal={showModal}
+          toggleModal={toggleModal}
+          toggleCallScreen={startCall}
+          currentUser={currentUser}
+          actionType={actionType}
+        />
+      )}
+
+      {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} />}
+
+      {showVideoScreen && (
+        <CallVideoScreen
+          showModal={showVideoScreen}
+          currentUser={currentUser}
+          toggleModal={toggleModal}
+          toggleCallScreen={toggleCallScreen}
+          modalRef={modalRef}
+        />
       )}
     </>
   );
