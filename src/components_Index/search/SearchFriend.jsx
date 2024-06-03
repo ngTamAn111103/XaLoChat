@@ -1,4 +1,5 @@
 import SearchResult from "./SearchResult";
+
 import {
   collection,
   query,
