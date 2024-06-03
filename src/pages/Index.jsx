@@ -143,10 +143,7 @@ export function Index() {
     }
   };
 
-  const toggleModal = () => {
-    setShowModal(!showModal);
 
-  };
 
   // Hàm bắt đầu cuộc gọi.
   const startCall = () => {

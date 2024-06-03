@@ -3,7 +3,7 @@ import ProfileInfo from "./ProfileInfo";
 import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 export function Profile({
   isHeader = true,
   extend,
@@ -11,7 +11,6 @@ export function Profile({
   userProfile,
   profileDetails,
   isAttachFile = true,
-
 }) {
   // Thông tin của người dùng
   const [toggleOne, setToggleOne] = useState(false);
@@ -24,17 +23,17 @@ export function Profile({
   });
 
   const dropdownRef = useRef(null);
-  const handleNotify = (status,mes) => { 
-    switch (status) { 
-      case "success": 
-        toast.success(mes)
-      break; 
+  const handleNotify = (status, mes) => {
+    switch (status) {
+      case "success":
+        toast.success(mes);
+        break;
 
-      case "error": 
-        toast.error(mes)
-      break; 
-    } 
-  }
+      case "error":
+        toast.error(mes);
+        break;
+    }
+  };
   const handleToggleOne = () => {
     setToggleOne(!toggleOne);
     if (toggleTwo) {
@@ -78,13 +77,11 @@ export function Profile({
 
   return (
     <>
-
       <div
         className={
           isActive ? "absolute block h-full w-full lg:w-[360px]" : "hidden"
         }
       >
-
         {isHeader && (
           <Header
             title={"My Profile"}
@@ -131,25 +128,14 @@ export function Profile({
         )}
         {extend}
         <UserProfile
+          //           handleNotify={handleNotify}
 
           
-        
-          
-          
-//           handleNotify={handleNotify}
 
-
-          avatarSrc={userProfile ? currentUser.Avatar : ""}
-          name={userProfile ? currentUser.Fullname : ""}
-          activityStatus={userProfile ? userProfile.activityStatus : ""}
-          description={userProfile ? userProfile.description : ""}
-
-//           avatarSrc={userProfile.Avatar}
-//           name={userProfile.Fullname}
-//           activityStatus={userProfile.activityStatus}
-//           description={userProfile.Description}
-
-
+                    avatarSrc={userProfile.Avatar}
+                    name={userProfile.Fullname}
+                    activityStatus={userProfile.activityStatus}
+                    description={userProfile.Description}
         />
 
         <div className="user-profile-desc px-4 pt-4">
@@ -175,79 +161,87 @@ export function Profile({
                 }}
               >
                 <div className="card-body">
+                  <div className="mt-4 pl-4">
+                    <ProfileInfo label={"Name"} value={userProfile.Fullname} />
+                    <ProfileInfo label={"Email"} value={userProfile.Email} />
+                    <ProfileInfo label={"Time"} value={userProfile.UpdatedAt} />
+                    //{" "}
+                    <div className="mt-4 pl-4">
+                      //{" "}
+                      <ProfileInfo
+                        label={"Name"}
+                        value={userProfile.Fullname}
+                      />
+                      //{" "}
+                      <ProfileInfo label={"Email"} value={userProfile.Email} />
+                      //{" "}
+                      <ProfileInfo
+                        label={"Time"}
+                        value={userProfile.UpdatedAt}
+                      />
+                      <ProfileInfo
+                        label={"Location"}
+                        value={userProfile.Location}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-                   <div className="mt-4 pl-4">
-                     <ProfileInfo label={"Name"} value={currentUser.Fullname} />
-                     <ProfileInfo label={"Email"} value={currentUser.Email} />
-                     <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
+              <div
+                className={` mb-1 rounded-md border border-[#DCDCDC] bg-white p-1 ${isAttachFile ? "" : "hidden"}`}
+              >
+                <div className="cursor-pointer" onClick={handleToggleTwo}>
+                  <h6 className="flex items-center text-xs font-bold">
+                    <i className="fas fa-paperclip p-2 pl-4"></i>
+                    Attached Files
+                    <i
+                      className={`fas fa-chevron-${toggleTwo ? "up" : "down"} fa-xs ml-auto pr-4`}
+                    ></i>
+                  </h6>
+                </div>
+                <div
+                  style={{
+                    maxHeight: toggleTwo ? "1000px" : "0",
+                    opacity: toggleTwo ? 1 : 0,
+                    overflow: "hidden",
+                    transition: toggleTwo
+                      ? "max-height 1s ease-in, opacity 0.3s ease-in"
+                      : "max-height .3s ease-out, opacity 0.3s ease-out",
+                  }}
+                >
+                  <div className="card-body h-[calc(100vh_-_400px)]">
+                    <FileCard
+                      fileName={"Admin-A.zip"}
+                      fileSize={"12.5 MB"}
+                      iconClassName={"fas fa-file-lines"}
+                    />
+                    <FileCard
+                      fileName={"User-A.zip"}
+                      fileSize={"122 MB"}
+                      iconClassName={"fas fa-file-image"}
+                    />
+                    <FileCard
+                      fileName={"User-A.zip"}
+                      fileSize={"122 MB"}
+                      iconClassName={"fas fa-file-image"}
+                    />
+                    <FileCard
+                      fileName={"User-A.zip"}
+                      fileSize={"122 MB"}
+                      iconClassName={"fas fa-file-image"}
+                    />
 
-//                 <div className="mt-4 pl-4">
-//                     <ProfileInfo label={"Name"} value={userProfile.Fullname} />
-//                     <ProfileInfo label={"Email"} value={userProfile.Email} />
-//                     <ProfileInfo label={"Time"} value={userProfile.UpdatedAt} />
-
-                    <ProfileInfo
-                      label={"Location"}
-                      value={userProfile.Location}
+                    <FileCard
+                      fileName="Document.pdf"
+                      fileSize="1.2 MB"
+                      iconClassName="fas fa-file-pdf"
+                      menuPosition="bottom"
                     />
                   </div>
                 </div>
               </div>
             </div>
-
-             <div className={` mb-1 rounded-md border border-[#DCDCDC] bg-white p-1 ${isAttachFile?"":"hidden"}`}>
-
-              <div className="cursor-pointer" onClick={handleToggleTwo}>
-                <h6 className="flex items-center text-xs font-bold">
-                  <i className="fas fa-paperclip p-2 pl-4"></i>
-                  Attached Files
-                  <i
-                    className={`fas fa-chevron-${toggleTwo ? "up" : "down"} fa-xs ml-auto pr-4`}
-                  ></i>
-                </h6>
-              </div>
-              <div
-                style={{
-                  maxHeight: toggleTwo ? "1000px" : "0",
-                  opacity: toggleTwo ? 1 : 0,
-                  overflow: "hidden",
-                  transition: toggleTwo
-                    ? "max-height 1s ease-in, opacity 0.3s ease-in"
-                    : "max-height .3s ease-out, opacity 0.3s ease-out",
-                }}
-              >
-                <div className="card-body h-[calc(100vh_-_400px)]">
-                  <FileCard
-                    fileName={"Admin-A.zip"}
-                    fileSize={"12.5 MB"}
-                    iconClassName={"fas fa-file-lines"}
-                  />
-                  <FileCard
-                    fileName={"User-A.zip"}
-                    fileSize={"122 MB"}
-                    iconClassName={"fas fa-file-image"}
-                  />
-                  <FileCard
-                    fileName={"User-A.zip"}
-                    fileSize={"122 MB"}
-                    iconClassName={"fas fa-file-image"}
-                  />
-                  <FileCard
-                    fileName={"User-A.zip"}
-                    fileSize={"122 MB"}
-                    iconClassName={"fas fa-file-image"}
-                  />
-                  
-                  <FileCard
-                    fileName="Document.pdf"
-                    fileSize="1.2 MB"
-                    iconClassName="fas fa-file-pdf"
-                    menuPosition="bottom"
-                  />
-                </div>
-              </div>
-            </div>
-            
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useUserStore } from "../../lib/userStore";
-import styled, { keyframes } from "styled-components";
+import { styled, keyframes } from "styled-components";
 
 // animation
 const pulse = keyframes`
@@ -96,7 +96,7 @@ export function CallScreen({ toggleCallScreen }) {
       >
         <button
           type="button"
-          className=" bg-[#F44336] text-[#fff] hover:text-[#C62828] rounded-full p-4 m-4"
+          className=" m-4 rounded-full bg-[#F44336] p-4 text-[#fff] hover:text-[#C62828]"
           onClick={toggleCallScreen}
         >
           <i className="fa-solid fa-xmark fa-2xl"></i>
