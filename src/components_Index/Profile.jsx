@@ -130,12 +130,10 @@ export function Profile({
         <UserProfile
           //           handleNotify={handleNotify}
 
-          
-
-                    avatarSrc={userProfile.Avatar}
-                    name={userProfile.Fullname}
-                    activityStatus={userProfile.activityStatus}
-                    description={userProfile.Description}
+          avatarSrc={userProfile.Avatar}
+          name={userProfile.Fullname}
+          activityStatus={userProfile.activityStatus}
+          description={userProfile.Description}
         />
 
         <div className="user-profile-desc px-4 pt-4">
@@ -165,25 +163,10 @@ export function Profile({
                     <ProfileInfo label={"Name"} value={userProfile.Fullname} />
                     <ProfileInfo label={"Email"} value={userProfile.Email} />
                     <ProfileInfo label={"Time"} value={userProfile.UpdatedAt} />
-                    //{" "}
-                    <div className="mt-4 pl-4">
-                      //{" "}
-                      <ProfileInfo
-                        label={"Name"}
-                        value={userProfile.Fullname}
-                      />
-                      //{" "}
-                      <ProfileInfo label={"Email"} value={userProfile.Email} />
-                      //{" "}
-                      <ProfileInfo
-                        label={"Time"}
-                        value={userProfile.UpdatedAt}
-                      />
-                      <ProfileInfo
-                        label={"Location"}
-                        value={userProfile.Location}
-                      />
-                    </div>
+                    <ProfileInfo
+                      label={"Location"}
+                      value={userProfile.Location}
+                    />
                   </div>
                 </div>
               </div>

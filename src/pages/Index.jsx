@@ -93,9 +93,10 @@ export function Index() {
   };
 
   // Hàm xử lý sự kiện khi biểu tượng được nhấp (gọi hoặc nhắn tin).
-//   const handleIconClick = (type) => {
-//     setActionType(type);
-//     toggleModal();
+  const handleIconClick = (type) => {
+    setActionType(type);
+    toggleModal();
+  }
 
   //TA: Viết cho search friend
   const createChatroom = async (receiverId) => {
