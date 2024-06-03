@@ -26,11 +26,11 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
 
       //gửi dữ liệu 
 
-      setMessages([...messages, {
-        uid: currentUser.ID,
-        createdAt: `${hours}:${minutes}`,
-        mes: inputValue
-      }])
+      // setMessages([...messages, {
+      //   uid: currentUser.ID,
+      //   createdAt: `${hours}:${minutes}`,
+      //   mes: inputValue
+      // }])
 
       //clear ô input
       setInputValue('')
@@ -79,7 +79,7 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
       return msg?.SenderID === currentUser.ID ?
         <Sender
           msg={msg.Content}
-          createdAt={msg.createdAt}
+          createdAt={msg.CreateAt}
           isLast={isLastMessage}
           key={index}
         />
@@ -88,7 +88,7 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
           avatarReceiver={friendInfo.Avatar}
           nameReceiver={"Name"}
           msg={msg.Content}
-          createAtReceiver={msg.createdAt}
+          createAtReceiver={msg.CreateAt}
           isLast={isLastMessage}
           isFirst={isFirstMessage}
           key={index}

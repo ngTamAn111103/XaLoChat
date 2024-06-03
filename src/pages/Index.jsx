@@ -63,6 +63,9 @@ export function Index() {
   const createChatroom = async (receiverId) => {
     try {
       // Gọi hàm tạo phòng chat từ backend (hoặc logic xử lý tương tự)
+      const now = new Date()
+      const hours = now.getHours()
+      const minutes = now.getMinutes()
       // 1. Tạo  chatroom mới
       const docRef = await addDoc(collection(db, "Chatroom"), {
         // Các trường dữ liệu của bạn
@@ -71,6 +74,7 @@ export function Index() {
         isGroup: false,
         CreateBy: currentUser.ID,
         Description: "Description",
+        CreatedAt: `${hours}:${minutes}`,
 
         Message: [],
       });
