@@ -42,8 +42,7 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist, set
   });
 
   function handleClickButton(order) {
-    setClickedButton(order);
-    console.log("set :" +order)
+    setClickedButton(order)
     setFlag("message")
 
   }

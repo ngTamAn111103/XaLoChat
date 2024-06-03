@@ -1,6 +1,9 @@
 import React from "react";
 
-function UserProfile({ name, avatarSrc, activityStatus, description }) {
+function UserProfile({ name, avatarSrc, activityStatus, description,handleNotify }) {
+  
+
+  
   return (
     <div className="border-[#DCDCDC] p-4 text-center">
       <div className="border border-[#DCDCDC] inline-block p-1 rounded-full">

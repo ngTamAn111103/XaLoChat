@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+
 import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
-
+import {toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
@@ -41,9 +42,7 @@ export function Register() {
       // Kiểm tra xác nhận mật khẩu không đúng
       if (password != confirm_password) {
         console.log("Confirm password fail!");
-        toast.error("Confirm password fail!", {
-          position: "top-center",
-        });
+        toast.error("Confirm password fail!");
 
         return;
       } else {
@@ -145,7 +144,8 @@ export function Register() {
   };
 
   return (
-    <div className="my-12 py-12">
+    <div className="py-24 bg-[#f7f7ff]">
+     
       <div className="container mx-auto">
         <div className="flex flex-col flex-wrap items-center justify-center">
           {/* Header */}

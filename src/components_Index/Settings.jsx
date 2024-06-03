@@ -5,6 +5,7 @@ import ProfileInfo from "./ProfileInfo";
 import DropdownMenu from "./Settings/DropdownProFile";
 import ToggleSwitch from "./Settings/ToggleSwitch";
 import { useUserStore } from "../lib/userStore";
+import { ToastContainer } from "react-toastify";
 
 export function Setting({ isActive, profileSetting, profileDetails}) {
   // State hooks để quản lý toggle và dropdown
@@ -36,7 +37,9 @@ export function Setting({ isActive, profileSetting, profileDetails}) {
   return (
     <>
       <div className={isActive ? "block" : "hidden"}>
+        
         <Header title={"Settings"} />
+        {/* <ToastContainer/> */}
         {/* Component User Profile */}
         <UserSetting
           avatarSrc={currentUser.Avatar || "./images/avt.png"}

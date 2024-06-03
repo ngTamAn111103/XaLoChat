@@ -2,7 +2,7 @@ import { NavbarItem } from "../components_Index/side-menu/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import { useEffect, useRef, useState } from "react";
 import { Setting } from "../components_Index/Settings";
-import { ToastContainer, toast } from "react-toastify";
+
 import notify from "../../public/audio/milestone_ios_17.mp3"
 import notify_send from "../../public/audio/send_sms.mp3"
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
@@ -290,7 +290,7 @@ export function Index() {
 
   return (
     <>
-      <ToastContainer />
+    
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
@@ -308,6 +308,7 @@ export function Index() {
             <Profile
               isActive={selectedButton === "user"}
               userProfile={currentUser}
+              isAttachFile={false}
               profileDetails={profileDetails}
             />
 

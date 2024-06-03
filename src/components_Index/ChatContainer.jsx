@@ -3,7 +3,7 @@ import { Sender } from "./Chat/Sender";
 import { Receiver } from "./Chat/Receiver";
 import { useUserStore } from "../lib/userStore";
 import { updateDoc, arrayUnion, doc, or } from "firebase/firestore";
-import { toast } from "react-toastify";
+import { toast,ToastContainer} from "react-toastify";
 import { db } from "../lib/firebase";
 import { SendImage } from "./Chat/SendImage";
 
@@ -55,7 +55,7 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
 
       } catch (error) {
         console.error("Lỗi khi gửi tin nhắn:", error);
-        toast("Lỗi khi gửi tin nhắn")
+        toast.error("Lỗi khi gửi tin nhắn")
       }
 
     }
@@ -69,8 +69,6 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
   }
 
   if (messages) {
-    console.log("message chunk: ")
-    console.log(messages)
     msgs = messages.map((msg, index) => {
       const isLastMessage =
         index === messages.length - 1 || messages[index + 1].uid !== msg.uid; // Kiểm tra isLastMessage chính xác hơn
@@ -104,7 +102,6 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
 
   const handDeleteImage = (order)=> { 
     const newArr = images.filter((_ ,i)=>{return i!=order} )
-    console.log(newArr)
     setImages(newArr)
   }
   const handleChooseFile = async (e) => {
@@ -113,14 +110,12 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
     for (const file of files) {
       //kiểm tra mảng file có hình ảnh hay không 
       if (file.type.includes("image")) {
-        console.log('run')
         const fileReader = new FileReader()
         //event handler
         fileReader.onload = (event) => {
           const fileData = event.target.result
           //set useState() 
           setImages(prImage => [...prImage, fileData])   
-          console.log("test ")
         }
         //read file and trigger event 
         fileReader.readAsDataURL(file)
@@ -132,9 +127,6 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
   const imgComponents = images.map((e, i) => {
     return <SendImage src={e} key={i} handleDelete={()=>handDeleteImage(i)} index={i}></SendImage>
   })
-  useEffect(()=>{ 
-    console.log("images length: "+images.length)
-  },[images])
   useEffect(() => {
     if (newestChat.current) {
       newestChat.current.scrollIntoView({ behavior: "smooth" });
@@ -143,6 +135,7 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
 
   return (
     <>
+    
       <div className="chat-conversation pb-5 pe-1 ps-5">
         <div className="flex h-[calc(100vh_-_120px)] flex-col">
           <div className="flex-1 overflow-y-scroll px-4 py-2">{msgs}
