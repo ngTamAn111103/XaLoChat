@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { useUserStore } from "../lib/userStore";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 
 function ProfileInfo({ label, value, isEditing, onSave }) {
   const [editedValue, setEditedValue] = useState(value);
@@ -19,10 +19,10 @@ function ProfileInfo({ label, value, isEditing, onSave }) {
       });
       
       console.log("Cập nhật fullname thành công!");
-      toast("Cập nhật thành công!")
+      toast.success("Cập nhật thành công!")
 
     } catch (error) {
-      console.error("Lỗi khi cập nhật fullname:", error);
+      toast.error("Lỗi khi cập nhật fullname:", error);
 
       
     }
@@ -36,6 +36,7 @@ function ProfileInfo({ label, value, isEditing, onSave }) {
 
   return (
     <>
+  
       <p className="mb-1 font-sans text-sm text-[#7A7F9A]">{label}</p>
       {isEditing ? (
         <div className="mt-2 flex items-center">

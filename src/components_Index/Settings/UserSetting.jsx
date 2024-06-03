@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { useUserStore } from "../../lib/userStore";
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 
 
 function UserSetting({ name, avatarSrc }) {
@@ -13,7 +13,6 @@ function UserSetting({ name, avatarSrc }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Available");
   const { currentUser } = useUserStore();
-
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -23,7 +22,7 @@ function UserSetting({ name, avatarSrc }) {
   };
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
-
+    
     if (file) {
       try {
         const storage = getStorage();
@@ -31,9 +30,9 @@ function UserSetting({ name, avatarSrc }) {
           storage,
           `AvatarUser/${currentUser.ID}`,
         );
-
+        
         await uploadBytes(storageRef, file);
-
+        
         const downloadURL = await getDownloadURL(storageRef);
         const db = getFirestore();
         
@@ -41,19 +40,23 @@ function UserSetting({ name, avatarSrc }) {
         await updateDoc(profileRef, {
           Avatar: downloadURL,
         });
-
         
+        
+        toast.success("Đổi ảnh thành công")
         console.log("Tải ảnh và cập nhật URL thành công!");
-        // toast: CHo tao cái toast ở đây nha
+        // toast: CHo tao cái toast ở đây nhza
+        
       } catch (error) {
-        console.error("Lỗi khi tải ảnh hoặc cập nhật URL:", error);
+        toast.error("Đổi ảnh không thành công")
+        console.error("Lỗi khi tải ảnh hoặc cập nhật URL:", error);  
+        // toast.success("hello")
       }
     }
   };
 
   return (
     <div className="relative border-b border-[#DCDCDC] p-4 text-center">
-        <ToastContainer />
+      
       <div className="relative inline-block rounded-full border border-[#DCDCDC] p-1">
         <img src={avatarSrc} className="h-20 w-20 rounded-full" alt={name} />
         <button

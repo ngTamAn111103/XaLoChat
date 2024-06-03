@@ -135,7 +135,8 @@ export function Index() {
       });
       console.log("Document written with ID: ", docRef.id);
       // Chuyển hướng đến trang đăng nhập
-      navigate("/index");
+      // navigate("/index");
+      setSelectedButton("message")
     } catch (error) {
       // Xử lý lỗi
       console.log("createChatroom thất bại " + error);
@@ -416,7 +417,7 @@ export function Index() {
 
   return (
     <>
-      <ToastContainer />
+    
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
@@ -434,6 +435,7 @@ export function Index() {
             <Profile
               isActive={selectedButton === "user"}
               userProfile={currentUser}
+              isAttachFile={false}
               profileDetails={profileDetails}
             />
 

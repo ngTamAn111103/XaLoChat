@@ -18,6 +18,7 @@ import { Index } from "./pages/Index.jsx";
 import RecoverPass from "./pages/RecoverPass.jsx";
 import Profile from "./components_Index/Profile.jsx";
 import { useUserStore } from "./lib/userStore.js";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   // TA: Backend
@@ -71,7 +72,7 @@ function App() {
 
   return (
     <>
-
+      <ToastContainer position="bottom-left"></ToastContainer>
        <Router>
         <Routes>
           {/* 

@@ -3,12 +3,15 @@ import ProfileInfo from "./ProfileInfo";
 import UserProfile from "./UserProfile";
 import FileCard from "./FileCard";
 import { Header } from "./chat-leftsidebar/Header";
+import { ToastContainer,toast } from "react-toastify";
 export function Profile({
   isHeader = true,
   extend,
   isActive,
   userProfile,
   profileDetails,
+  isAttachFile = true,
+
 }) {
   // Thông tin của người dùng
   const [toggleOne, setToggleOne] = useState(false);
@@ -21,7 +24,17 @@ export function Profile({
   });
 
   const dropdownRef = useRef(null);
+  const handleNotify = (status,mes) => { 
+    switch (status) { 
+      case "success": 
+        toast.success(mes)
+      break; 
 
+      case "error": 
+        toast.error(mes)
+      break; 
+    } 
+  }
   const handleToggleOne = () => {
     setToggleOne(!toggleOne);
     if (toggleTwo) {
@@ -65,11 +78,13 @@ export function Profile({
 
   return (
     <>
+
       <div
         className={
           isActive ? "absolute block h-full w-full lg:w-[360px]" : "hidden"
         }
       >
+
         {isHeader && (
           <Header
             title={"My Profile"}
@@ -117,6 +132,13 @@ export function Profile({
         {extend}
         <UserProfile
 
+          
+        
+          
+          
+//           handleNotify={handleNotify}
+
+
           avatarSrc={userProfile ? currentUser.Avatar : ""}
           name={userProfile ? currentUser.Fullname : ""}
           activityStatus={userProfile ? userProfile.activityStatus : ""}
@@ -126,6 +148,7 @@ export function Profile({
 //           name={userProfile.Fullname}
 //           activityStatus={userProfile.activityStatus}
 //           description={userProfile.Description}
+
 
         />
 
@@ -172,7 +195,8 @@ export function Profile({
               </div>
             </div>
 
-            <div className=" mb-1 rounded-md border border-[#DCDCDC] bg-white p-1 ">
+             <div className={` mb-1 rounded-md border border-[#DCDCDC] bg-white p-1 ${isAttachFile?"":"hidden"}`}>
+
               <div className="cursor-pointer" onClick={handleToggleTwo}>
                 <h6 className="flex items-center text-xs font-bold">
                   <i className="fas fa-paperclip p-2 pl-4"></i>
@@ -223,6 +247,7 @@ export function Profile({
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </div>

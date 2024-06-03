@@ -5,12 +5,12 @@ import { Outlet, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { useUserStore } from "../lib/userStore";
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
 import { Footer } from "../components_auth/Footer";
-import { toast } from "react-toastify";
 import { auth } from "../lib/firebase";
 export function Login() {
   // Khởi tạo mặc định usernmae có @gmail.com
@@ -29,13 +29,12 @@ export function Login() {
 
     try {
       await signInWithEmailAndPassword(auth, username, password);
+      setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
-    } finally {
-      // Tắt loading
       setLoading(false);
-    }
+    } 
   };
   // mặc đinh true
   let isValidationUsername = true;
@@ -46,7 +45,8 @@ export function Login() {
   }
 
   return (
-    <div className="my-12 py-12">
+    <div className="py-24 bg-[#f7f7ff]">
+        <ToastContainer position="top-left"></ToastContainer>
       <div className="container mx-auto">
         <div className="flex flex-col flex-wrap items-center justify-center">
           {/* Header */}
@@ -114,6 +114,7 @@ export function Login() {
             label2=" Sign up now"
             href="/register"
           />
+          
         </div>
       </div>
     </div>

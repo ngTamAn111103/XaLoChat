@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+
 import { Timestamp, doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../lib/firebase";
-
+import {toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { Header } from "../components_auth/Header";
 import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
@@ -41,9 +42,7 @@ export function Register() {
       // Kiểm tra xác nhận mật khẩu không đúng
       if (password != confirm_password) {
         console.log("Confirm password fail!");
-        toast.error("Confirm password fail!", {
-          position: "top-center",
-        });
+        toast.error("Confirm password fail!");
 
         return;
       } else {
@@ -145,7 +144,8 @@ export function Register() {
   };
 
   return (
-    <div className="my-12 py-12">
+    <div className="py-24 bg-[#f7f7ff]">
+     
       <div className="container mx-auto">
         <div className="flex flex-col flex-wrap items-center justify-center">
           {/* Header */}
@@ -155,9 +155,9 @@ export function Register() {
             href="#"
           />
           {/* body */}
-          <div className="card mx-auto mb-6 flex max-w-lg rounded-lg bg-white p-8 shadow-md">
-            <div className="flex flex-col items-center justify-center">
-              <div className="p-4">
+          <div className="card lg:mx-auto lg:mb-6 flex w-5/6 lg:w-auto rounded-lg bg-white lg:p-8 shadow-md">
+            <div className="flex flex-col items-center justify-center w-full lg:w-auto">
+              <div className="p-4 l w-full lg:w-auto">
                 <form
                   // action="#"
                   method="post"
