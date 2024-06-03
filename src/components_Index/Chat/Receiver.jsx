@@ -9,7 +9,7 @@ export function Receiver({
   createAtReceiver,
   msg,
   isLast,
-  isFirst,
+  isFirst=true,
   index
 }) {
 
@@ -25,15 +25,15 @@ export function Receiver({
   return (
     <>
     <div key={index} className="w-1/2 lg:w-fit">
-      <div className="mb-3 flex items-center">
+      <div className="mb-3 flex items-center"> 
         {isFirst == true ? (
           <>
-            <img
-              className="mr-2 h-8 w-8 rounded-full"
-              src={`images/${avatarReceiver}`}
-              alt="User Avatar"
-            />
-            <div className="font-medium" >{nameReceiver}</div>
+          <img
+                  className="mr-2 h-8 w-8 rounded-full"
+                  src={`${avatarReceiver}`}
+                  alt="User Avatar"
+                />
+                <div className="font-medium" >{nameReceiver}</div>
           </>
         ) : (
           ""
