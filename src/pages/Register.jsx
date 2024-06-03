@@ -155,9 +155,9 @@ export function Register() {
             href="#"
           />
           {/* body */}
-          <div className="card mx-auto mb-6 flex max-w-lg rounded-lg bg-white p-8 shadow-md">
-            <div className="flex flex-col items-center justify-center">
-              <div className="p-4">
+          <div className="card lg:mx-auto lg:mb-6 flex w-5/6 lg:w-auto rounded-lg bg-white lg:p-8 shadow-md">
+            <div className="flex flex-col items-center justify-center w-full lg:w-auto">
+              <div className="p-4 l w-full lg:w-auto">
                 <form
                   // action="#"
                   method="post"

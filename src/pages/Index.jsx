@@ -93,7 +93,8 @@ export function Index() {
       });
       console.log("Document written with ID: ", docRef.id);
       // Chuyển hướng đến trang đăng nhập
-      navigate("/index");
+      // navigate("/index");
+      setSelectedButton("message")
     } catch (error) {
       // Xử lý lỗi
       console.log("createChatroom thất bại " + error);

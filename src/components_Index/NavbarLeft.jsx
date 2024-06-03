@@ -52,7 +52,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
 
   return (
     <div
-      style={{ zIndex: 1000 }}
+      style={{ zIndex: 10 }}
       className="side-menu fixed bottom-0 left-0 right-0 z-10 flex bg-white shadow-black lg:static lg:z-0 lg:mr-1 lg:h-[100vh] lg:min-h-[570px] lg:min-w-[75px] lg:max-w-[75px] lg:flex-col lg:items-center"
     >
       
@@ -77,6 +77,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
             icon="fa-solid fa-user"
             id="profile"
             isPrimary={selectedButton === "user"}
+            customClass={"hidden lg:list-item"} 
           />
           <NavbarItem
             onClickButton={() => handleClickButton("message")}
@@ -97,7 +98,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
             onClickButton={() => handleClickButton("plus")}
             icon="fa-solid fa-circle-plus"
             isPrimary={selectedButton === "plus"}
-            customClass={"hidden lg:list-item"}
+            
           />
         </ul>
       </div>
@@ -106,7 +107,8 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
           <NavbarItem
             icon="fa-solid fa-gear"
             onClickButton={() => handleClickButton("setting")}
-            isPrimary={selectedButton === "setting"} 
+            isPrimary={selectedButton === "setting"}
+            customClass={"hidden lg:list-item"} 
           />
           <NavbarItem
             icon="fa-solid fa-right-from-bracket"
@@ -129,7 +131,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
               />
             </button>
             {isDropdownOpen && (
-              <div className="z-index: 9999 absolute bottom-12 left-0 w-40 rounded-md bg-white shadow-lg">
+              <div className="z-index: 9999 absolute bottom-12 right-0 lg:left-0 w-40 rounded-md bg-white shadow-lg">
                 <div className="py-5">
                 <button
                     className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
