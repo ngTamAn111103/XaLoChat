@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Sender } from "./Chat/Sender";
 import { Receiver } from "./Chat/Receiver";
+import { useUserStore } from "../lib/userStore";
+import { updateDoc, arrayUnion, doc } from "firebase/firestore";
+import { toast } from "react-toastify";
+import { db } from "../lib/firebase";
 
-function ChatContainer({ messages, friendInfo,setMessages }) {
+
+function ChatContainer({ messages, friendInfo,setMessages, chatroomId }) {
   let msgs;
   const [inputValue, setInputValue] = useState('')
+  const { currentUser } = useUserStore();
 
   //xử lý dữ liệu khi ấn enter hoặc nút gửi   
   const handleSendMessage = ()=>{ 
@@ -18,13 +24,37 @@ function ChatContainer({ messages, friendInfo,setMessages }) {
       //gửi dữ liệu 
   
       setMessages([...messages,{
-        uid: 0,
+        uid: currentUser.ID,
         createdAt: `${hours}:${minutes}`,
         mes: inputValue
       }])
    
       //clear ô input
       setInputValue('')
+
+      // TA Ghi dữ liệu lên db
+      try {
+              // Tham chiếu đến document của phòng chat
+      const chatroomRef = doc(db, "Chatroom", chatroomId); // Giả sử bạn đã có chatroomId
+
+       // Tạo object tin nhắn mới
+      const newMessage = {
+        SenderID: currentUser.ID,
+        CreateAt: `${hours}:${minutes}`,
+        Content: inputValue,
+        isImage: false 
+      };
+
+      // Cập nhật mảng Message trong Firestore
+       updateDoc(chatroomRef, {
+        Message: arrayUnion(newMessage)
+      });
+
+      } catch (error) {
+        console.error("Lỗi khi gửi tin nhắn:", error);
+        toast("Lỗi khi gửi tin nhắn")
+      }
+
     }
   }
 
@@ -43,9 +73,9 @@ function ChatContainer({ messages, friendInfo,setMessages }) {
         index === messages.length - 1 || messages[index + 1].uid !== msg.uid; // Kiểm tra isLastMessage chính xác hơn
       const isFirstMessage = index === 0 || messages[index - 1].uid !== msg.uid;
       // Render người gửi và người nhận
-      return msg?.uid !== friendInfo?.id ? 
+      return msg?.SenderID === currentUser.ID ? 
         <Sender
-          msg={msg.mes}
+          msg={msg.Content}
           createdAt={msg.createdAt}
           isLast={isLastMessage}
           key={index}
@@ -54,7 +84,7 @@ function ChatContainer({ messages, friendInfo,setMessages }) {
         <Receiver
           avatarReceiver={friendInfo.Avatar}
           nameReceiver={"Name"}
-          msg={msg.mes}
+          msg={msg.Content}
           createAtReceiver={msg.createdAt}
           isLast={isLastMessage}
           isFirst={isFirstMessage}

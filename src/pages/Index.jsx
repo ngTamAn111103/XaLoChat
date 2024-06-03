@@ -2,8 +2,9 @@ import { NavbarItem } from "../components_Index/side-menu/NavbarItem";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import { useEffect, useRef, useState } from "react";
 import { Setting } from "../components_Index/Settings";
-import { ToastContainer, toast } from 'react-toastify';
-
+import { ToastContainer, toast } from "react-toastify";
+import notify from "../../public/audio/milestone_ios_17.mp3";
+import notify_send from "../../public/audio/send_sms.mp3";
 import FriendList from "../components_Index/chat-leftsidebar/FriendList";
 import { NavbarLeft } from "../components_Index/NavbarLeft";
 import Profile from "../components_Index/Profile";
@@ -23,17 +24,26 @@ import {
 import Toast from "../general_component/Toast";
 import { SearchFriend } from "../components_Index/search/SearchFriend";
 import { useUserStore } from "../lib/userStore";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { db } from "../lib/firebase";
+import { useNavigate } from "react-router-dom";
 
 export function Index() {
-    // Lấy người dùng hiện tại
+  // Lấy người dùng hiện tại
   const { currentUser } = useUserStore();
   const [showUserInfo, setUserInfo] = useState(false); //ấn để hiện phần thông tin user ẩn
   const [selectedButton, setSelectedButton] = useState("message"); //ẩn để chọn 1 bên của navbar
   const [clickedChat, setClickedChat] = useState(-1); //ấn để chọn tin nhắn và update vị trí được ấn
   const [showChat, setShowChat] = useState(fakeMessages["1"]);
-    // Lưu trữ danh sách các cuộc trò chuyện (mảng).
+  // Lưu trữ danh sách các cuộc trò chuyện (mảng).
   const [showFriendList, setshowFriendList] = useState([]);
   const [showSearch, setShowSearch] = useState(false); // hiển thị text tìm kiếm
   const searchRef = useRef(null); // useRef
@@ -42,33 +52,85 @@ export function Index() {
   const [flagSearchOrChat, setFlag] = useState("message");
   const [avatar, setAvatar] = useState();
   const [name, setName] = useState();
-   // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
+  const [resultSearch, setResultSearch] = useState([]);
+  // Lưu trữ thông tin của người nhận (receiver) cho mỗi cuộc trò chuyện (object với key là ID phòng chat).
   const [receiverInfos, setReceiverInfos] = useState({});
 
   // TA: Backend
   const [users, setUsers] = useState([]);
+
+  //TA: Viết cho search friend
+  const createChatroom = async (receiverId) => {
+    try {
+      // Gọi hàm tạo phòng chat từ backend (hoặc logic xử lý tương tự)
+      // 1. Tạo  chatroom mới
+      const docRef = await addDoc(collection(db, "Chatroom"), {
+        // Các trường dữ liệu của bạn
+        Name: "Tên phòng chat",
+        Members: [receiverId, currentUser.ID],
+        isGroup: false,
+        CreateBy: currentUser.ID,
+        Description: "Description",
+
+        Message: [],
+      });
+      const newChatroomId = docRef.id;
+      // 2. Cập nhật mảng Chatroom trong document Profile của người dùng hiện tại
+      const currentUserRef = doc(db, "Profile", currentUser.ID);
+      await updateDoc(currentUserRef, {
+        Chatroom: arrayUnion(newChatroomId),
+      });
+      // 3 Cập nhật mảng Chatroom trong document Profile của người dùng được click
+      const receiverRef = doc(db, "Profile", receiverId);
+      await updateDoc(receiverRef, {
+        Chatroom: arrayUnion(newChatroomId),
+      });
+
+      // Cập nhật id vào chính chatroom
+      const chatroomRef = doc(db, "Chatroom", docRef.id);
+      await updateDoc(chatroomRef, {
+        ID: newChatroomId,
+      });
+      console.log("Document written with ID: ", docRef.id);
+      // Chuyển hướng đến trang đăng nhập
+      navigate("/index");
+    } catch (error) {
+      // Xử lý lỗi
+      console.log("createChatroom thất bại " + error);
+    }
+  };
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
 
   // Lắng nghe sự kiện khi profile được thay đổi
+  // ... (các import khác)
+
+  // ... (các state khác)
+
+  // Lắng nghe sự kiện khi profile được thay đổi
   useEffect(() => {
-    // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
-    const listChatroomID = currentUser?.Chatroom || []; 
-    // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom 
-    const unsubscribeFunctions = [];
+    if (!currentUser) return; // Thoát nếu chưa có thông tin người dùng
 
-    // Duyệt qua từng id chatroom
-    listChatroomID.forEach((chatroomId) => {
-      // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
-      const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => { // Lấy thông tin chatroom dựa vào chatroomID
-        // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
+    const listChatroomID = currentUser.Chatroom || [];
+
+    // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
+    const unsubscribeFunctions = listChatroomID.map((chatroomId) => {
+      return onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
         if (doc.exists()) {
-
           const chatroomData = doc.data();
 
-          // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
+          try {
+            if (
+              chatroomData.Message[chatroomData.Message.length - 1].SenderID ==
+              currentUser.ID
+            ) {
+              new Audio(notify_send).play();
+            } else {
+              new Audio(notify).play();
+            }
+          } catch (error) {}
           setshowFriendList((prevChats) => {
             const index = prevChats.findIndex((chat) => chat.id === chatroomId);
             if (index > -1) {
@@ -82,14 +144,61 @@ export function Index() {
           });
         }
       });
-      unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
     });
 
-    // Dọn dẹp khi component unmount
-    return () => {
-      unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
-    };
+    // Dọn dẹp khi component unmount hoặc currentUser thay đổi
+    return () => unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
   }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
+
+  // useEffect(() => {
+  //   if (!currentUser) return; // Thoát nếu chưa có thông tin người dùng
+
+  //   // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
+  //   const listChatroomID = currentUser.Chatroom || [];
+  //   // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom
+  //   const unsubscribeFunctions = [];
+
+  //   // Duyệt qua từng id chatroom
+  //   listChatroomID.forEach((chatroomId) => {
+  //     // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
+  //     const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
+
+  //       // Lấy thông tin chatroom dựa vào chatroomID
+  //       // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
+  //       if (doc.exists()) {
+  //         const chatroomData = doc.data();
+  //         if (clickedChat > -1) {
+  //           if (chatroomData.Message[chatroomData.Message.length-1].SenderID == currentUser.ID) {
+
+  //             (new Audio(notify_send)).play()
+  //           }
+  //           else{
+  //             (new Audio(notify)).play()
+  //           }
+  //         }
+
+  //         // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
+  //         setshowFriendList((prevChats) => {
+  //           const index = prevChats.findIndex((chat) => chat.id === chatroomId);
+  //           if (index > -1) {
+  //             // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
+  //             prevChats[index] = { id: chatroomId, ...chatroomData };
+  //           } else {
+  //             // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
+  //             prevChats.unshift({ id: chatroomId, ...chatroomData });
+  //           }
+  //           return [...prevChats];
+  //         });
+  //       }
+  //     });
+  //     unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
+  //   });
+
+  //   // Dọn dẹp khi component unmount
+  //   return () => {
+  //     unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+  //   };
+  // }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
 
   useEffect(() => {
     const fetchReceiverInfos = async () => {
@@ -117,7 +226,6 @@ export function Index() {
 
     fetchReceiverInfos();
   }, [showFriendList, currentUser.ID]);
-
 
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
@@ -150,14 +258,14 @@ export function Index() {
       //setshowChat sau khi an vao 1 nguoi
       // console.log(receiverInfos[`${}`])
       if (showFriendList[clickedChat]) {
-        const key = showFriendList[clickedChat].id
+        const key = showFriendList[clickedChat].id;
         setShowChat(fakeMessages[key]);
       } else {
         setShowChat("");
       }
       setAvatar(
         <img
-          src={`${showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
+          src={`${showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Avatar : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
           className="h-10 w-10 rounded-full"
         />,
       );
@@ -165,24 +273,28 @@ export function Index() {
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {
-            showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"
-            // showFriendList[clickedChat]?.name.length > 14
-            //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
-            //   : showFriendList[clickedChat]?.name.substring(0, 17)
-              }
+              showFriendList[clickedChat]
+                ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+                : "NULL"
+              // showFriendList[clickedChat]?.name.length > 14
+              //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
+              //   : showFriendList[clickedChat]?.name.substring(0, 17)
+            }
           </a>
           <a
             href="#"
             className="hidden decoration-0 outline-none sm:inline-block"
           >
-            {showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"}
+            {showFriendList[clickedChat]
+              ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+              : "NULL"}
           </a>
         </>,
       );
     } else if (flagSearchOrChat == "search") {
       setAvatar(
         <img
-          src={`${showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
+          src={`${showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Avatar : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
           className="h-10 w-10 rounded-full"
         />,
       );
@@ -190,17 +302,21 @@ export function Index() {
         <>
           <a href="#" className="decoration-0 outline-none sm:hidden">
             {
-              showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"
-            // users[clickedChat]?.Fullname.length > 14
-            //   ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
-            //   : users[clickedChat]?.Fullname.substring(0, 17)
-              }
+              showFriendList[clickedChat]
+                ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+                : "NULL"
+              // users[clickedChat]?.Fullname.length > 14
+              //   ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
+              //   : users[clickedChat]?.Fullname.substring(0, 17)
+            }
           </a>
           <a
             href="#"
             className="hidden decoration-0 outline-none sm:inline-block"
           >
-            {showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL"}
+            {showFriendList[clickedChat]
+              ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+              : "NULL"}
           </a>
         </>,
       );
@@ -225,6 +341,7 @@ export function Index() {
   // đóng modal khi click ra ngoài
   const modalRef = useRef(null);
   // mặc định là hiện lên phần chat
+
   return (
     <>
       <ToastContainer />
@@ -246,7 +363,6 @@ export function Index() {
               isActive={selectedButton === "user"}
               userProfile={currentUser}
               profileDetails={profileDetails}
-
             />
 
             <FriendList
@@ -254,7 +370,7 @@ export function Index() {
               clickedButton={clickedChat}
               setClickedButton={setClickedChat}
               friendlist={showFriendList}
-              receiverInfos = {receiverInfos}// cái này của TAO, đừng hỏi
+              receiverInfos={receiverInfos} // cái này của TAO, đừng hỏi
               setFlag={setFlag}
             ></FriendList>
             <GroupList isActive={selectedButton == "group" ? true : false} />
@@ -270,10 +386,11 @@ export function Index() {
               isActive={selectedButton == "plus" ? true : false}
               clickedChat={clickedChat}
               setClickedChat={setClickedChat}
-              friendlist={showFriendList}
-              setUsers={setUsers}
-              users={users}
+              // friendlist={showFriendList}
+              setUsers={setResultSearch}
+              users={resultSearch}
               setFlag={setFlag}
+              createChatroom={createChatroom} // Truyền hàm createChatroom vào SearchFriend
             />
           </div>
         </div>
@@ -425,11 +542,19 @@ export function Index() {
                     </div>
                     {/* Chat container */}
                     <ChatContainer
-                      messages={showChat}
+                      messages={
+                        showFriendList[clickedChat]
+                          ? showFriendList[clickedChat].Message
+                          : showChat
+                      }
                       setMessages={setShowChat}
                       friendInfo={showFriendList[clickedChat]}
+                      chatroomId={
+                        showFriendList[clickedChat]
+                          ? showFriendList[clickedChat].ID
+                          : ""
+                      }
                     />
-                   
                   </div>
                 </div>
               </div>
@@ -451,13 +576,24 @@ export function Index() {
                     <i className="fa-solid fa-x font-extrabold"></i>
                   </div>
                 }
-                userProfile={
-                  {
-                    Fullname:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Fullname:"NULL",  
-                    Avatar:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Avatar:"https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png", 
-                    Description:showFriendList[clickedChat]? receiverInfos[showFriendList[clickedChat].ID].Description:"Mô tả ở đây"
-                  }
-                }
+                userProfile={{
+                  Fullname:
+                    (showFriendList[clickedChat] &&
+                      receiverInfos[showFriendList[clickedChat].ID] &&
+                      receiverInfos[showFriendList[clickedChat].ID].Fullname) ||
+                    "NULL",
+                  Avatar:
+                    (showFriendList[clickedChat] &&
+                      receiverInfos[showFriendList[clickedChat].ID] &&
+                      receiverInfos[showFriendList[clickedChat].ID].Avatar) ||
+                    "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
+                  Description:
+                    (showFriendList[clickedChat] &&
+                      receiverInfos[showFriendList[clickedChat].ID] &&
+                      receiverInfos[showFriendList[clickedChat].ID]
+                        .Description) ||
+                    "Mô tả ở đây",
+                }}
                 profileDetails={profileDetails}
               />
             </div>
