@@ -12,6 +12,7 @@ import { Input } from "../components_auth/Input";
 import { Button } from "../components_auth/Button";
 import { Footer } from "../components_auth/Footer";
 import { auth } from "../lib/firebase";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
 export function Login() {
   // Khởi tạo mặc định usernmae có @gmail.com
   const [username, setUsername] = useState("admin@gmail.com");
@@ -26,15 +27,32 @@ export function Login() {
     // Lấy data người dùng nhập
     const formData = new FormData(e.target);
     const { password } = Object.fromEntries(formData);
-
     try {
-      await signInWithEmailAndPassword(auth, username, password);
+      const userCredential = await signInWithEmailAndPassword(auth, username, password);
+      // Đăng nhập thành công
+      const user = userCredential.user;
+
+      // Cập nhật isOnline trong Firestore
+      const db = getFirestore();
+      const profileRef = doc(db, "Profile", user.uid);
+      await updateDoc(profileRef, {
+        isOnline: true,
+      });
       setLoading(false);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
       setLoading(false);
-    } 
+    }
+
+    // try {
+    //   await signInWithEmailAndPassword(auth, username, password);
+    //   setLoading(false);
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error(error.message);
+    //   setLoading(false);
+    // } 
   };
   // mặc đinh true
   let isValidationUsername = true;

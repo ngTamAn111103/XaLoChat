@@ -270,27 +270,31 @@ export function Index() {
       const newReceiverInfos = {};
       // Lặp qua từng chat trong chats
       for (const chat of showFriendList) {
-        // Kiểm tra ko phải nhóm chat
-        if (!chat.isGroup) {
-          // Lấy ID người còn lại
-          const otherMembers = chat.Members.filter(
-            (member) => member !== currentUser.ID,
-          );
-          const receiverId = otherMembers[0];
-          // lấy profile người còn lại
-          const docRef = doc(db, "Profile", receiverId);
-          const docSnap = await getDoc(docRef);
+        try {
+          // Kiểm tra ko phải nhóm chat
+          if (!chat.isGroup) {
+            // Lấy ID người còn lại
+            const otherMembers = chat.Members.filter(
+              (member) => member !== currentUser.ID,
+            );
+            const receiverId = otherMembers[0];
+            // lấy profile người còn lại
+            const docRef = doc(db, "Profile", receiverId);
+            const docSnap = await getDoc(docRef);
 
-          if (docSnap.exists()) {
-            newReceiverInfos[chat.id] = docSnap.data();
+            if (docSnap.exists()) {
+              newReceiverInfos[chat.id] = docSnap.data();
+            }
           }
+        } catch (error) {
+          console.log("LỖI: " + error);
         }
       }
       setReceiverInfos(newReceiverInfos);
     };
 
     fetchReceiverInfos();
-  }, [showFriendList, currentUser.ID]);
+  }, [showFriendList, currentUser.ID, receiverInfos]);
 
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
@@ -333,16 +337,22 @@ export function Index() {
           ? receiverInfos[showFriendList[clickedChat].ID].Avatar
           : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
       );
-      setName(showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-                : "NULL");
+      setName(
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+          : "NULL",
+      );
     } else if (flagSearchOrChat == "search") {
       setAvatar(
         showFriendList[clickedChat]
           ? receiverInfos[showFriendList[clickedChat].ID].Avatar
           : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
       );
-      setName(showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-                : "NULL");
+      setName(
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+          : "NULL",
+      );
     }
     //responsive
     if (chatRef.current.classList.contains("left-full")) {
@@ -457,12 +467,9 @@ export function Index() {
                                   href="#"
                                   className="decoration-0 outline-none sm:hidden"
                                 >
-                                  {
-
-                                    name.length > 14
-                                      ? name.substring(0, 17) + "..."
-                                      : name.substring(0, 17)
-                                  }
+                                  {name.length > 14
+                                    ? name.substring(0, 17) + "..."
+                                    : name.substring(0, 17)}
                                 </a>
                                 <a
                                   href="#"
@@ -470,7 +477,14 @@ export function Index() {
                                 >
                                   {name}
                                 </a>
-                                <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
+                                {showFriendList[clickedChat] &&
+                                receiverInfos[showFriendList[clickedChat].ID] &&
+                                receiverInfos[showFriendList[clickedChat].ID]
+                                  .isOnline == true ? (
+                                  <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
+                                ) : (
+                                  ""
+                                )}
                               </h5>
                             </div>
                           </div>
@@ -659,17 +673,23 @@ export function Index() {
           toggleModal={toggleModal}
           toggleCallScreen={startCall}
           receiverAvatar={avatar.props.src}
-           receiverName={name}
+          receiverName={name}
           actionType={actionType}
         />
       )}
 
-      {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} receiverAvatar={avatar.props.src} receiverName={name} />}
+      {showCallScreen && (
+        <CallScreen
+          toggleCallScreen={toggleCallScreen}
+          receiverAvatar={avatar.props.src}
+          receiverName={name}
+        />
+      )}
 
       {showVideoScreen && (
         <CallVideoScreen
           showModal={showVideoScreen}
-          receiverAvatar={avatar.props.src} 
+          receiverAvatar={avatar.props.src}
           receiverName={name}
           toggleModal={toggleModal}
           toggleCallScreen={toggleCallScreen}

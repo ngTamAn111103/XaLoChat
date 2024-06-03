@@ -6,16 +6,21 @@ import { useUserStore } from "../../lib/userStore";
 import { db } from "../../lib/firebase";
 
 function FriendList({ isActive, clickedButton, setClickedButton, friendlist, setFlag, receiverInfos }) {
-  let arrOnline = [];
+  let arrOnline = [
+    <OnlineFriend
+          avatar={"https://cdn.sanity.io/images/bj34pdbp/migration/3da103a4a279be9447e60f81cdeddf695dce4bb8-1244x746.png?w=3840&q=100&fit=clip&auto=format"}
+          name={"Default"}
+        />
+  ];
   //nhận danh sách đầu vào và Map mảng chuẩn bị render
   // TA: chats: mảng các đoạn chat của thằng người dùng đã có
   const listFriend = friendlist?.map((e, i) => {
-  // const listFriend = chats?.map((e, i) => {
-    if (e.isOnline == true) {
+
+    if (receiverInfos[e.ID]?.isOnline == true && arrOnline.length <5) {
       arrOnline.push(
         <OnlineFriend
-          avatar={e.avatar}
-          name={e.name.length > 8 ? e.name.substring(0, 8) + "..." : e.name}
+          avatar={receiverInfos[e.ID].Avatar}
+          name={receiverInfos[e.ID].Fullname.length > 8 ? receiverInfos[e.ID].Fullname.substring(0, 8) + "..." : receiverInfos[e.ID].Fullname}
         />,
       );
     }
@@ -28,7 +33,7 @@ function FriendList({ isActive, clickedButton, setClickedButton, friendlist, set
       <Conversation
         avatar={e.isGroup ? null : receiverInfo?.Avatar}
         notifycation={e.notifycation}
-        isOnline={e.isOnline}
+        isOnline={receiverInfos[e.ID]?.isOnline}
         name={e.isGroup ? e.Name : receiverInfo?.Fullname} // Sử dụng receiverInfo (không còn là Promise)
         newestMessage={e.Message[e.Message.length-1]?.Content}
         time={e.Message[e.Message.length-1]?.CreateAt}
