@@ -72,7 +72,7 @@ function App() {
 
   return (
     <>
-      <ToastContainer position="bottom-left"></ToastContainer>
+      {currentUser? <ToastContainer position="bottom-left"></ToastContainer>:""}
        <Router>
         <Routes>
           {/* 
