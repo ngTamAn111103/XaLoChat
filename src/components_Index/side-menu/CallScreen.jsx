@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUserStore } from "../../lib/userStore";
 import { styled, keyframes } from "styled-components";
 
@@ -47,9 +47,41 @@ const PulseCircle = styled.div`
 export function CallScreen({ toggleCallScreen }) {
   const { currentUser } = useUserStore();
   const [isVolumeLow, setIsVolumeLow] = useState(true);
+  const [isSpeakerOn, setIsSpeakerOn] = useState(false); // Trạng thái loa
+  const [audio] = useState(new Audio("/audio/nhac_cho.mp3")); // Sử dụng URL tương đối từ thư mục public
+  const [endCallAudio] = useState(new Audio("/audio/end_call.mp3")); // Âm thanh khi kết thúc cuộc gọi
+
+  useEffect(() => {
+    // Phát âm thanh khi màn hình cuộc gọi hiển thị
+    audio
+      .play()
+      .catch((error) => console.error("Failed to play audio:", error));
+    audio.loop = true;
+
+    // Dừng âm thanh khi component unmount hoặc khi toggleCallScreen được gọi
+    return () => {
+      audio.pause();
+      audio.currentTime = 0;
+    };
+  }, [audio]);
+
+  useEffect(() => {
+    // Đặt âm lượng dựa trên trạng thái của loa và isVolumeLow
+    audio.volume = isSpeakerOn ? (isVolumeLow ? 0.2 : 1) : 0.2;
+  }, [isSpeakerOn, isVolumeLow]);
 
   const toggleVolume = () => {
     setIsVolumeLow(!isVolumeLow);
+  };
+
+  const toggleSpeaker = () => {
+    setIsSpeakerOn(!isSpeakerOn);
+  };
+
+  // Hàm xử lý khi kết thúc cuộc gọi
+  const handleEndCall = () => {
+    toggleCallScreen(); // Ẩn màn hình cuộc gọi
+    endCallAudio.play(); // Phát âm thanh kết thúc cuộc gọi
   };
 
   return (
@@ -89,6 +121,9 @@ export function CallScreen({ toggleCallScreen }) {
         </PulseAnimation>
         <h5 className="text-truncate text-2xl">{currentUser.Fullname}</h5>
         <p className="text-[#7A7F9A]">Calling...</p>
+        {isSpeakerOn && (
+          <p className="text-[#7A7F9A]">Bạn đang bật loa ngoài</p>
+        )}
       </div>
       <div
         className="mt-5"
@@ -96,14 +131,15 @@ export function CallScreen({ toggleCallScreen }) {
       >
         <button
           type="button"
-          className=" m-4 rounded-full bg-[#F44336] p-4 text-[#fff] hover:text-[#C62828]"
-          onClick={toggleCallScreen}
+          className="m-4 rounded-full bg-[#F44336] p-4 text-[#fff] hover:text-[#C62828]"
+          onClick={toggleCallScreen && handleEndCall}
         >
           <i className="fa-solid fa-xmark fa-2xl"></i>
         </button>
         <button
           type="button"
           className="btn btn-success avatar-sm rounded-circle me-2 p-4 pt-5"
+          onClick={toggleSpeaker}
         >
           <div onClick={toggleVolume} style={{ justifyContent: "center" }}>
             {isVolumeLow ? (
