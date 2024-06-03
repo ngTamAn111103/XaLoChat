@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom";
 import Logo from "/public/images/logo.e41f6087382055646c1c02d0a63583d5.svg";
 import avatar from "/public/images/320186702_823742058729606_3659513607149413256_n.jpg";
 import { NavbarItem } from "./side-menu/NavbarItem";
@@ -7,12 +7,13 @@ import { toast } from "react-toastify";
 
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import { useUserStore } from "../lib/userStore"; // Hoặc đường dẫn đến userStore của bạn
+import { useUserStore } from "../lib/userStore";
 
 export function NavbarLeft({ selectedButton, setSelectedButton }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { currentUser } = useUserStore();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   const handleClickButton = (selectedButtonName) => {
     setSelectedButton(selectedButtonName);
@@ -24,7 +25,7 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
       .then(() => {
         useUserStore.getState().fetchUserInfo(null);
         console.log("NavbarLeft.jsx: Đăng xuất thành công");
-        toast.success("Đăng xuất thành công!"); // Hoặc thông báo khác
+        toast.success("Đăng xuất thành công!");
       })
       .catch((error) => {
         console.error("NavbarLeft.jsx: Lỗi đăng xuất:", error);
@@ -42,10 +43,16 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
     }
   };
 
+  const handleResize = () => {
+    setIsMobile(window.innerWidth <= 1024);
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("resize", handleResize);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -122,28 +129,27 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
               <img
                 src={currentUser.Avatar}
                 alt="Avatar"
-                className="
-                h-8 w-8 rounded-full"
+                className="h-8 w-8 rounded-full"
               />
             </button>
             {isDropdownOpen && (
-              <div className="z-index: 9999 absolute bottom-12 left-0 w-40 rounded-md bg-white shadow-lg">
+              <div className={`z-9999 absolute bottom-12 ${isMobile ? 'right-1' : 'left-1'} w-40 rounded-md bg-white shadow-lg`}>
                 <div className="py-5">
-                <button
+                  <button
                     className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
                     onClick={() => {
                       handleClickButton("user");
-                      setIsDropdownOpen(false); // Cập nhật state để đóng dropdown
+                      setIsDropdownOpen(false);
                     }}
                   >
                     Profile
-                    <i class="fa-solid fa-address-card float-end p-1"></i>
+                    <i className="fa-solid fa-address-card float-end p-1"></i>
                   </button>
                   <button
                     className="block w-full px-4 py-2 text-left text-sm hover:bg-[#F5F5F5]"
                     onClick={() => {
                       handleClickButton("setting");
-                      setIsDropdownOpen(false); // Cập nhật state để đóng dropdown
+                      setIsDropdownOpen(false);
                     }}
                   >
                     Setting

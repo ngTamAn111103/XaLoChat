@@ -67,7 +67,11 @@ export function Profile({
 
   return (
     <>
-      <div className={isActive ? "absolute block w-full h-full lg:w-[360px]" : "hidden"}>
+      <div
+        className={
+          isActive ? "absolute block h-full w-full lg:w-[360px]" : "hidden"
+        }
+      >
         {isHeader && (
           <Header
             title={"My Profile"}
@@ -114,10 +118,10 @@ export function Profile({
         )}
         {extend}
         <UserProfile
-          avatarSrc={userProfile ? currentUser.avatarSrc : ""}
+          avatarSrc={userProfile ? currentUser.Avatar : ""}
           name={userProfile ? currentUser.Fullname : ""}
-          activityStatus={userProfile ? currentUser.activityStatus : ""}
-          description={userProfile ? currentUser.Description : ""}
+          activityStatus={userProfile ? userProfile.activityStatus : ""}
+          description={userProfile ? userProfile.description : ""}
         />
 
         <div className="user-profile-desc px-4 pt-4">
@@ -132,9 +136,18 @@ export function Profile({
                   ></i>
                 </h6>
               </div>
-              <div className={` ${toggleOne ? "block" : "hidden"}`}>
+              <div
+                style={{
+                  maxHeight: toggleOne ? "1000px" : "0",
+                  opacity: toggleOne ? 1 : 0,
+                  overflow: "hidden",
+                  transition: toggleOne
+                    ? "max-height 1s ease-in, opacity 0.3s ease-in"
+                    : "max-height .3s ease-out, opacity 0.3s ease-out",
+                }}
+              >
                 <div className="card-body">
-                <div className="mt-4 pl-4">
+                  <div className="mt-4 pl-4">
                     <ProfileInfo label={"Name"} value={currentUser.Fullname} />
                     <ProfileInfo label={"Email"} value={currentUser.Email} />
                     <ProfileInfo label={"Time"} value={currentUser.UpdatedAt} />
@@ -147,7 +160,7 @@ export function Profile({
               </div>
             </div>
 
-            <div className=" mb-1 rounded-md border border-[#DCDCDC] bg-white p-1">
+            <div className=" mb-1 rounded-md border border-[#DCDCDC] bg-white p-1 ">
               <div className="cursor-pointer" onClick={handleToggleTwo}>
                 <h6 className="flex items-center text-xs font-bold">
                   <i className="fas fa-paperclip p-2 pl-4"></i>
@@ -157,8 +170,17 @@ export function Profile({
                   ></i>
                 </h6>
               </div>
-              <div className={` ${toggleTwo ? "block" : "hidden"} p-2 pb-6`}>
-                <div className="card-body">
+              <div
+                style={{
+                  maxHeight: toggleTwo ? "1000px" : "0",
+                  opacity: toggleTwo ? 1 : 0,
+                  overflow: "hidden",
+                  transition: toggleTwo
+                    ? "max-height 1s ease-in, opacity 0.3s ease-in"
+                    : "max-height .3s ease-out, opacity 0.3s ease-out",
+                }}
+              >
+                <div className="card-body h-[calc(100vh_-_400px)]">
                   <FileCard
                     fileName={"Admin-A.zip"}
                     fileSize={"12.5 MB"}
@@ -173,6 +195,18 @@ export function Profile({
                     fileName={"User-A.zip"}
                     fileSize={"122 MB"}
                     iconClassName={"fas fa-file-image"}
+                  />
+                  <FileCard
+                    fileName={"User-A.zip"}
+                    fileSize={"122 MB"}
+                    iconClassName={"fas fa-file-image"}
+                  />
+                  
+                  <FileCard
+                    fileName="Document.pdf"
+                    fileSize="1.2 MB"
+                    iconClassName="fas fa-file-pdf"
+                    menuPosition="bottom"
                   />
                 </div>
               </div>
