@@ -1,42 +1,78 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+::-webkit-scrollbar { 
+    width: 5px;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+::-webkit-scrollbar-thumb { 
+    background-color: rgb(0, 0, 0,.2);
+    border-radius: 4px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.dropdown-menu { 
+    position: absolute;
+    z-index: 1;
+    inset: unset!important;
+    transform: translate(-90%,-5%)!important;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.chat-option > li { 
+    cursor: pointer;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.createdAt { 
+    font-size: .8rem;
+    color: #b8a9a9; 
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.msg { 
+    cursor: pointer;
 }
-
-.card {
-  padding: 2em;
+.toast { 
+    left: 0px!important; 
+    animation: hideToast 5s forwards;
+    position: relative;
 }
-
-.read-the-docs {
-  color: #888;
+.duration { 
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 0; 
+    left: 0;
+    animation: countDown 4s 0.5s forwards;
+    
+}
+.shake-imgs:hover { 
+    animation: shake 1s infinite;
+    /* transform: scale(1.1); */
+    transition: .3s all;
+    box-shadow: 0px 0px 10px  rgba(11, 0, 0,.2);
+}
+.shake-imgs:hover > img { 
+    border: 2px rgb(73, 73, 134) solid;
+}
+@keyframes hideToast {
+    0% {  
+        transform: translateX(-100%);
+    } 
+    25%,90% { 
+        transform: translateX(0);
+    }
+    100% { 
+        transform: translateX(-100%);
+    }
+}
+@keyframes countDown {
+    0% {  
+        width: 100%;
+    }         
+    100% { 
+        width: 0%;
+    }
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
 }
