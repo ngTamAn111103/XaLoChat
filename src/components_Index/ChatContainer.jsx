@@ -14,6 +14,7 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId,avatar, n
   const [images, setImages] = useState([])
   const [files, setFiles] = useState([])
   const { currentUser } = useUserStore();
+
   // console.log(messages)
   //xử lý dữ liệu khi ấn enter hoặc nút gửi   
   const handleSendMessage = () => {
