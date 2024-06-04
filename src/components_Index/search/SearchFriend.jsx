@@ -109,7 +109,7 @@ export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setU
             />
           </div>
         </div>
-        <ul className="h-[calc(100vh_-_140px)]">{result ?? result}</ul>
+        <ul className="h-[calc(100vh_-_140px)] overflow-scroll">{result ?? result}</ul>
       </div>
     </>
   );
