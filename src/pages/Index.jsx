@@ -82,12 +82,12 @@ export function Index() {
     setShowCallScreen(!showCallScreen); // Chuyển đổi trạng thái màn hình cuộc gọi.
     setShowVideoScreen(false); // Đảm bảo rằng màn hình video đóng khi chuyển đổi.
   };
-
   // Hàm để chuyển đổi trạng thái hiển thị của màn hình video.
   const toggleVideoScreen = () => {
     setShowModal(false); // Đóng modal nếu mở.
+    console.log(!showVideoScreen)
     setShowVideoScreen(!showVideoScreen); // Chuyển đổi trạng thái màn hình video.
-    if (!showVideoScreen) {
+    if (  showVideoScreen) {
       setShowCallScreen(false); // Nếu đang mở màn hình video, đảm bảo rằng màn hình cuộc gọi đóng.
     }
   };
@@ -658,18 +658,20 @@ export function Index() {
           showModal={showModal}
           toggleModal={toggleModal}
           toggleCallScreen={startCall}
-          receiverAvatar={avatar.props.src}
+          receiverAvatar={avatar}
            receiverName={name}
           actionType={actionType}
         />
       )}
 
-      {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} receiverAvatar={avatar.props.src} receiverName={name} />}
+      {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} receiverAvatar={avatar} receiverName={name} />}
 
       {showVideoScreen && (
         <CallVideoScreen
+          toggleVideoScreen= { toggleVideoScreen}
+          setShowModal={setShowVideoScreen}
           showModal={showVideoScreen}
-          receiverAvatar={avatar.props.src} 
+          receiverAvatar={avatar} 
           receiverName={name}
           toggleModal={toggleModal}
           toggleCallScreen={toggleCallScreen}
