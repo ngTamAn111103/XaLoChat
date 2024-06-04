@@ -135,12 +135,16 @@ export function Index() {
         ID: newChatroomId,
       });
       console.log("Document written with ID: ", docRef.id);
-      // Chuyển hướng đến trang đăng nhập
-      // navigate("/index");
+      toast.success(`Tạo mới chatroom thành công`,{
+        position:"top-left"
+      })
       setSelectedButton("message");
     } catch (error) {
       // Xử lý lỗi
       console.log("createChatroom thất bại " + error);
+      toast.error(`Tạo mới chatroom thất bại`,{
+        position:"top-left"
+      })
     }
   };
 
@@ -157,25 +161,10 @@ export function Index() {
   // TA: Backend
   const [users, setUsers] = useState([]);
 
-  // Lắng nghe sự kiện khi profile được thay đổi
-  // ... (các import khác)
-
-  // ... (các state khác)
-
+ 
   // Lắng nghe sự kiện khi profile được thay đổi
   useEffect(() => {
-    //     // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
-    //     const listChatroomID = currentUser?.Chatroom || [];
-    //     // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom
-    //     const unsubscribeFunctions = [];
-
-    //     // Duyệt qua từng id chatroom
-    //     listChatroomID.forEach((chatroomId) => {
-    //       // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
-    //       const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
-    //         // Lấy thông tin chatroom dựa vào chatroomID
-    //         // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
-
+   
     if (!currentUser) return; // Thoát nếu chưa có thông tin người dùng
 
     const listChatroomID = currentUser.Chatroom || [];
@@ -215,82 +204,38 @@ export function Index() {
     return () => unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
   }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
 
-  // useEffect(() => {
-  //   if (!currentUser) return; // Thoát nếu chưa có thông tin người dùng
-
-  //   // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
-  //   const listChatroomID = currentUser.Chatroom || [];
-  //   // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom
-  //   const unsubscribeFunctions = [];
-
-  //   // Duyệt qua từng id chatroom
-  //   listChatroomID.forEach((chatroomId) => {
-  //     // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
-  //     const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
-
-  //       // Lấy thông tin chatroom dựa vào chatroomID
-  //       // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
-  //       if (doc.exists()) {
-  //         const chatroomData = doc.data();
-  //         if (clickedChat > -1) {
-  //           if (chatroomData.Message[chatroomData.Message.length-1].SenderID == currentUser.ID) {
-
-  //             (new Audio(notify_send)).play()
-  //           }
-  //           else{
-  //             (new Audio(notify)).play()
-  //           }
-  //         }
-
-  //         // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
-  //         setshowFriendList((prevChats) => {
-  //           const index = prevChats.findIndex((chat) => chat.id === chatroomId);
-  //           if (index > -1) {
-  //             // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
-  //             prevChats[index] = { id: chatroomId, ...chatroomData };
-  //           } else {
-  //             // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
-  //             prevChats.unshift({ id: chatroomId, ...chatroomData });
-  //           }
-  //           return [...prevChats];
-  //         });
-  //       }
-  //     });
-  //     unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
-  //   });
-
-  //   // Dọn dẹp khi component unmount
-  //   return () => {
-  //     unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
-  //   };
-  // }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
+  
 
   useEffect(() => {
     const fetchReceiverInfos = async () => {
       const newReceiverInfos = {};
       // Lặp qua từng chat trong chats
       for (const chat of showFriendList) {
-        // Kiểm tra ko phải nhóm chat
-        if (!chat.isGroup) {
-          // Lấy ID người còn lại
-          const otherMembers = chat.Members.filter(
-            (member) => member !== currentUser.ID,
-          );
-          const receiverId = otherMembers[0];
-          // lấy profile người còn lại
-          const docRef = doc(db, "Profile", receiverId);
-          const docSnap = await getDoc(docRef);
+        try {
+          // Kiểm tra ko phải nhóm chat
+          if (!chat.isGroup) {
+            // Lấy ID người còn lại
+            const otherMembers = chat.Members.filter(
+              (member) => member !== currentUser.ID,
+            );
+            const receiverId = otherMembers[0];
+            // lấy profile người còn lại
+            const docRef = doc(db, "Profile", receiverId);
+            const docSnap = await getDoc(docRef);
 
-          if (docSnap.exists()) {
-            newReceiverInfos[chat.id] = docSnap.data();
+            if (docSnap.exists()) {
+              newReceiverInfos[chat.id] = docSnap.data();
+            }
           }
+        } catch (error) {
+          console.log("LỖI: " + error);
         }
       }
       setReceiverInfos(newReceiverInfos);
     };
 
     fetchReceiverInfos();
-  }, [showFriendList, currentUser.ID]);
+  }, [showFriendList, currentUser.ID, receiverInfos]);
 
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
@@ -333,16 +278,22 @@ export function Index() {
           ? receiverInfos[showFriendList[clickedChat].ID].Avatar
           : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
       );
-      setName(showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-                : "NULL");
+      setName(
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+          : "NULL",
+      );
     } else if (flagSearchOrChat == "search") {
       setAvatar(
         showFriendList[clickedChat]
           ? receiverInfos[showFriendList[clickedChat].ID].Avatar
           : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
       );
-      setName(showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-                : "NULL");
+      setName(
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+          : "NULL",
+      );
     }
     //responsive
     if (chatRef.current.classList.contains("left-full")) {
@@ -457,12 +408,9 @@ export function Index() {
                                   href="#"
                                   className="decoration-0 outline-none sm:hidden"
                                 >
-                                  {
-
-                                    name.length > 14
-                                      ? name.substring(0, 17) + "..."
-                                      : name.substring(0, 17)
-                                  }
+                                  {name.length > 14
+                                    ? name.substring(0, 17) + "..."
+                                    : name.substring(0, 17)}
                                 </a>
                                 <a
                                   href="#"
@@ -470,7 +418,14 @@ export function Index() {
                                 >
                                   {name}
                                 </a>
-                                <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
+                                {showFriendList[clickedChat] &&
+                                receiverInfos[showFriendList[clickedChat].ID] &&
+                                receiverInfos[showFriendList[clickedChat].ID]
+                                  .isOnline == true ? (
+                                  <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
+                                ) : (
+                                  ""
+                                )}
                               </h5>
                             </div>
                           </div>
@@ -658,20 +613,26 @@ export function Index() {
           showModal={showModal}
           toggleModal={toggleModal}
           toggleCallScreen={startCall}
+
           receiverAvatar={avatar}
            receiverName={name}
+
           actionType={actionType}
         />
       )}
 
+
       {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} receiverAvatar={avatar} receiverName={name} />}
+
 
       {showVideoScreen && (
         <CallVideoScreen
           toggleVideoScreen= { toggleVideoScreen}
           setShowModal={setShowVideoScreen}
           showModal={showVideoScreen}
+
           receiverAvatar={avatar} 
+
           receiverName={name}
           toggleModal={toggleModal}
           toggleCallScreen={toggleCallScreen}

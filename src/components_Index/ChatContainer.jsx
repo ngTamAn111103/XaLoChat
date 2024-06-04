@@ -14,6 +14,8 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId,avatar, n
   const [images, setImages] = useState([])
   const [files, setFiles] = useState([])
   const { currentUser } = useUserStore();
+
+  // console.log(messages)
   //xử lý dữ liệu khi ấn enter hoặc nút gửi   
   const handleSendMessage = () => {
     if (inputValue) {
@@ -69,7 +71,7 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId,avatar, n
 
   if (messages) {
     msgs = messages.map((msg, index) => {
-      console.log(messages  )
+      // console.log(messages  )
       const isLastMessage =
         index === messages.length - 1 || messages[index + 1].SenderID !== msg.SenderID; // Kiểm tra isLastMessage chính xác hơn
       const isFirstMessage = index === 0 || messages[index - 1].SenderID !== msg.SenderID;

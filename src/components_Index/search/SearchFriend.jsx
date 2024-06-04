@@ -19,7 +19,7 @@ export function SearchFriend({ isActive, clickedChat, setClickedChat, users,setU
 
     setClickedChat((order))
     setFlag("search")
-    console.log(clickedChat)
+    // console.log(clickedChat)
     // TA
     const selectedUser = users[order];
     const receiverId = selectedUser.ID;

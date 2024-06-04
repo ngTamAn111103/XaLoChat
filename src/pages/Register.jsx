@@ -62,6 +62,7 @@ export function Register() {
             UpdatedAt: Date(),
             Avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLFoDZq13cmMt74V-hRwqM3h4DhzBwd9ubFA&s",
             Blocked: [],
+            isOnline: false,
             Chatroom: [],
           });
 
