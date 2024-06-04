@@ -400,7 +400,7 @@ export function Index() {
                                 src={avatar}
                                 className="h-10 w-10 rounded-full"
                               />
-                              ,
+                              
                             </div>
                             <div className="flex-grow overflow-hidden">
                               <h5 className="mb-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-bs-dark">
