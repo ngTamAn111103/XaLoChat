@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen }) => {
+const CallVideoScreen = ({ showModal, receiverAvatar="",receiverName="", toggleModal, toggleCallScreen }) => {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const [audio] = useState(new Audio("/audio/nhac_cho.mp3")); // Sử dụng Audio để phát âm thanh chuông
+  const [isMuted, setIsMuted] = useState(false); // State để kiểm soát trạng thái của âm thanh
 
   useEffect(() => {
     const startCamera = async () => {
@@ -13,6 +15,9 @@ const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen
           videoRef.current.play();
         }
         streamRef.current = stream; // Lưu trữ stream để có thể dừng video khi cần.
+        if (!isMuted) {
+          audio.play(); // Bắt đầu phát âm thanh chuông khi bắt đầu hiển thị màn hình gọi video
+        }
       } catch (error) {
         console.error('Error accessing the camera: ', error);
       }
@@ -27,6 +32,8 @@ const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen
           stream.removeTrack(track); // Gỡ bỏ track khỏi stream
         });
         videoRef.current.srcObject = null; // Dừng phát video.
+        audio.pause(); // Dừng âm thanh chuông khi dừng hiển thị màn hình gọi video
+        audio.currentTime = 0; // Reset thời gian của audio về 0 để sẵn sàng cho lần phát kế tiếp
       }
     };
     
@@ -40,11 +47,21 @@ const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen
     return () => {
       stopCamera();
     };
-  }, [showModal]);
+  }, [showModal, audio, isMuted]);
 
   const handleCloseModal = () => {
     toggleModal();
     toggleCallScreen();
+  };
+
+  const toggleMute = () => {
+    if (isMuted) {
+      audio.play();
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+    setIsMuted(!isMuted);
   };
 
   if (!showModal) return null;
@@ -62,11 +79,11 @@ const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen
           <div className="flex items-center justify-between">
             <div className="flex items-center ml-20 ">
               <img
-                src={currentUser.Avatar}
+                src={receiverAvatar}
                 className="w-12 h-12 rounded-full mr-4"
-                alt={currentUser.Fullname}
+                alt={receiverName}
               />
-              <h5 className="text-xl font-semibold">{currentUser.Fullname}</h5>
+              <h5 className="text-xl font-semibold">{receiverName}</h5>
             </div>
           </div>
           <div className="flex justify-center">
@@ -75,7 +92,7 @@ const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen
               className="bg-[#BDBDBD] hover:bg-[#757575] text-[#fff] rounded-full p-4 m-4"
               onClick={toggleCallScreen}
             >
-              <i class="fa-solid fa-video-slash"></i>
+              <i class="fa-solid fa-video-slash" onClick={toggleMute}></i>
             </button>
             <button
               type="button"
@@ -86,6 +103,9 @@ const CallVideoScreen = ({ showModal, currentUser, toggleModal, toggleCallScreen
             </button>
           </div>
         </div>
+        {isMuted && (
+          <audio src={ringingSound} autoPlay loop /> // Phát âm thanh chuông khi isMuted là true
+        )}
       </div>
     </div>
   );

@@ -58,9 +58,9 @@ export function Index() {
   // Trạng thái để quản lý cờ cho chế độ xem tìm kiếm hoặc chat.
   const [flagSearchOrChat, setFlag] = useState("message");
   // Trạng thái để lưu trữ ảnh đại diện của người dùng.
-  const [avatar, setAvatar] = useState();
+  const [avatar, setAvatar] = useState("");
   // Trạng thái để lưu trữ tên của người dùng.
-  const [name, setName] = useState();
+  const [name, setName] = useState("");
 
   const [resultSearch, setResultSearch] = useState([]);
 
@@ -96,15 +96,15 @@ export function Index() {
   const handleIconClick = (type) => {
     setActionType(type);
     toggleModal();
-  }
+  };
 
   //TA: Viết cho search friend
   const createChatroom = async (receiverId) => {
     try {
       // Gọi hàm tạo phòng chat từ backend (hoặc logic xử lý tương tự)
-      const now = new Date()
-      const hours = now.getHours()
-      const minutes = now.getMinutes()
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
       // 1. Tạo  chatroom mới
       const docRef = await addDoc(collection(db, "Chatroom"), {
         // Các trường dữ liệu của bạn
@@ -135,16 +135,18 @@ export function Index() {
         ID: newChatroomId,
       });
       console.log("Document written with ID: ", docRef.id);
-      // Chuyển hướng đến trang đăng nhập
-      // navigate("/index");
-      setSelectedButton("message")
+      toast.success(`Tạo mới chatroom thành công`,{
+        position:"top-left"
+      })
+      setSelectedButton("message");
     } catch (error) {
       // Xử lý lỗi
       console.log("createChatroom thất bại " + error);
+      toast.error(`Tạo mới chatroom thất bại`,{
+        position:"top-left"
+      })
     }
   };
-
-
 
   // Hàm bắt đầu cuộc gọi.
   const startCall = () => {
@@ -159,26 +161,10 @@ export function Index() {
   // TA: Backend
   const [users, setUsers] = useState([]);
 
-  // Lắng nghe sự kiện khi profile được thay đổi
-  // ... (các import khác)
-
-  // ... (các state khác)
-
+ 
   // Lắng nghe sự kiện khi profile được thay đổi
   useEffect(() => {
-
-//     // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
-//     const listChatroomID = currentUser?.Chatroom || [];
-//     // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom
-//     const unsubscribeFunctions = [];
-
-//     // Duyệt qua từng id chatroom
-//     listChatroomID.forEach((chatroomId) => {
-//       // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
-//       const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
-//         // Lấy thông tin chatroom dựa vào chatroomID
-//         // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
-
+   
     if (!currentUser) return; // Thoát nếu chưa có thông tin người dùng
 
     const listChatroomID = currentUser.Chatroom || [];
@@ -186,7 +172,6 @@ export function Index() {
     // Lắng nghe sự thay đổi của từng phòng chat trong listChatroomID
     const unsubscribeFunctions = listChatroomID.map((chatroomId) => {
       return onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
-
         if (doc.exists()) {
           const chatroomData = doc.data();
 
@@ -219,82 +204,38 @@ export function Index() {
     return () => unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
   }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
 
-  // useEffect(() => {
-  //   if (!currentUser) return; // Thoát nếu chưa có thông tin người dùng
-
-  //   // Lấy danh sách ID phòng chat của người dùng hiện tại tham gia
-  //   const listChatroomID = currentUser.Chatroom || [];
-  //   // Tạo một mảng chứa các unsubscribe functions để sau này dọn dẹp(ngừng lắng nghe) khi unmount 1 chatroom
-  //   const unsubscribeFunctions = [];
-
-  //   // Duyệt qua từng id chatroom
-  //   listChatroomID.forEach((chatroomId) => {
-  //     // lắng nghe sự thay đổi của phòng chat trong listChatroomID:
-  //     const unsubscribe = onSnapshot(doc(db, "Chatroom", chatroomId), (doc) => {
-
-  //       // Lấy thông tin chatroom dựa vào chatroomID
-  //       // Nếu phòng chat tồn tại: lấy dữ liệu phòng chat (chatroomData) và cập nhật vào state chats
-  //       if (doc.exists()) {
-  //         const chatroomData = doc.data();
-  //         if (clickedChat > -1) {
-  //           if (chatroomData.Message[chatroomData.Message.length-1].SenderID == currentUser.ID) {
-
-  //             (new Audio(notify_send)).play()
-  //           }
-  //           else{
-  //             (new Audio(notify)).play()
-  //           }
-  //         }
-
-  //         // Cập nhật trạng thái chats, bạn có thể thêm logic để xử lý tin nhắn mới nhất, trạng thái online, ...
-  //         setshowFriendList((prevChats) => {
-  //           const index = prevChats.findIndex((chat) => chat.id === chatroomId);
-  //           if (index > -1) {
-  //             // Nếu phòng chat đã tồn tại trong danh sách, cập nhật nó
-  //             prevChats[index] = { id: chatroomId, ...chatroomData };
-  //           } else {
-  //             // Nếu phòng chat chưa tồn tại, thêm nó vào đầu danh sách
-  //             prevChats.unshift({ id: chatroomId, ...chatroomData });
-  //           }
-  //           return [...prevChats];
-  //         });
-  //       }
-  //     });
-  //     unsubscribeFunctions.push(unsubscribe); // Thêm unsubscribe function vào mảng
-  //   });
-
-  //   // Dọn dẹp khi component unmount
-  //   return () => {
-  //     unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
-  //   };
-  // }, [currentUser]); // Lắng nghe lại khi currentUser thay đổi (khi đăng nhập/đăng xuất)
+  
 
   useEffect(() => {
     const fetchReceiverInfos = async () => {
       const newReceiverInfos = {};
       // Lặp qua từng chat trong chats
       for (const chat of showFriendList) {
-        // Kiểm tra ko phải nhóm chat
-        if (!chat.isGroup) {
-          // Lấy ID người còn lại
-          const otherMembers = chat.Members.filter(
-            (member) => member !== currentUser.ID,
-          );
-          const receiverId = otherMembers[0];
-          // lấy profile người còn lại
-          const docRef = doc(db, "Profile", receiverId);
-          const docSnap = await getDoc(docRef);
+        try {
+          // Kiểm tra ko phải nhóm chat
+          if (!chat.isGroup) {
+            // Lấy ID người còn lại
+            const otherMembers = chat.Members.filter(
+              (member) => member !== currentUser.ID,
+            );
+            const receiverId = otherMembers[0];
+            // lấy profile người còn lại
+            const docRef = doc(db, "Profile", receiverId);
+            const docSnap = await getDoc(docRef);
 
-          if (docSnap.exists()) {
-            newReceiverInfos[chat.id] = docSnap.data();
+            if (docSnap.exists()) {
+              newReceiverInfos[chat.id] = docSnap.data();
+            }
           }
+        } catch (error) {
+          console.log("LỖI: " + error);
         }
       }
       setReceiverInfos(newReceiverInfos);
     };
 
     fetchReceiverInfos();
-  }, [showFriendList, currentUser.ID]);
+  }, [showFriendList, currentUser.ID, receiverInfos]);
 
   // Dropdown state
   const [showDropdown, setShowDropdown] = useState(false);
@@ -333,63 +274,25 @@ export function Index() {
         setShowChat("");
       }
       setAvatar(
-        <img
-          src={`${showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Avatar : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
-          className="h-10 w-10 rounded-full"
-        />,
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Avatar
+          : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
       );
       setName(
-        <>
-          <a href="#" className="decoration-0 outline-none sm:hidden">
-            {
-
-              showFriendList[clickedChat]
-                ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-                : "NULL"
-
-              // showFriendList[clickedChat]?.name.length > 14
-              //   ? showFriendList[clickedChat]?.name.substring(0, 17) + "..."
-              //   : showFriendList[clickedChat]?.name.substring(0, 17)
-            }
-          </a>
-          <a
-            href="#"
-            className="hidden decoration-0 outline-none sm:inline-block"
-          >
-            {showFriendList[clickedChat]
-              ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-              : "NULL"}
-          </a>
-        </>,
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+          : "NULL",
       );
     } else if (flagSearchOrChat == "search") {
       setAvatar(
-        <img
-          src={`${showFriendList[clickedChat] ? receiverInfos[showFriendList[clickedChat].ID].Avatar : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png"}`}
-          className="h-10 w-10 rounded-full"
-        />,
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Avatar
+          : "https://uploads.sitepoint.com/wp-content/uploads/2021/04/1618197067vitejs.png",
       );
       setName(
-        <>
-          <a href="#" className="decoration-0 outline-none sm:hidden">
-            {
-              showFriendList[clickedChat]
-                ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-                : "NULL"
-              // users[clickedChat]?.Fullname.length > 14
-              //   ? users[clickedChat]?.Fullname.substring(0, 17) + "..."
-              //   : users[clickedChat]?.Fullname.substring(0, 17)
-            }
-          </a>
-          <a
-            href="#"
-            className="hidden decoration-0 outline-none sm:inline-block"
-          >
-            {showFriendList[clickedChat]
-              ? receiverInfos[showFriendList[clickedChat].ID].Fullname
-              : "NULL"}
-          </a>
-        </>,
+        showFriendList[clickedChat]
+          ? receiverInfos[showFriendList[clickedChat].ID].Fullname
+          : "NULL",
       );
     }
     //responsive
@@ -415,7 +318,6 @@ export function Index() {
 
   return (
     <>
-    
       {/* Toàn bộ trang index */}
       <div className="layout-wrapper box-border flex bg-[#f5f7fb]">
         {/* Thanh navbar bên trái */}
@@ -493,11 +395,37 @@ export function Index() {
                             >
                               <i className="fa-solid fa-angle-left"></i>
                             </div>
-                            <div className="ml-0 mr-4">{avatar}</div>
+                            <div className="ml-0 mr-4">
+                              <img
+                                src={avatar}
+                                className="h-10 w-10 rounded-full"
+                              />
+                              ,
+                            </div>
                             <div className="flex-grow overflow-hidden">
                               <h5 className="mb-0 overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold text-bs-dark">
-                                {name}
-                                <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
+                                <a
+                                  href="#"
+                                  className="decoration-0 outline-none sm:hidden"
+                                >
+                                  {name.length > 14
+                                    ? name.substring(0, 17) + "..."
+                                    : name.substring(0, 17)}
+                                </a>
+                                <a
+                                  href="#"
+                                  className="hidden decoration-0 outline-none sm:inline-block"
+                                >
+                                  {name}
+                                </a>
+                                {showFriendList[clickedChat] &&
+                                receiverInfos[showFriendList[clickedChat].ID] &&
+                                receiverInfos[showFriendList[clickedChat].ID]
+                                  .isOnline == true ? (
+                                  <i className="fa-solid fa-circle ml-2 text-[10px] text-bs-success-rgb"></i>
+                                ) : (
+                                  ""
+                                )}
                               </h5>
                             </div>
                           </div>
@@ -622,8 +550,11 @@ export function Index() {
                           ? showFriendList[clickedChat].Message
                           : showChat
                       }
+                      avatar={avatar}
+                      name={name}
                       setMessages={setShowChat}
-                      friendInfo={showFriendList[clickedChat]}
+                      receiverAvatar={avatar.props?.src}
+                      receiverName={name}
                       chatroomId={
                         showFriendList[clickedChat]
                           ? showFriendList[clickedChat].ID
@@ -682,17 +613,25 @@ export function Index() {
           showModal={showModal}
           toggleModal={toggleModal}
           toggleCallScreen={startCall}
-          currentUser={currentUser}
+          receiverAvatar={avatar.props.src}
+          receiverName={name}
           actionType={actionType}
         />
       )}
 
-      {showCallScreen && <CallScreen toggleCallScreen={toggleCallScreen} />}
+      {showCallScreen && (
+        <CallScreen
+          toggleCallScreen={toggleCallScreen}
+          receiverAvatar={avatar.props.src}
+          receiverName={name}
+        />
+      )}
 
       {showVideoScreen && (
         <CallVideoScreen
           showModal={showVideoScreen}
-          currentUser={currentUser}
+          receiverAvatar={avatar.props.src}
+          receiverName={name}
           toggleModal={toggleModal}
           toggleCallScreen={toggleCallScreen}
           modalRef={modalRef}

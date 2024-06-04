@@ -1,7 +1,7 @@
 // Modal.js
 import React from "react";
 
-const Modal = ({ showModal, toggleModal, toggleCallScreen, currentUser, actionType }) => {
+const Modal = ({ showModal, toggleModal, toggleCallScreen, receiverAvatar="",receiverName="", actionType }) => {
   return (
     <>
       {showModal && (
@@ -32,12 +32,12 @@ const Modal = ({ showModal, toggleModal, toggleCallScreen, currentUser, actionTy
             <div style={{ textAlign: "center" }}>
               <div className="mb-4 mt-5 inline-block">
                 <img
-                  src={currentUser.Avatar}
+                  src={receiverAvatar}
                   className="h-20 w-20 rounded-full"
-                  alt={currentUser.Fullname}
+                  alt={receiverAvatar}
                 />
               </div>
-              <h5 className="text-truncate text-2xl">{currentUser.Fullname}</h5>
+              <h5 className="text-truncate text-2xl">{receiverName}</h5>
               {actionType === "audio" && <p className="text-[#7A7F9A]">Start Audio Call</p>}
               {actionType === "video" && <p className="text-[#7A7F9A]">Start Video Call</p>}
             </div>

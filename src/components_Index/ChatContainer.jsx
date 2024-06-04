@@ -8,21 +8,21 @@ import { db } from "../lib/firebase";
 import { SendImage } from "./Chat/SendImage";
 
 
-function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
+function ChatContainer({ messages, friendInfo, setMessages, chatroomId,avatar, name }) {
   let msgs;
   const [inputValue, setInputValue] = useState('')
   const [images, setImages] = useState([])
   const [files, setFiles] = useState([])
   const { currentUser } = useUserStore();
-
+  // console.log(messages)
   //xử lý dữ liệu khi ấn enter hoặc nút gửi   
   const handleSendMessage = () => {
     if (inputValue) {
       //lấy dữ liệu từ input chat
       const enteredMessage = inputValue
       const now = new Date()
-      const hours = now.getHours()
-      const minutes = now.getMinutes()
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
 
       //gửi dữ liệu 
 
@@ -70,9 +70,11 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
 
   if (messages) {
     msgs = messages.map((msg, index) => {
+      // console.log(messages  )
       const isLastMessage =
-        index === messages.length - 1 || messages[index + 1].uid !== msg.uid; // Kiểm tra isLastMessage chính xác hơn
-      const isFirstMessage = index === 0 || messages[index - 1].uid !== msg.uid;
+        index === messages.length - 1 || messages[index + 1].SenderID !== msg.SenderID; // Kiểm tra isLastMessage chính xác hơn
+      const isFirstMessage = index === 0 || messages[index - 1].SenderID !== msg.SenderID;
+      
       // Render người gửi và người nhận
       return msg?.SenderID === currentUser.ID ?
         <Sender
@@ -83,13 +85,14 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId }) {
         />
         :
         <Receiver
-          avatarReceiver={friendInfo.Avatar}
-          nameReceiver={"Name"}
+          avatarReceiver={avatar}
+          nameReceiver={name}
           msg={msg.Content}
           createAtReceiver={msg.CreateAt}
           isLast={isLastMessage}
           isFirst={isFirstMessage}
           key={index}
+
         />
 
     });
