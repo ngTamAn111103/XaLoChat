@@ -42,7 +42,6 @@ function UserSetting({ name, avatarSrc }) {
         });
         
         
-        toast.success("Đổi ảnh thành công")
         console.log("Tải ảnh và cập nhật URL thành công!");
         toast.success(`Đổi ảnh thành công!`,{
           position: "top-left"
