@@ -56,7 +56,9 @@ function ChatContainer({ messages, friendInfo, setMessages, chatroomId,avatar, n
 
       } catch (error) {
         console.error("Lỗi khi gửi tin nhắn:", error);
-        toast.error("Lỗi khi gửi tin nhắn")
+        toast.error("Lỗi khi gửi tin nhắn", {
+          position: "top-left"
+        })
       }
 
     }

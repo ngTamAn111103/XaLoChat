@@ -42,7 +42,9 @@ export function Register() {
       // Kiểm tra xác nhận mật khẩu không đúng
       if (password != confirm_password) {
         console.log("Confirm password fail!");
-        toast.error("Confirm password fail!");
+        toast.error("Confirm password fail!", {
+          position: "top-left"
+        });
 
         return;
       } else {
@@ -50,7 +52,7 @@ export function Register() {
         const res = await createUserWithEmailAndPassword(auth, email, password);
         if (res) {
           console.log("Create UserAuth thành công.");
-          toast.success("Create UserAuth thành công.");
+          // toast.success("Create UserAuth thành công.");
 
           // Thực hiện hàm thêm dữ liệu vào firestore
           await setDoc(doc(db, "Profile", res.user.uid), {
@@ -67,14 +69,18 @@ export function Register() {
           });
 
           console.log("Create Profile thành công.");
-          toast.success("Create Profile thành công.");
+          toast.success("Create Profile thành công.", {
+            position: "top-left"
+          });
         }
         // Chuyển hướng đến trang đăng nhập
         navigate("/login");
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
+      toast.error(error.message, {
+        position: "top-left"
+      });
     }
     finally{
       // Tắt loading

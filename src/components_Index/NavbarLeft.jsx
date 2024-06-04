@@ -47,7 +47,9 @@ export function NavbarLeft({ selectedButton, setSelectedButton }) {
       })
       .catch((error) => {
         console.error("NavbarLeft.jsx: Lỗi đăng xuất:", error);
-        toast.error("Đăng xuất thất bại. Vui lòng thử lại!");
+        toast.error("Đăng xuất thất bại. Vui lòng thử lại!", {
+          position: "top-left"
+        });
       });
   };
 
